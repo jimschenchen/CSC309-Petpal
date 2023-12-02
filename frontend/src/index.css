@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,4 +16,89 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+/* Extracting classes with @apply */
+/* Customize class here */
+@layer base {
+  html {
+    font-family: "Lato", system-ui, sans-serif;
+  }
+  h1 {
+    @apply text-2xl;
+  }
+
+  main {
+    @apply flex-1 mt-4 p-4 overflow-y-auto main_height
+  }
+}
+
+@layer components {
+/* .btn-primary {
+  @apply rounded-lg bg-blue-500 px-4 py-2 font-semibold text-white shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+} */
+.main_height {
+  @apply min-h-screen;
+  min-height: calc(100vh - 11rem);
+}
+
+.navbar-btn-white {
+  @apply text-white font-medium text-sm sm:text-lg px-2 sm:px-4 py-1 sm:py-2 
+  hover:underline hover:font-semibold;
+}
+
+.user-menu-item {
+  @apply font-medium text-sm sm:text-lg text-primary my-1 sm:my-2 sm:w-60 p-1 rounded-sm
+  hover:bg-primary hover:text-white;
+}
+
+.active-signin-tab {
+  @apply z-10 w-3/5 h-10 bg-background font-semibold text-xl flex items-end justify-center 
+  pb-1 rounded-t-lg text-black;
+}
+
+.inactive-signin-tab {
+  @apply w-2/5 h-8 bg-[#BDA89B] font-semibold text-sm flex items-end justify-center 
+  pb-1 rounded-t-lg text-[#8C8C8C] hover:h-10 hover:text-base;
+}
+
+.active-application-tab{
+  @apply z-10 w-3/5 h-10 bg-[#EFEFEF] font-semibold text-base sm:text-xl flex items-end justify-center 
+  pb-2 rounded-t-lg text-black
+}
+
+.inactive-application-tab{
+  @apply w-2/5 h-8 bg-[#C9C9C9] font-semibold text-sm flex items-end justify-center 
+  pb-2 rounded-t-lg text-[#8C8C8C] hover:h-10 hover:text-base
+}
+
+.white-card-hover{
+  @apply hover:bg-gray-100 hover:shadow-lg
+}
+
+.detail-active-tab{
+  @apply inline-block px-4 py-1 text-black text-base bg-white rounded-t-lg
+}
+
+.detail-active-page{
+  @apply bg-white p-4 w-full rounded-b rounded-r shadow-md -m-px
+}
+
+.detail-inactive-tab{
+  @apply inline-block px-4 py-1 rounded-t-lg bg-gray-100 opacity-80 text-base hover:text-gray-600 hover:bg-gray-50
+}
+
+.detail-inactive-page{
+  @apply hidden
+}
+}
+
+@layer utilities {
+  /* .filter-none {
+    filter: none;
+  }
+  .filter-grayscale {
+    filter: grayscale(100%);
+  } */
 }
