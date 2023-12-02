@@ -1,0 +1,35 @@
+header, footer {
+    background-color: bisque;
+    display: flex;
+    justify-content: space-between;
+}
+
+header a {
+    padding: 1em 2em;
+    text-decoration: none;
+    color: #333;
+}
+
+header a:hover {
+    color: #666;
+}
+
+header a.active {
+    font-weight: bold;
+}
+
+header div {
+    display: flex;
+}
+
+header div:last-child {
+    flex-direction: column-reverse;
+    padding: 1em 2em;
+}
+
+footer {
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+}
+
