@@ -23,9 +23,7 @@ function Webpages() {
 
 function App() {
   return <APIContext.Provider value={useAPIContext()}>
-    <main>
-      <Webpages />
-    </main>
+    <Webpages />
   </APIContext.Provider>;
 }
 

@@ -2,14 +2,14 @@ import { useState } from "react";
 import { createContext } from "react";
 
 export const APIContext = createContext({
-    userName: "jack",
-    setUserName: () => {},
+    sidebarVisible: false,
+    setSidebarVisible: () => {},
 });
 
 export const useAPIContext = () => {
-    const [userName, setUserName] = useState("jack");
+    const [sidebarVisible, setSidebarVisible] = useState(false);
 
     return {
-        userName, setUserName,
+        sidebarVisible, setSidebarVisible,
     };
 }
