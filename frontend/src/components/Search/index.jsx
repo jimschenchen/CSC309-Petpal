@@ -1,90 +1,92 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { APIContext } from "../../contexts/APIContext";
 // import { useLocation } from "react-router-dom"
+
+import { Request } from "../../utils/Request";
 
 import Card from "../Card";
 import Chip from "../Chip";
 
-var items = [
-  {
-      id: 1,
-      name: "Buddy",
-      breed: "Bobcat",
-      gender: "male",
-      age: "3",
-      size: "large",
-      date: "January 1",
-      imageUrl: "/src/img/cat114-sm.jpg",
-      link: "pet_details_and_crud/pet-details.html",
-      status: "Available",
-      status_color: "text-green-700"
-  },
-  {
-      id: 2,
-      name: "Cheems",
-      breed: "Shiba Inu",
-      gender: "male",
-      age: "3",
-      size: "small",
-      date: "January 10",
-      imageUrl: "https://imagevars.gulfnews.com/2023/08/22/Shiba-Inu-of-the-viral--Cheems--doge-meme-_18a1dc8b125_large.jpg",
-      link: "pet_details_and_crud/pet-details-Cheems.html",
-      status: "Available",
-      status_color: "text-green-700"
-  },
-  {
-      id: 3,
-      name: "Bob",
-      breed: "German Shepherds",
-      gender: "male",
-      age: "6",
-      size: "large",
-      date: "January 15",
-      imageUrl: "https://www.thesprucepets.com/thmb/2v3mFoE-mLVxNCPeKifiuIAONrA=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-978711748-39cc1126c08c42eca3a4a255c1bb50ef.jpg",
-      link: "pet_details_and_crud/pet-details-pending.html",
-      status: "Pending",
-      status_color: "text-yellow-700"
-  },
-  {
-      id: 4,
-      name: "Luna",
-      breed: "Ragdoll",
-      gender: "female",
-      age: "1",
-      size: "small",
-      date: "January 28",
-      imageUrl: "https://assets.elanco.com/8e0bf1c2-1ae4-001f-9257-f2be3c683fb1/5b65b849-841f-4370-8030-95227c3d461e/ragdoll_cat_01401.jpg?w=3840&q=75&auto=format",
-      link: "pet_details_and_crud/pet-details-adopted.html",
-      status: "Adopted",
-      status_color: "text-red-700"
-  },
-  {
-      id: 5,
-      name: "Bella",
-      breed: "Guinea Pig",
-      gender: "female",
-      age: "2",
-      size: "small",
-      date: "January 18",
-      imageUrl: "https://petkeen.com/wp-content/uploads/2021/02/A-guinea-pig-running-around-in-the-garden_theianov_Shutterstock-1.webp",
-      link: "pet_details_and_crud/pet-details-withdraw.html",
-      status: "Withdrawn",
-      status_color: "text-red-700"
-  },
-  {
-      id: 6,
-      name: "Molly",
-      breed: "Husky",
-      gender: "female",
-      age: "4",
-      size: "medium",
-      date: "February 1",
-      imageUrl: "https://a-z-animals.com/media/siberian-husky-1.jpg",
-      link: "pet_details_and_crud/pet-details-Molly.html",
-      status: "Available",
-      status_color: "text-green-700"
-  },
-];
+// var items = [
+//   {
+//       id: 1,
+//       name: "Buddy",
+//       breed: "Bobcat",
+//       gender: "male",
+//       age: "3",
+//       size: "large",
+//       date: "January 1",
+//       imageUrl: "/src/img/cat114-sm.jpg",
+//       link: "pet_details_and_crud/pet-details.html",
+//       status: "Available",
+//       status_color: "text-green-700"
+//   },
+//   {
+//       id: 2,
+//       name: "Cheems",
+//       breed: "Shiba Inu",
+//       gender: "male",
+//       age: "3",
+//       size: "small",
+//       date: "January 10",
+//       imageUrl: "https://imagevars.gulfnews.com/2023/08/22/Shiba-Inu-of-the-viral--Cheems--doge-meme-_18a1dc8b125_large.jpg",
+//       link: "pet_details_and_crud/pet-details-Cheems.html",
+//       status: "Available",
+//       status_color: "text-green-700"
+//   },
+//   {
+//       id: 3,
+//       name: "Bob",
+//       breed: "German Shepherds",
+//       gender: "male",
+//       age: "6",
+//       size: "large",
+//       date: "January 15",
+//       imageUrl: "https://www.thesprucepets.com/thmb/2v3mFoE-mLVxNCPeKifiuIAONrA=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-978711748-39cc1126c08c42eca3a4a255c1bb50ef.jpg",
+//       link: "pet_details_and_crud/pet-details-pending.html",
+//       status: "Pending",
+//       status_color: "text-yellow-700"
+//   },
+//   {
+//       id: 4,
+//       name: "Luna",
+//       breed: "Ragdoll",
+//       gender: "female",
+//       age: "1",
+//       size: "small",
+//       date: "January 28",
+//       imageUrl: "https://assets.elanco.com/8e0bf1c2-1ae4-001f-9257-f2be3c683fb1/5b65b849-841f-4370-8030-95227c3d461e/ragdoll_cat_01401.jpg?w=3840&q=75&auto=format",
+//       link: "pet_details_and_crud/pet-details-adopted.html",
+//       status: "Adopted",
+//       status_color: "text-red-700"
+//   },
+//   {
+//       id: 5,
+//       name: "Bella",
+//       breed: "Guinea Pig",
+//       gender: "female",
+//       age: "2",
+//       size: "small",
+//       date: "January 18",
+//       imageUrl: "https://petkeen.com/wp-content/uploads/2021/02/A-guinea-pig-running-around-in-the-garden_theianov_Shutterstock-1.webp",
+//       link: "pet_details_and_crud/pet-details-withdraw.html",
+//       status: "Withdrawn",
+//       status_color: "text-red-700"
+//   },
+//   {
+//       id: 6,
+//       name: "Molly",
+//       breed: "Husky",
+//       gender: "female",
+//       age: "4",
+//       size: "medium",
+//       date: "February 1",
+//       imageUrl: "https://a-z-animals.com/media/siberian-husky-1.jpg",
+//       link: "pet_details_and_crud/pet-details-Molly.html",
+//       status: "Available",
+//       status_color: "text-green-700"
+//   },
+// ];
 
 var chipColorMap = {
   "breed": "bg-pink-500",
@@ -105,10 +107,25 @@ const Search = () => {
     const { sidebarVisible, setSidebarVisible } = useContext(APIContext);
     const { filters, setFilters } = useContext(APIContext);
 
-    // console.log(filters);
-    // Object.entries(filters).filter(([key, value])  => {return true}).map(([key, value]) => {
-    //   console.log(key, value);
-    // });
+    const [ pets, setPets ] = useState([]);
+
+
+
+    const getPetsList = async () => {
+      try {
+        const res = await Request("/pets/", "GET");
+        setPets(res.results);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    // Note: the empty deps array [] means
+    // this useEffect will run once
+    // similar to componentDidMount()
+    useEffect(() => {
+      getPetsList();
+    }, [])
 
     const toggleSidebar = () => {
         setSidebarVisible(!sidebarVisible);
@@ -167,8 +184,8 @@ const Search = () => {
           {/* <!-- ... main ... --> */}
 
           <div id="cardsContainer" className="flex justify-center lg:justify-start flex-wrap">
-            {items.map(item => (
-              <Card key={item.id} item={item} />
+            {pets.map(pet => (
+              <Card key={pet.id} item={pet} />
             ))}
           </div>
 
