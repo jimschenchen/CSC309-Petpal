@@ -25,8 +25,13 @@ code {
   html {
     font-family: "Lato", system-ui, sans-serif;
   }
+
   h1 {
     @apply text-2xl;
+  }
+
+  body {
+    margin: 0;
   }
 
   main {

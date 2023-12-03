@@ -5,7 +5,6 @@ import { APIContext } from "../../contexts/APIContext";
 
 
 const Sidebar = () => {
-
     // const location = useLocation();
     // const url = location.pathname;
     // const today = new Date();
@@ -13,6 +12,8 @@ const Sidebar = () => {
 
     // Script for sidebar
     const { sidebarVisible, setSidebarVisible } = useContext(APIContext);
+    const { filters, setFilters } = useContext(APIContext);
+    const [ filtersTemp, setFiltersTemp ] = useState(filters);
 
     const toggleSidebar = () => {
         setSidebarVisible(!sidebarVisible);
@@ -21,6 +22,15 @@ const Sidebar = () => {
     const sidebarClasses = `bg-background text-blue-gray-700 w-full h-max space-y-3 px-4 z-50 pb-[25rem] lg:relative lg:w-64 transition-transform duration-200 ease-in-out ${
         sidebarVisible ? 'absolute inset-y-0 left-0 translate-x-0' : 'absolute inset-y-0 left-0 -translate-x-full lg:translate-x-0'
     }`;
+
+    const toggleFilter = () => {
+        setFilters(filtersTemp);
+    }
+
+    const handleFilterChange = (e) => {
+        const { name, value } = e.target;
+        setFiltersTemp({ ...filtersTemp, [name]: value });
+    };
 
     return <>
          <div id="sidebar" className={sidebarClasses}>
@@ -38,7 +48,10 @@ const Sidebar = () => {
 
           <h2 className="text-lg font-extrabold pl-3">Breed</h2>
           <div className="relative h-10 w-auto min-w-[100px]">
-            <select name="breed" className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-primary focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
+            <select name="breed"
+                    className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-primary focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                    value={filtersTemp.breed}
+                    onChange={handleFilterChange}>
               <option value="Any">Any</option>
               <option value="Shiba Inu">Shiba Inu</option>
               <option value="German Shepherds">German Shepherds</option>
@@ -54,7 +67,10 @@ const Sidebar = () => {
 
           <h2 className="text-lg font-extrabold pl-3">Age</h2>
           <div className="relative h-10 w-auto min-w-[100px]">
-            <select name="age" className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-primary focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
+            <select name="age"
+                    className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-primary focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                    value={filtersTemp.age}
+                    onChange={handleFilterChange}>
               <option value="Any">Any</option>
               <option value="1">1 year</option>
               <option value="2">2 years</option>
@@ -69,7 +85,10 @@ const Sidebar = () => {
 
           <h2 className="text-lg font-extrabold pl-3">Size</h2>
           <div className="relative h-10 w-auto min-w-[100px]">
-            <select name="size" className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-primary focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
+            <select name="size"
+                    className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-primary focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                    value={filtersTemp.size}
+                    onChange={handleFilterChange}>
               <option value="Any">Any</option>
               <option value="small">small</option>
               <option value="medium">medium</option>
@@ -82,7 +101,10 @@ const Sidebar = () => {
 
           <h2 className="text-lg font-extrabold pl-3">Gender</h2>
           <div className="relative h-10 w-auto min-w-[100px]">
-            <select name="gender" className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-primary focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
+            <select name="gender" 
+                    className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-primary focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                    value={filtersTemp.gender}
+                    onChange={handleFilterChange}>
               <option value="Any">Any</option>
               <option value="male">male</option>
               <option value="female">female</option>
@@ -94,6 +116,7 @@ const Sidebar = () => {
 
           <button
             id="filter_button"
+            onClick={toggleFilter}
             className="middle none center rounded-lg w-full bg-primary py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-primary/20 transition-all hover:shadow-lg hover:shadow-primary/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             data-ripple-light="true"
           >
@@ -109,7 +132,10 @@ const Sidebar = () => {
           </div>
 
           <div className="relative h-10 w-auto min-w-[100px]">
-            <select name="sort" className="peer h-full w-full rounded-[7px] border border-blue-gray-200 bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-primary focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
+            <select name="sort"
+                    className="peer h-full w-full rounded-[7px] border border-blue-gray-200 bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-primary focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                    value={filtersTemp.sort}
+                    onChange={handleFilterChange}>
               <option value="Any">Any</option>
               <option value="name">Name:A-Z</option>
               <option value="date-newest">Date-newest</option>
@@ -119,6 +145,7 @@ const Sidebar = () => {
 
           <button
             id="sort_button"
+            onClick={toggleFilter}
             className="middle none center rounded-lg w-full bg-primary py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-primary/20 transition-all hover:shadow-lg hover:shadow-primary/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             data-ripple-light="true"
           >

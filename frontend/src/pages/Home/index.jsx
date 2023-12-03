@@ -3,7 +3,7 @@ import Search from '../../components/Search';
 
 const Home = () => {
     return <>
-        <div class="flex h-screen background">
+        <div className="flex h-screen bg-background">
             <Sidebar />
             <Search />
         </div>

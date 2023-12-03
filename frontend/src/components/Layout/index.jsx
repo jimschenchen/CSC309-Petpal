@@ -10,7 +10,7 @@ const Layout = () => {
     var semester;
 
     return <>
-        <div id="body" class="class='flex flex-col min-h-screen bg-background'" >
+        <div id="body" className='flex flex-col min-h-screen bg-background'>
             <header>
                 <div>
                     <Link to="/" className={url === "/" ? "active" : ""}>Home</Link>
