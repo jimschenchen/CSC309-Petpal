@@ -128,3 +128,19 @@ dist
 
 # DS_Store
 .DS_Store
+
+# backend
+backend/venv/
+backend/.idea/*
+
+# Byte-compiled / optimized / DLL files
+backend/__pycache__/
+*/__pycache__/
+backend/backend/*.py[cod]
+
+
+# db image
+backend/db.sqlite3
+
+# migrations
+backend/*/migrations/00*.py
