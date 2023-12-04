@@ -1,0 +1,16 @@
+venv/
+.idea/*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*/__pycache__/
+*.py[cod]
+
+# ignore .DS_Store
+.DS_Store
+
+# db image
+db.sqlite3
+
+# migrations
+*/migrations/00*.py
