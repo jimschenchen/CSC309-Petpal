@@ -1,25 +1,30 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
+import { APIContext, useAPIContext } from './contexts/APIContext';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import Layout from './components/Layout';
+
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
+
+function Webpages() {
+  return <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        {/* <Route path="teams" element={<Teams />} /> */}
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </BrowserRouter>;
+}
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <APIContext.Provider value={useAPIContext()}>
+    <Webpages />
+  </APIContext.Provider>;
 }
 
 export default App;
