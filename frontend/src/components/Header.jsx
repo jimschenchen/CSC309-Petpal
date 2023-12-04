@@ -29,21 +29,21 @@ const Logged = ({username, showMenu, setShowMenu}) => (
 const UserMenu = ({userType}) => {
     if (userType === 'seeker') {
         return (
-            <div class="bg-gray-50 rounded-lg z-50 absolute right-0 flex flex-col px-2">
-                <ul class="pt-2 pb-1 px-2 border-primary border-b-2">
-                    <li class="user-menu-item">
+            <div className="bg-gray-50 rounded-lg z-50 absolute right-0 flex flex-col px-2">
+                <ul className="pt-2 pb-1 px-2 border-primary border-b-2">
+                    <li className="user-menu-item">
                     <Link>My Applications</Link>
                     </li>
-                    <li class="user-menu-item">
+                    <li className="user-menu-item">
                     <Link>Notification</Link>
                     </li>
                 </ul>
 
-                <ul class="pt-1 pb-2 px-2 border-primary">
-                    <li class="user-menu-item">
+                <ul className="pt-1 pb-2 px-2 border-primary">
+                    <li className="user-menu-item">
                         <Link>Edit profile</Link>
                     </li>
-                    <li class="user-menu-item">
+                    <li className="user-menu-item">
                         <Link>Sign out</Link>
                     </li>
                 </ul>
@@ -53,28 +53,28 @@ const UserMenu = ({userType}) => {
     else if (userType === 'shelter'){
         return (
             <div 
-            class="bg-gray-50 border-primary rounded-lg z-50 absolute right-0 flex flex-col px-2">
+            className="bg-gray-50 border-primary rounded-lg z-50 absolute right-0 flex flex-col px-2">
 
-            <ul class="pt-2 pb-1 px-2 border-primary border-b-2">
-                <li class="user-menu-item">
+            <ul className="pt-2 pb-1 px-2 border-primary border-b-2">
+                <li className="user-menu-item">
                 <Link>Shelter details</Link>
                 </li>
-                <li class="user-menu-item">
+                <li className="user-menu-item">
                     <Link>Manage Pets</Link>
                 </li>
-                <li class="user-menu-item">
+                <li className="user-menu-item">
                     <Link>Manage Applications</Link>
                 </li>
-                <li class="user-menu-item">
+                <li className="user-menu-item">
                 <Link>Notification</Link>
                 </li>
             </ul>
 
-            <ul class="pt-1 pb-2 px-2 border-primary">
-                <li class="user-menu-item">
+            <ul className="pt-1 pb-2 px-2 border-primary">
+                <li className="user-menu-item">
                     <Link>Edit profile</Link>
                 </li>
-                <li class="user-menu-item">
+                <li className="user-menu-item">
                 <Link>Sign out</Link>
                 </li>
             </ul>
@@ -99,17 +99,19 @@ const Header = ({userType, username}) => {
     }
 
     return ( 
-        <header className="fixed w-full">
+        <>
+        <header className="fixed w-full z-50">
         <nav className={"px-4 h-14 sm:h-16 " + headerColor()}>
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl h-full">
                 <Logo/>
-                {console.log(userType)}
                 {userType === 'guest' && <Guest/>}
                 {userType !== 'guest' && <Logged username={username} showMenu={showMenu} setShowMenu={setShowMenu}/>}
             </div>
         </nav>
         {userType !== 'guest' && showMenu && <UserMenu userType={userType}/>}
         </header>
+        </>
+        
     );
 }
  
