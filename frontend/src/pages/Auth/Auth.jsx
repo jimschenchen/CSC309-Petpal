@@ -10,15 +10,14 @@ const Auth = () => {
         document.body.classList.add("bg-sencond_background");
     })
     return ( 
-        <div>
+        <>
             <AuthLogo/>
             <Routes>
-                <Route index element={<Login/>}/>
                 <Route path="login" element={<Login/>} />
                 <Route path="signup" element={<Signup/>} />
                 <Route path="*" element={<Navigate to="login"/>}/>
             </Routes>
-        </div>
+        </>
         
     );
 
