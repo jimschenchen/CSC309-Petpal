@@ -18,6 +18,10 @@ code {
     monospace;
 } */
 
+html, body, #root, #root>div {
+  height: 100%
+}
+
 
 /* Extracting classes with @apply */
 /* Customize class here */

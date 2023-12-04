@@ -9,16 +9,17 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Auth from './pages/Auth/Auth';
+import Application from './pages/Application/Application';
 
 function Webpages() {
   return (<BrowserRouter>
     <Routes>
-      <Route exact path="/" element={<Layout />}>
+      <Route exact path="/">
         <Route index element={<Home />} />
-        {/* <Route path="teams" element={<Teams />} /> */}
       </Route>
 
       <Route exact path="auth/*" element={<Auth/>}/>
+      <Route exact path="application/*" element={<Application/>}></Route>
 
       <Route path="*" element={<NotFound />} />
     </Routes>
@@ -26,9 +27,7 @@ function Webpages() {
 }
 
 function App() {
-  return <APIContext.Provider value={useAPIContext()}>
-    <Webpages />
-  </APIContext.Provider>;
+  return <Webpages/>;
 }
 
 export default App;
