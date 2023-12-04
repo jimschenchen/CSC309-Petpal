@@ -1,5 +1,5 @@
-const Footer = (userType) => {
-    const footerColor = (userType) => {
+const Footer = ({userType}) => {
+    const footerColor = () => {
         if (userType === 'seeker') {
             return "bg-seeker";
         }
@@ -12,7 +12,7 @@ const Footer = (userType) => {
     }
 
     return ( 
-    <footer className={"text-white p-4 mt-auto " + footerColor()}>
+    <footer className={"text-white p-4 mt-auto bottom-0 " + footerColor()}>
         <p>&copy; 2023 PetPal. All rights reserved.</p>
     </footer> 
     );
