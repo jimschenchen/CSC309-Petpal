@@ -54,7 +54,8 @@ const LoginBody = ({activeTab}) => {
                 
         
                 <button className="bg-primary text-white rounded-md py-1 
-                hover:shadow-md hover:bg-[#744124]">
+                hover:shadow-md hover:bg-[#744124]"
+                onClick={(e) => {e.preventDefault();}}>
                     Log in
                 </button>
                 <SignupLink/>
