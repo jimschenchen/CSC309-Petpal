@@ -100,7 +100,7 @@ const Header = ({userType, username}) => {
 
     return ( 
         <>
-        <header className="fixed w-full z-50">
+        <header className="w-full z-50">
         <nav className={"px-4 h-14 sm:h-16 " + headerColor()}>
             <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl h-full">
                 <Logo/>
