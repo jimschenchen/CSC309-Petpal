@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-const UpdatePet = (Name, Breed, Age, Size, Gender, Status, img ) => {
-    const [name, setName] = useState('');
+const UpdatePet = (props) => {
+    const { shelter, pet } = props;
+    console.log(pet);
+    const [name, setName] = useState(pet?.Name || '');
     const [photos, setPhotos] = useState('');
     const [breed, setBreed] = useState('');
     const [age, setAge] = useState('');

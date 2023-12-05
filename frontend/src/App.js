@@ -42,7 +42,7 @@ function Webpages() {
       <Route exact path="manage_pets" element={< PetsManagement/>} />
       <Route exact path="create_pet" element={< PetsCreation/>} />
       <Route exact path="manage_applications" element={< ApplicationManagement/>} />
-      <Route exact path="update_pet" element={< PetsUpdate/>} />
+      <Route exact path="pets/:petId" element={< PetsUpdate/>} />
       <Route exact path="add_review" element={< AddReview/>} />
       <Route exact path="create_applications" element={< CreateApplication/>} />
       <Route exact path="my_applications" element={< MyApplication/>} />
