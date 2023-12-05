@@ -19,6 +19,7 @@ import ApplicationManagement from './pages/Shelter_pages/manage_applications';
 import PetsUpdate from './pages/Shelter_pages/update_pet';
 import AddReview from './pages/Shelter_pages/add_review';
 import CreateApplication from './pages/Seeker_pages/application_form';
+import MyApplication from './pages/Seeker_pages/my_application';
 
 
 function Webpages() {
@@ -41,6 +42,7 @@ function Webpages() {
       <Route exact path="update_pet" element={< PetsUpdate/>} />
       <Route exact path="add_review" element={< AddReview/>} />
       <Route exact path="create_applications" element={< CreateApplication/>} />
+      <Route exact path="my_applications" element={< MyApplication/>} />
       
       
 
