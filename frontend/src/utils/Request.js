@@ -1,6 +1,6 @@
 
 
-export const Request = async (api = '', method = "GET", data = {}, baseURL = "http://127.0.0.1:8000") => {
+export const Request = async (api = '', method = "GET", data = {}, baseURL = "https://petpal.api.jimschenchen.com") => {
     const url = baseURL + api;
 
     var request = {
