@@ -144,3 +144,7 @@ backend/db.sqlite3
 
 # migrations
 backend/*/migrations/00*.py
+
+
+# env
+backend/.env

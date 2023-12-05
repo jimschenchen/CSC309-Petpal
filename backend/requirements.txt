@@ -8,3 +8,5 @@ djangorestframework-simplejwt==5.3.0
 drf-yasg==1.21.7
 django-filter
 django-cors-headers==4.3.1
+psycopg2-binary==2.9.9
+python-dotenv==1.0.0
