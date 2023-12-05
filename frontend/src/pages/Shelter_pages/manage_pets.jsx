@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ManagePets from '../../components/Shelter/Pets/PetsManage';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 const PetsManagement = () => {
     const [shelter, setShelter] = useState([
@@ -16,9 +18,7 @@ const PetsManagement = () => {
 
     return (
         <div className="flex flex-col min-h-screen bg-background">
-            <header>
-                {/* Header Content */}
-            </header>
+            <Header userType={"shelter"} username={'user'} />
 
             <main className="mt-0 p-6">
                 <section className="bg-white p-6 rounded-lg shadow ">
@@ -30,9 +30,7 @@ const PetsManagement = () => {
                 </section>
             </main>
 
-            <footer>
-                {/* Footer Content */}
-            </footer>
+            <Footer userType={"shelter"} />
         </div>
     );
 };

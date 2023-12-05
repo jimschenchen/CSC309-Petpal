@@ -1,5 +1,7 @@
 import ManageApplication from '../../components/Shelter/Applications/ApplicationManage';
 import { useState } from 'react';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 const ApplicationManagement = () => {
     const [shelter, setShelter] = useState([
@@ -7,15 +9,11 @@ const ApplicationManagement = () => {
     ])
     return (
         <body className="flex flex-col min-h-screen bg-background">
-            <header>
-                Header
-            </header>
+            <Header userType={"shelter"} username={'user'} />
 
             <ManageApplication shelter={shelter}/>
 
-            <footer>
-                Footer
-            </footer>
+            <Footer userType={"shelter"} />
         </body>
 
     );
