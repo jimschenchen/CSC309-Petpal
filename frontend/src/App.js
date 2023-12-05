@@ -22,6 +22,7 @@ import CreateApplication from './pages/Seeker_pages/application_form';
 import MyApplication from './pages/Seeker_pages/my_application';
 import PetDetails from './pages/Pet_Detail/pet_details';
 import SeekerAccountUpdate from './pages/Seeker_pages/edit_profile_seeker';
+import ShelterAccountUpdate from './pages/Shelter_pages/edit_profile_shelter';
 
 
 function Webpages() {
@@ -47,6 +48,8 @@ function Webpages() {
       <Route exact path="my_applications" element={< MyApplication/>} />
       <Route exact path="pet_details" element={< PetDetails/>} />
       <Route exact path="seeker_update" element={< SeekerAccountUpdate/>} />
+      <Route exact path="shelter_update" element={< ShelterAccountUpdate/>} />
+      
       
       
       
