@@ -37,11 +37,25 @@ const SignupLink = () => (
     </div>
 );
 
+const login = (email, password, userType) => {
+    const data = {email: email, password: password, userType: userType}
+    console.log(data);
+}
+
 const LoginBody = ({activeTab}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+
+    const userType = () => {
+        if (activeTab === "seeker-tab") {
+            return 'pet_seeker';
+        }
+        else {
+            return 'pet_shelter';
+        }
+    }
 
     return (
         <div className="z-10 flex justify-center items-center w-full -mt-px">
@@ -55,7 +69,7 @@ const LoginBody = ({activeTab}) => {
         
                 <button className="bg-primary text-white rounded-md py-1 
                 hover:shadow-md hover:bg-[#744124]"
-                onClick={(e) => {e.preventDefault();}}>
+                onClick={(e) => {e.preventDefault();login(email, password, userType());}}>
                     Log in
                 </button>
                 <SignupLink/>
