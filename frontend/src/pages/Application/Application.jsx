@@ -14,7 +14,6 @@ const TabBody = ({activeTab}) => {
 }
 
 const Application = () => {
-
     const userType = 'seeker';
     const username = 'User';
     const [activeTab, setActiveTab] = useState('msg-tab');
