@@ -18,6 +18,7 @@ import PetsCreation from './pages/Shelter_pages/create_pet';
 import ApplicationManagement from './pages/Shelter_pages/manage_applications';
 import PetsUpdate from './pages/Shelter_pages/update_pet';
 import AddReview from './pages/Shelter_pages/add_review';
+import CreateApplication from './pages/Seeker_pages/application_form';
 
 
 function Webpages() {
@@ -33,12 +34,13 @@ function Webpages() {
 
       <Route path="*" element={<NotFound />} />
 
-      <Route exact path="shelter_details" element={<Shelter_Details />} />
+      <Route exact path="shelter/*" element={<Shelter_Details />} />
       <Route exact path="manage_pets" element={< PetsManagement/>} />
       <Route exact path="create_pet" element={< PetsCreation/>} />
       <Route exact path="manage_applications" element={< ApplicationManagement/>} />
       <Route exact path="update_pet" element={< PetsUpdate/>} />
       <Route exact path="add_review" element={< AddReview/>} />
+      <Route exact path="create_applications" element={< CreateApplication/>} />
       
       
 
