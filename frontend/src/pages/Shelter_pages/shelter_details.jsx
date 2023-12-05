@@ -8,7 +8,8 @@ import Footer from '../../components/Footer';
 import { Request } from "../../utils/Request";
 
 const ShelterDetails = () => {
-    const [shelter, setShelter] = useState('hello');
+    const [shelter, setShelter] = useState('');
+    const [pets, setPets] = useState('');
 
     const getShelter = async () => {
         try {
@@ -19,6 +20,8 @@ const ShelterDetails = () => {
           console.log(err);
         }
       }
+    
+      
   
       // Note: the empty deps array [] means
       // this useEffect will run once

@@ -1,13 +1,24 @@
+import { Request } from '../../../utils/Request';
 import PetItem from './PetItem';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PetList = (shelter) => {
-  const [pets, setPets] = useState([
+  const [pets, setPets] = useState([]);
 
-    { id: 1, Name: 'Tom', Breed: 'Teddy', Age: '1 year', Size: 'small', Gender: 'Male', Status: 'Available'},
-    { id: 2, Name: 'Jerry', Breed: 'Ragdoll', Age: '8 months', Size: 'small', Gender: 'Female', Status: 'Available' },
+  const getPets = async () => {
+    try {
+      const res = await Request("/pets/", "GET");
+      console.log(res.results);
+      // add a filter 
+      setPets(res.results);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-  ]);
+  useEffect(() => {
+    getPets();
+  }, [])
 
   return (
     <div className="md:flex ">
@@ -16,7 +27,7 @@ const PetList = (shelter) => {
           <h2 className="text-2xl font-bold mb-10 text-center">Available Pets</h2>
           <div className="flex flex-col gap-6 mb-4">
             {pets.map(pet => (
-              <PetItem key={pet.id} Name={pet.Name} Breed={pet.Breed} Age={pet.Age} Size={pet.Size} Gender={pet.Gender} Status={pet.Status} Img={pet.Img} />
+              <PetItem pet={pet} />
             ))}
           </div>
           <div className="flex justify-end">
