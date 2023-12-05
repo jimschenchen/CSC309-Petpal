@@ -114,6 +114,7 @@ const Search = () => {
     const getPetsList = async () => {
       try {
         const res = await Request("/pets/", "GET");
+        console.log(res);
         setPets(res.results);
       } catch (err) {
         console.log(err);

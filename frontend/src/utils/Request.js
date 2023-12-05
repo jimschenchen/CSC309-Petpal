@@ -14,7 +14,11 @@ export const Request = async (api = '', method = "GET", data = {}, baseURL = "ht
         request.body = JSON.stringify(data);
     }
 
-    const response = await fetch(url, request);
-
-    return response.json();
+    try {
+        const response = await fetch(url, request);
+        return response.json();
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
 }
