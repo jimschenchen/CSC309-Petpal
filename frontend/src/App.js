@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Auth from './pages/Auth/Auth';
 import Application from './pages/Application/Application';
+import Notification from './pages/Notification/Notification';
 
 function Webpages() {
   return (<BrowserRouter>
@@ -20,6 +21,7 @@ function Webpages() {
 
       <Route exact path="auth/*" element={<Auth/>}/>
       <Route exact path="application/*" element={<Application/>}></Route>
+      <Route exact path="notification/*" element={<Notification/>}></Route>
 
       <Route path="*" element={<NotFound />} />
     </Routes>
