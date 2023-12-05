@@ -33,12 +33,12 @@ function Webpages() {
 
       <Route path="*" element={<NotFound />} />
 
-      <Route path="shelter_details" element={<Shelter_Details />} />
-      <Route path="manage_pets" element={< PetsManagement/>} />
-      <Route path="create_pet" element={< PetsCreation/>} />
-      <Route path="manage_applications" element={< ApplicationManagement/>} />
-      <Route path="update_pet" element={< PetsUpdate/>} />
-      <Route path="add_review" element={< AddReview/>} />
+      <Route exact path="shelter_details" element={<Shelter_Details />} />
+      <Route exact path="manage_pets" element={< PetsManagement/>} />
+      <Route exact path="create_pet" element={< PetsCreation/>} />
+      <Route exact path="manage_applications" element={< ApplicationManagement/>} />
+      <Route exact path="update_pet" element={< PetsUpdate/>} />
+      <Route exact path="add_review" element={< AddReview/>} />
       
       
 
