@@ -36,11 +36,30 @@ const LoginLink = () => (
     </div>
 )
 
+const signup = (email, password1, password2, userType) => {
+    const data = {
+        email: email, 
+        password: password1, 
+        confirm_password: password2,
+        user_type: userType
+    }
+    console.log(data);
+}
+
 const SignupBody = ({activeTab}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
     const [error, setError] = useState('');
+
+    const userType = () => {
+        if (activeTab === "seeker-tab") {
+            return 'pet_seeker';
+        }
+        else {
+            return 'pet_shelter';
+        }
+    }
 
     const validate_info = () => {
         // check email
@@ -67,7 +86,8 @@ const SignupBody = ({activeTab}) => {
             return ;
         }
 
-        console.log("ok");
+        setError('');
+        signup(email, password, password2, userType());
     }
 
     return ( 
