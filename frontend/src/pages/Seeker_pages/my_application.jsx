@@ -1,4 +1,4 @@
-import ApplicationList from '../../components/Shelter/Applications/ApplicationList';
+import ApplicationList from '../../components/Seeker/ApplicationList';
 import { useState } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';

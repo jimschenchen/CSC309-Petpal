@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SendApplication from '../../components/Shelter/Applications/SendApplication';
+import SendApplication from '../../components/Seeker/SendApplication';
 import PageFrame from "../../components/PageFrame";
 
 
