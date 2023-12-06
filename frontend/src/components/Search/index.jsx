@@ -35,6 +35,7 @@ const Search = () => {
 
     const [ currentPage, setCurrentPage ] = useState(1);
     const [ hasMorePage, setHasMorePage ] = useState(true);
+    const [ isLoading, setIsLoading ] = useState(false);
 
     const infiniteScrollRef = useRef(null);
 
@@ -48,22 +49,46 @@ const Search = () => {
         page_size = 8
     }
 
-    const getNextPetsList = async () => {
-      setCurrentPage(currentPage + 1);
+    const getNextPetsList = async (restPage = false) => {
+      var currentPageTemp = currentPage;
+      if (restPage) {
+        currentPageTemp = 1;
+        setCurrentPage(1);
+      }
 
-      const url = "/pets/?page=" + currentPage + "&page_size=" + page_size + ""
+      console.log("currentPageTemp: " + currentPageTemp)
+
+      var url = "/pets/?page=" + currentPageTemp + "&page_size=" + page_size + ""
+
+      for (const [key, value] of Object.entries(filters)) {
+        if (value !== "Any") {
+          if (key === "sort") {
+            url += "&" + "ordering" + "=" + value;
+          } else {
+            url += "&" + key + "=" + value;
+          }
+        }
+      }
+
       try {
         const res = await Request(url, "GET");
-        // console.log(res.count);
-        console.log(res.next);
 
         const newPets = res.results;
-        setPets([...pets, ...newPets]);
+        if (restPage) {
+          setPets(newPets);
+        }
+        else {
+          setPets([...pets, ...newPets]);
+        }
 
         if (res.next === null) {
           console.log("No more pets");
           setHasMorePage(false);
         }
+
+        // setCurrentPage
+        setCurrentPage(currentPageTemp + 1);
+
       } catch (err) {
         console.log(err);
       }
@@ -71,10 +96,9 @@ const Search = () => {
 
     const fetchMorePets = () => {
       setTimeout(() => {
-        getNextPetsList();
+          getNextPetsList(false);
       }, 1000)
     }
-
 
     // Get infiniteScrollHeight
     const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -85,8 +109,20 @@ const Search = () => {
     // this useEffect will run once
     // similar to componentDidMount()
     useEffect(() => {
-      getNextPetsList();
+      getNextPetsList(true);
     }, [])
+
+    // Update filters
+    useEffect(() => {
+      setIsLoading(true);
+      setPets([]);
+      setTimeout(() => {
+        getNextPetsList(true);
+        setIsLoading(false);
+      }, 1000)
+
+    }, [filters]);
+
 
     const toggleSidebar = () => {
         setSidebarVisible(!sidebarVisible);
@@ -127,7 +163,7 @@ const Search = () => {
         <div id="chip_row" className="flex items-center p-2 mx-4">
           <div id="filter_row" className="flex item-center mr-4">
             {
-              Object.entries(filters).filter(([key, value])  => {return key != "sort" && value != "Any"}).length > 0 ? <p class="text-base sm:text-xl pl-3 mr-4">Filtered by:</p> : ""
+              Object.entries(filters).filter(([key, value])  => {return key != "sort" && value != "Any"}).length > 0 ? <p className="text-base sm:text-xl pl-3 mr-4">Filtered by:</p> : ""
             }
 
             {Object.entries(filters).filter(([key, value])  => {return key != "sort" && value != "Any"}).map(([key, value]) => (
@@ -137,7 +173,7 @@ const Search = () => {
           </div>
           <div id="sort_row" className="flex item-center mr-4">
             {
-              Object.entries(filters).filter(([key, value])  => {return key == "sort" && value != "Any"}).length > 0 ? <p class="text-base sm:text-xl pl-3 mr-4">Sorted by:</p> : ""
+              Object.entries(filters).filter(([key, value])  => {return key == "sort" && value != "Any"}).length > 0 ? <p className="text-base sm:text-xl pl-3 mr-4">Sorted by:</p> : ""
             }
 
             {Object.entries(filters).filter(([key, value])  => {return key == "sort" && value != "Any"}).map(([key, value]) => (
@@ -168,6 +204,12 @@ const Search = () => {
               </p>
             }
           >
+
+            {
+              isLoading ? <div className="flex justify-center items-center basis-full p-4">
+                <CircularProgress />
+              </div> : ""
+            }
             {pets.map(pet => (
               <Card key={pet.id} item={pet} />
             ))}
