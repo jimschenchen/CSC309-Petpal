@@ -6,19 +6,10 @@ import { CircularProgress } from "@mui/material";
 import {EmailField, PasswordField, ErrorDisplay} from "./FormFields";
 import { getUser, logUser } from "../../../utils/credential";
 
-const LoginTitle = ({activeTab}) => {
-    const message = () => {
-        if (activeTab === "seeker-tab") {
-            return " Pet Seeker ";
-        }
-        else {
-            return " Pet Shelter ";
-        }
-    }
-
+const LoginTitle = () => {
     return ( 
     <div className="font-medium text-lg mb-4"> Log in to your 
-    <span className="font-semibold">{message()}</span> account</div> 
+    <span className="font-semibold"> PetPal</span> account</div> 
     );
 }
 
@@ -29,7 +20,7 @@ const RememberAndResetPassword = ({rememberMe, setRememberMe}) => (
             onChange={() => {setRememberMe(!rememberMe);}}/> 
             <label className="text-sm" onClick={() => {setRememberMe(!rememberMe);}}>Remember me</label>
         </div>
-        <Link className="text-sm hover:underline"> Forgot Password?</Link>
+        {/* <Link className="text-sm hover:underline"> Forgot Password?</Link> */}
     </div>
 );
 
@@ -40,7 +31,7 @@ const SignupLink = () => (
     </div>
 );
 
-const LoginBody = ({activeTab}) => {
+const LoginBody = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -48,15 +39,6 @@ const LoginBody = ({activeTab}) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-
-    const userType = () => {
-        if (activeTab === 'seeker-tab') {
-            return 'seeker';
-        }
-        else {
-            return 'shelter';
-        }
-    }
 
     const loginHandle = () => {
         if (email.length === 0 || password.length === 0) {
@@ -110,9 +92,9 @@ const LoginBody = ({activeTab}) => {
     return (
         <>
         {getUser().userType !== 'guest' && <Navigate to='/'/>}
-        <div className="z-10 flex justify-center items-center w-full -mt-px">
-            <form className="flex mx-3 w-full max-w-[540px] bg-background flex-col px-4 py-4 rounded-b-lg">
-                <LoginTitle activeTab={activeTab}/>
+        <div className="z-10 flex justify-center items-center w-full mt-3">
+            <form className="flex mx-3 w-full max-w-[540px] bg-background flex-col px-4 py-4 rounded-lg">
+                <LoginTitle />
                 <EmailField email={email} setEmail={setEmail}/>
                 <PasswordField password={password} setPassword={setPassword}/>
                 <RememberAndResetPassword rememberMe={rememberMe} setRememberMe={setRememberMe}/>
