@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { isLogged } from "./credential";
+import { isLogged, getUser } from "./credential";
 
 const useFetch = (endpoint, requestData = {}, 
 baseURL = "https://petpal.api.jimschenchen.com") => {
