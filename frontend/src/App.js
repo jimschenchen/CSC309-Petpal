@@ -3,6 +3,7 @@
 
 import { APIContext, useAPIContext } from './contexts/APIContext';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { getUser, removeUser } from './utils/credential';
 
 import Layout from './components/Layout';
 
@@ -26,7 +27,8 @@ import ShelterAccountUpdate from './pages/Shelter_pages/edit_profile_shelter';
 
 
 function Webpages() {
-  return (<BrowserRouter>
+  return (
+  <BrowserRouter>
     <Routes>
       <Route exact path="/">
         <Route index element={<Home />} />
@@ -51,14 +53,14 @@ function Webpages() {
       <Route exact path="shelter/:userId" element={< ShelterAccountUpdate/>} />
       
       
-      
-      
-
     </Routes>
   </BrowserRouter>);
 }
 
 function App() {
+  if (!sessionStorage.getItem('keepUser') && !getUser().remember) {
+    removeUser();
+  }
   return <Webpages/>;
 }
 

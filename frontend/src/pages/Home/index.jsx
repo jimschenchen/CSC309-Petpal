@@ -1,17 +1,17 @@
 import Sidebar from '../../components/Sidebar';
 import Search from '../../components/Search';
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
+import PageFrame from '../../components/PageFrame';
+import { getUser } from '../../utils/credential';
 
 const Home = () => {
-    return (<>
-        <Header userType='shelter' username='happy'/>
+    return (
+    <PageFrame userType='guest'>
+
         <div className="flex h-screen bg-background">
             <Sidebar />
             <Search />
         </div>
-        <Footer userType='guest'/>
-    </>);
+    </PageFrame>);
 }
 
 export default Home;

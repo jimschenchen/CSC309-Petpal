@@ -2,8 +2,11 @@ import PageFrame from "../../components/PageFrame";
 import SmsIcon from '@mui/icons-material/Sms';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import { Link } from "react-router-dom";
+import useFetchGet from "../../utils/useFetch";
+import { getUser } from "../../utils/credential";
 
-const NotificationCard = ({userType, Icon, message, time_string}) => {
+const NotificationCard = ({Icon, message, time_string}) => {
+    const userType = getUser().userType;
     const icon_color = () => {
         return (userType === 'seeker'? "text-primary": "text-shelter");
     }
@@ -20,23 +23,21 @@ const NotificationCard = ({userType, Icon, message, time_string}) => {
 }
 
 const Notification = () => {
-    const userType = 'seeker';
-    const username = 'User';
+    const {data, isLoading, error} = useFetchGet('notifications/', {page:1, "page_size": 2});
+    console.log(data);
 
     return (
-        <PageFrame userType={userType} username={username}>
+        <PageFrame requiredLogin={true}>
             <div className="flex justify-center items-center">
                 <div className="flex mx-3 w-full max-w-[800px] bg-background flex-col">
                     <div className="font-bold text-2xl my-3 mx-3 left-0">Notifications</div>
 
                     <NotificationCard 
-                    userType={userType}
                     Icon={SmsIcon} 
                     message={"User sent you a message"} 
                     time_string={"3d ago"}/>
                     
                     <NotificationCard
-                    userType={userType}
                     Icon={EditNoteIcon}
                     message={"You received a notification"}
                     time_string={'4w ago'}

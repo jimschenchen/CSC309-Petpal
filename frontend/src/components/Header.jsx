@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Logo = () => (
-    <Link href="/dist/index.html" className="flex items-center hover:scale-105">
+    <Link to="/" className="flex items-center hover:scale-105">
         <img src={process.env.PUBLIC_URL + '/logo.svg'} className="mr-3 h-9 sm:h-10" alt="PetPal logo" />
         <span className="self-center text-2xl sm:text-3xl font-extrabold text-white">PetPal</span>
     </Link>
@@ -11,8 +11,8 @@ const Logo = () => (
 
 const Guest = () => (
     <div className="flex items-center">
-        <Link className="navbar-btn-white">Log in</Link>
-        <Link className="navbar-btn-white">Sign up</Link>
+        <Link to='auth/login' className="navbar-btn-white">Log in</Link>
+        <Link to='auth/signup' className="navbar-btn-white">Sign up</Link>
     </div>
 );
 
