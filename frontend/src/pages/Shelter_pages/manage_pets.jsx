@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ManagePets from '../../components/Shelter/Pets/PetsManage';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import { Request } from "../../utils/Request";
 import PageFrame from '../../components/PageFrame';
 
