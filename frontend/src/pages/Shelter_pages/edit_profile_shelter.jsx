@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Header from '../../components/Header'; // Adjust the import path as needed
-import Footer from '../../components/Footer'; // Adjust the import path as needed
+import Header from '../../components/Header'; 
+import Footer from '../../components/Footer'; 
 import { Link } from 'react-router-dom';
 
 const ShelterAccountUpdate = () => {

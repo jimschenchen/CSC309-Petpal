@@ -3,9 +3,8 @@ import Reviews from '../../components/Shelter/DetailPage/ReviewList';
 import Contact from '../../components/Shelter/DetailPage/Contact';
 import ShelterHeader from '../../components/Shelter/DetailPage/ShelterHeader';
 import { useEffect, useState } from 'react';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import { Request } from "../../utils/Request";
+import PageFrame from "../../components/PageFrame";
 
 const ShelterDetails = () => {
     const [shelter, setShelter] = useState('');
@@ -31,8 +30,9 @@ const ShelterDetails = () => {
       }, [])
 
     return (
+        <PageFrame userType={'shelter'} username={'user'}>
         <body className="bg-background ">
-            <Header userType={"shelter"} username={'user'} />
+            
 
             <div className="m-6 md:m-12 p-2">
                 {/* Shelter Header */}
@@ -57,8 +57,9 @@ const ShelterDetails = () => {
 
             </div>
 
-            <Footer userType={"shelter"} />
+            
         </body>
+        </PageFrame>
 
     );
 };
