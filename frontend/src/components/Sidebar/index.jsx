@@ -21,8 +21,8 @@ const Sidebar = () => {
         setSidebarVisible(!sidebarVisible);
     };
 
-    const sidebarClasses = `bg-background text-blue-gray-700 w-full h-full space-y-3 px-4 z-50 pb-[25rem] lg:relative lg:w-64 transition-transform duration-200 ease-in-out ${
-        sidebarVisible ? 'absolute inset-y-0 left-0 translate-x-0' : 'absolute inset-y-0 left-0 -translate-x-full lg:translate-x-0'
+    const sidebarClasses = `bg-background w-full mr-0 rounded-lg bg-gray-100 border-gray-100 h-fit m-4 px-4 pb-4 border-4 space-y-3 z-50 lg:relative lg:w-64 transition-transform duration-200 ease-in-out ${
+        sidebarVisible ? 'absolute inset-y-0 left-0 translate-x-0' : 'absolute inset-y-0 left-0 lg:translate-x-0 -translate-x-[110%]'
     }`;
 
     const toggleFilter = () => {
