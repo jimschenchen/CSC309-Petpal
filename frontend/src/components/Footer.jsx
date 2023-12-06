@@ -12,7 +12,7 @@ const Footer = ({userType}) => {
     }
 
     return ( 
-    <footer className={"text-white p-4 mt-auto bottom-0 w-full h-14 " + footerColor()}>
+    <footer className={"text-white p-2 bottom-0 w-full h-10 " + footerColor()}>
         <p>&copy; 2023 PetPal. All rights reserved.</p>
     </footer> 
     );

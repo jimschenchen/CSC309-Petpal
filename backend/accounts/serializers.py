@@ -11,7 +11,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'password', 'confirm_password', 'user_type', 'avatar']
+        fields = ['id', 'email', 'password', 'confirm_password', 'name', 'user_type', 'avatar']
         extra_kwargs = {
             'password': {'write_only': True},
         }
@@ -75,7 +75,11 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         if self.user and self.user.is_active:
             data = super().validate(attrs)
-
+            data['user_info'] = {
+                'user_id': self.user.id,
+                'user_type': self.user.user_type,
+                'user_name': self.user.name
+            }
             return data
 
         raise serializers.ValidationError('Unable to log in with provided email and password.')

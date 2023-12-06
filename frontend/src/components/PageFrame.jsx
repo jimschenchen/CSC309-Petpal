@@ -12,7 +12,6 @@ const PageFrame = ({requiredLogin, requiredUserType, children}) => {
         setLog(false);
     }
 
-
     return ( 
         <>
         {requiredLogin && !isLogged() && <Navigate to="auth/login"/>}

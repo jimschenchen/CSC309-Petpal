@@ -38,7 +38,7 @@ code {
   }
 
   main {
-    @apply flex-1 mt-4 p-4 max-h-fit
+    @apply flex-1 mt-4 max-h-fit
   }
 
   #root {

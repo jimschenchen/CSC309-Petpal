@@ -1,13 +1,11 @@
 import Sidebar from '../../components/Sidebar';
 import Search from '../../components/Search';
 import PageFrame from '../../components/PageFrame';
-import { getUser } from '../../utils/credential';
 
 const Home = () => {
     return (
-    <PageFrame userType='guest'>
-
-        <div className="flex h-screen bg-background">
+    <PageFrame>
+        <div className="px-2 flex h-[calc(100vh-5.5rem)] lg:h-[calc(100vh-5.5rem)] bg-background">
             <Sidebar />
             <Search />
         </div>

@@ -65,7 +65,21 @@ const LoginBody = () => {
                 return res.json();
             })
             .then(data => {
-                logUser('username', 'seeker', data.access, rememberMe);
+                console.log(data.user_info)
+
+                var accountType = data.user_info.user_type;
+                if (accountType === 'pet_seeker') {
+                    accountType = 'seeker';
+                }
+                else if(accountType === 'pet_shelter') {
+                    accountType = 'shelter';
+                }
+
+                logUser(
+                    data.user_info.user_id, 
+                    data.user_info.user_name, 
+                    accountType, 
+                    data.access, rememberMe);
                 navigate('/');
                 setIsLoading(false);
             })
