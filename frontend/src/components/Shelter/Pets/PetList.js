@@ -1,24 +1,19 @@
-import { Request } from '../../../utils/Request';
+import useFetchGet from '../../../utils/useFetch';
 import PetItem from './PetItem';
 import { useEffect, useState } from "react";
 
-const PetList = (shelter) => {
+const PetList = ({shelter}) => {
   const [pets, setPets] = useState([]);
+  const {data, isLoading, error} = useFetchGet(`pets/`);
 
-  const getPets = async () => {
-    try {
-      const res = await Request("/pets/", "GET");
-      console.log(res.results);
-      // add a filter 
-      setPets(res.results);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   useEffect(() => {
-    getPets();
-  }, [])
+    if (data && !isLoading) {
+      const filteredPets = data.results.filter(pet => pet.shelter === shelter.id);
+      setPets(filteredPets);
+      console.log(pets);
+    }
+  }, [data, isLoading]);
 
   return (
     <div className="md:flex ">
