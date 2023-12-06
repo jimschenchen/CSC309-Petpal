@@ -3,11 +3,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { Request } from "../../../utils/Request";
 
 
-const Reviews = (shelter) => {
+const Reviews = ({shelter}) => {
   const [reviews, setReviews] = useState('');
   const getReviews = async () => {
     try {
-      const res = await Request("/comments/shelter/4/comments/", "GET");
+      const res = await Request(`/comments/shelter/${shelter.id}/comments/`, "GET");
       console.log(res);
       setReviews(res);
     } catch (err) {

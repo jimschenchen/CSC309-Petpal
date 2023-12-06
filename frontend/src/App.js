@@ -38,7 +38,7 @@ function Webpages() {
 
       <Route path="*" element={<NotFound />} />
 
-      <Route exact path="shelter/*" element={<Shelter_Details />} />
+      <Route exact path="shelter_detail/:userId" element={<Shelter_Details />} />
       <Route exact path="manage_pets" element={< PetsManagement/>} />
       <Route exact path="create_pet" element={< PetsCreation/>} />
       <Route exact path="manage_applications" element={< ApplicationManagement/>} />
