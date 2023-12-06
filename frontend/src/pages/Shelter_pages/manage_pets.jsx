@@ -4,6 +4,7 @@ import ManagePets from '../../components/Shelter/Pets/PetsManage';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { Request } from "../../utils/Request";
+import PageFrame from '../../components/PageFrame';
 
 const PetsManagement = () => {
     const [shelter, setShelter] = useState('');
@@ -25,8 +26,9 @@ const PetsManagement = () => {
     
 
     return (
+        <PageFrame userType={'shelter'} username={'user'}>
         <div className="flex flex-col min-h-screen bg-background">
-            <Header userType={"shelter"} username={'user'} />
+            
 
             <main className="mt-0 p-6">
                 <section className="bg-white p-6 rounded-lg shadow ">
@@ -38,8 +40,9 @@ const PetsManagement = () => {
                 </section>
             </main>
 
-            <Footer userType={"shelter"} />
+            
         </div>
+        </PageFrame>
     );
 };
 
