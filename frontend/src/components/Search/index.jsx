@@ -10,7 +10,7 @@ import Card from "../Card";
 import Chip from "../Chip";
 
 import CircularProgress from '@mui/material/CircularProgress';
-import Skeleton from '@mui/material/Skeleton';
+
 
 var chipColorMap = {
   "breed": "bg-pink-500",
