@@ -15,7 +15,7 @@ const AddReview = () => {
         <PageFrame userType={userType} username={username}>
             <body className="bg-background">
 
-                <main class="mt-0 p-6">
+                <main className="mt-0 p-6">
                     <ReviewCreation shelter={shelter} />
                 </main>
             </body>

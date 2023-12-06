@@ -10,7 +10,7 @@ const PetsUpdate = () => {
         <body className="bg-background">
             <Header userType={"shelter"} username={'user'} />
 
-            <main class="mt-0 p-6">
+            <main className="mt-0 p-6">
                 <UpdatePet/>
             </main>
 

@@ -47,8 +47,8 @@ function Webpages() {
       <Route exact path="create_applications" element={< CreateApplication/>} />
       <Route exact path="my_applications" element={< MyApplication/>} />
       <Route exact path="pet_details" element={< PetDetails/>} />
-      <Route exact path="seeker_update" element={< SeekerAccountUpdate/>} />
-      <Route exact path="shelter_update" element={< ShelterAccountUpdate/>} />
+      <Route exact path="seeker/:userId" element={< SeekerAccountUpdate/>} />
+      <Route exact path="shelter/:userId" element={< ShelterAccountUpdate/>} />
       
       
       
