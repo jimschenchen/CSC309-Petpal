@@ -10,6 +10,7 @@ export const APIContext = createContext({
         size: 'Any',
         gender: 'Any',
         sort: 'Any',
+        name: 'Any',
     },
     setFilters: () => {}
 });
@@ -22,6 +23,7 @@ export const useAPIContext = () => {
         size: 'Any',
         gender: 'Any',
         sort: 'Any',
+        name: 'Any',
     });
 
     return {
