@@ -1,10 +1,19 @@
 import Cookies from 'js-cookie';
 
-export const logUser = (username, userType, token, remember=false) => {
+export const logUser = (userId, username, userType, token, remember=false) => {
     var attr = {expires: 7};
 
+    var display_name;
+    if (username === '') {
+        display_name = `${userType}-${userId}`;
+    }
+    else {
+        display_name = username;
+    }
+
     var user = {
-        username: username, 
+        userId: userId,
+        username: display_name, 
         userType: userType, 
         token: token,
         remember: remember
