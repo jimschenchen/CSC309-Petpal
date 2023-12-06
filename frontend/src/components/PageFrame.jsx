@@ -2,9 +2,11 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { getUser, isLogged } from "../utils/credential";
 import { Navigate } from "react-router";
+import { useEffect } from "react";
 
 const PageFrame = ({requiredLogin, requiredUserType, children}) => {
     const userInfo = getUser();
+
     return ( 
         <>
         {requiredLogin && !isLogged() && <Navigate to="auth/login"/>}
