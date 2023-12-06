@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useFetch = (endpoint, requestData = {}, method = 'GET', 
+const useFetch = (endpoint, requestData = {}, 
 baseURL = "https://petpal.api.jimschenchen.com") => {
     // request State hooks
     const [data, setData] = useState(null);
@@ -15,7 +15,7 @@ baseURL = "https://petpal.api.jimschenchen.com") => {
     }
 
     var request = {
-        method: method,
+        method: 'GET',
         headers: header,
         body: JSON.stringify(requestData)
     }
@@ -23,7 +23,6 @@ baseURL = "https://petpal.api.jimschenchen.com") => {
     useEffect(() => {
         const abortControl = new AbortController();
 
-        console.log(url, request);
         // send request
         fetch(url, request, { signal: abortControl.signal })
             .then(res => {

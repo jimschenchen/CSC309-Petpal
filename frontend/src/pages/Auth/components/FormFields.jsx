@@ -21,7 +21,7 @@ const PasswordField = ({password, setPassword}) => {
 }
 
 const ErrorDisplay = ({error}) => (
-    <div id="error" className="text-xs text-red-700 my-1">
+    <div id="error" className="h-4 text-xs text-red-700 my-1">
         {error}
     </div>
 );

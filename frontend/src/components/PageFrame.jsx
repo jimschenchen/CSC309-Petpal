@@ -1,14 +1,16 @@
 import Header from "./Header";
 import Footer from "./Footer";
+import { getUser } from "../utils/credential";
 
-const PageFrame = ({userType, username, children}) => {
+const PageFrame = ({children}) => {
+    const userInfo = getUser();
     return ( 
         <>
-        <Header userType={userType} username={username}/>
+        <Header userType={userInfo.userType} username={userInfo.username}/>
         <main className="mt-0 bg-background">
             {children}
         </main>
-        <Footer userType={userType}/>
+        <Footer userType={userInfo.userType}/>
         </>
     );
 }

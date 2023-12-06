@@ -6,18 +6,15 @@ import Login from "./Login";
 import Signup from "./Signup";
 
 const Auth = () => {
-    useEffect(() => {
-        document.body.classList.add("bg-sencond_background");
-    })
     return ( 
-        <>
+        <div className="w-full h-full bg-sencond_background">
             <AuthLogo/>
             <Routes>
                 <Route path="login" element={<Login/>} />
                 <Route path="signup" element={<Signup/>} />
                 <Route path="*" element={<Navigate to="login"/>}/>
             </Routes>
-        </>
+        </div>
         
     );
 
