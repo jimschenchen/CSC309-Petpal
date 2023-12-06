@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { isLogged } from "./credential";
 
 const useFetch = (endpoint, requestData = {}, 
 baseURL = "https://petpal.api.jimschenchen.com") => {
@@ -10,8 +11,8 @@ baseURL = "https://petpal.api.jimschenchen.com") => {
     // construct request body
     const url = `${baseURL}/${endpoint}`;
     var header = new Headers({'Content-Type': 'application/json'});
-    if (localStorage.getItem('token')) {
-        header.append('Authentication', `Bearer ${localStorage.getItem('token')}`);
+    if (isLogged) {
+        header.append('Authentication', `Bearer ${getUser().token}`);
     }
 
     var request = {
