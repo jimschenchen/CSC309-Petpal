@@ -4,89 +4,12 @@ import { APIContext } from "../../contexts/APIContext";
 
 import { Request } from "../../utils/Request";
 
+import InfiniteScroll from 'react-infinite-scroll-component';
+
 import Card from "../Card";
 import Chip from "../Chip";
 
-// var items = [
-//   {
-//       id: 1,
-//       name: "Buddy",
-//       breed: "Bobcat",
-//       gender: "male",
-//       age: "3",
-//       size: "large",
-//       date: "January 1",
-//       imageUrl: "/src/img/cat114-sm.jpg",
-//       link: "pet_details_and_crud/pet-details.html",
-//       status: "Available",
-//       status_color: "text-green-700"
-//   },
-//   {
-//       id: 2,
-//       name: "Cheems",
-//       breed: "Shiba Inu",
-//       gender: "male",
-//       age: "3",
-//       size: "small",
-//       date: "January 10",
-//       imageUrl: "https://imagevars.gulfnews.com/2023/08/22/Shiba-Inu-of-the-viral--Cheems--doge-meme-_18a1dc8b125_large.jpg",
-//       link: "pet_details_and_crud/pet-details-Cheems.html",
-//       status: "Available",
-//       status_color: "text-green-700"
-//   },
-//   {
-//       id: 3,
-//       name: "Bob",
-//       breed: "German Shepherds",
-//       gender: "male",
-//       age: "6",
-//       size: "large",
-//       date: "January 15",
-//       imageUrl: "https://www.thesprucepets.com/thmb/2v3mFoE-mLVxNCPeKifiuIAONrA=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-978711748-39cc1126c08c42eca3a4a255c1bb50ef.jpg",
-//       link: "pet_details_and_crud/pet-details-pending.html",
-//       status: "Pending",
-//       status_color: "text-yellow-700"
-//   },
-//   {
-//       id: 4,
-//       name: "Luna",
-//       breed: "Ragdoll",
-//       gender: "female",
-//       age: "1",
-//       size: "small",
-//       date: "January 28",
-//       imageUrl: "https://assets.elanco.com/8e0bf1c2-1ae4-001f-9257-f2be3c683fb1/5b65b849-841f-4370-8030-95227c3d461e/ragdoll_cat_01401.jpg?w=3840&q=75&auto=format",
-//       link: "pet_details_and_crud/pet-details-adopted.html",
-//       status: "Adopted",
-//       status_color: "text-red-700"
-//   },
-//   {
-//       id: 5,
-//       name: "Bella",
-//       breed: "Guinea Pig",
-//       gender: "female",
-//       age: "2",
-//       size: "small",
-//       date: "January 18",
-//       imageUrl: "https://petkeen.com/wp-content/uploads/2021/02/A-guinea-pig-running-around-in-the-garden_theianov_Shutterstock-1.webp",
-//       link: "pet_details_and_crud/pet-details-withdraw.html",
-//       status: "Withdrawn",
-//       status_color: "text-red-700"
-//   },
-//   {
-//       id: 6,
-//       name: "Molly",
-//       breed: "Husky",
-//       gender: "female",
-//       age: "4",
-//       size: "medium",
-//       date: "February 1",
-//       imageUrl: "https://a-z-animals.com/media/siberian-husky-1.jpg",
-//       link: "pet_details_and_crud/pet-details-Molly.html",
-//       status: "Available",
-//       status_color: "text-green-700"
-//   },
-// ];
+import CircularProgress from '@mui/material/CircularProgress';
 
 var chipColorMap = {
   "breed": "bg-pink-500",
@@ -109,23 +32,63 @@ const Search = () => {
 
     const [ pets, setPets ] = useState([]);
 
+    const [ currentPage, setCurrentPage ] = useState(1);
+    const [ hasMorePage, setHasMorePage ] = useState(true);
 
+    var page_size = 6;
+    if (window.innerWidth >= 2560) {
+        page_size = 24
+    } else if (window.innerWidth >= 1920) {
+        page_size = 18
+    } else {
+        page_size = 8
+    }
 
-    const getPetsList = async () => {
+    const getNextPetsList = async () => {
+      setCurrentPage(currentPage + 1);
+
+      const url = "/pets/?page=" + currentPage + "&page_size=" + page_size + ""
       try {
-        const res = await Request("/pets/", "GET");
-        console.log(res);
-        setPets(res.results);
+        const res = await Request(url, "GET");
+        // console.log(res.count);
+        console.log(res.next);
+
+        const newPets = res.results;
+        setPets([...pets, ...newPets]);
+
+        if (res.next === null) {
+          console.log("No more pets");
+          setHasMorePage(false);
+        }
       } catch (err) {
         console.log(err);
       }
     }
 
+
+    const fetchMorePets = () => {
+      setTimeout(() => {
+        getNextPetsList();
+      }, 500)
+
+      // auto scroll down
+      const scrollHeight = window.innerHeight * 0.1;
+      window.scrollTo({
+        top: window.scrollY + scrollHeight,
+        behavior: 'smooth' // 平滑滚动
+      });
+    }
+
+    // Get infiniteScrollHeight
+    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const remInPixels = 12 * rootFontSize;
+    const infiniteScrollHeight = window.innerHeight - remInPixels;
+
     // Note: the empty deps array [] means
     // this useEffect will run once
     // similar to componentDidMount()
     useEffect(() => {
-      getPetsList();
+      getNextPetsList();
     }, [])
 
     const toggleSidebar = () => {
@@ -134,7 +97,7 @@ const Search = () => {
 
     return <>
         {/* <!-- Container wrapper --> */}
-      <div id="container" className="flex-1 flex flex-col overflow-hidden">
+      <div id="container" className="flex-1 flex flex-col">
         <div id="research_row" className="flex justify-between items-center p-4">
           {/* <!-- ... research_row ... --> */}
 
@@ -179,14 +142,30 @@ const Search = () => {
         </div>
 
 
-        <div id="main" className="flex-1 p-4 pt-0 overflow-y-auto">
+        <div id="main" className="flex-1 p-4 pt-0">
           {/* <!-- ... main ... --> */}
 
-          <div id="cardsContainer" className="flex justify-center flex-wrap">
+          <InfiniteScroll
+            id="cardsContainer"
+            className="flex justify-center lg:justify-start flex-wrap pb-4 lg:pb-8 overflow-y-auto"
+            dataLength={pets.length} //This is important field to render the next data
+            next={fetchMorePets}
+            hasMore={hasMorePage}
+            loader={<div className="flex justify-center items-center basis-full p-4">
+              <CircularProgress />
+            </div>}
+            height={infiniteScrollHeight}
+            endMessage={
+              <p className="flex justify-center items-center basis-full p-4">
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
             {pets.map(pet => (
               <Card key={pet.id} item={pet} />
             ))}
-          </div>
+
+          </InfiniteScroll>
 
           {/* <!-- ... main end ... --> */}
         </div>
