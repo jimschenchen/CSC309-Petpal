@@ -36,7 +36,7 @@ const UserMenu = ({userType, logout}) => {
                     <Link>My Applications</Link>
                     </li>
                     <li className="user-menu-item">
-                    <Link>Notification</Link>
+                    <Link to='/notification'>Notification</Link>
                     </li>
                 </ul>
 
@@ -67,7 +67,7 @@ const UserMenu = ({userType, logout}) => {
                     <Link>Manage Applications</Link>
                 </li>
                 <li className="user-menu-item">
-                <Link>Notification</Link>
+                <Link to='/notification'>Notification</Link>
                 </li>
             </ul>
 
