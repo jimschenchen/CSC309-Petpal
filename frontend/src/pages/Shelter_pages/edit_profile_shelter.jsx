@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Request } from '../../utils/Request';
+import PageFrame from '../../components/PageFrame';
 
 const ShelterAccountUpdate = () => {
 
@@ -65,8 +64,8 @@ const ShelterAccountUpdate = () => {
     };
 
     return (
+        <PageFrame userType={'shelter'} username={'user'}>
         <div className="bg-background">
-            <Header userType={"shelter"} username={'user'} />
             <main className="mt-0 p-0">
                 <div className="container mx-auto p-8">
                     <h1 className="text-2xl font-bold mb-6 text-center">Shelter Account Update</h1>
@@ -118,8 +117,7 @@ const ShelterAccountUpdate = () => {
                     </form>
                 </div>
             </main>
-            <Footer userType={"shelter"} />
-        </div>
+        </div></PageFrame>
     );
 };
 

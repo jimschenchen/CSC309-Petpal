@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Request } from '../../utils/Request';
+import PageFrame from '../../components/PageFrame';
 
 const SeekerAccountUpdate = () => {
 
@@ -65,8 +64,9 @@ const SeekerAccountUpdate = () => {
     };
 
     return (
+        <PageFrame userType={'seeker'} username={'user'}>
         <div className="bg-background">
-            <Header userType={"seeker"} username={'user'} />
+
             <main className="mt-0 p-0">
                 <div className="container mx-auto p-8">
                     <h1 className="text-2xl font-bold mb-6 text-center">Seeker Account Update</h1>
@@ -118,8 +118,7 @@ const SeekerAccountUpdate = () => {
                     </form>
                 </div>
             </main>
-            <Footer userType={"seeker"} />
-        </div>
+        </div></PageFrame>
     );
 };
 

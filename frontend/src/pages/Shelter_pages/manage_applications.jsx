@@ -1,19 +1,14 @@
 import ManageApplication from '../../components/Shelter/Applications/ApplicationManage';
-import { useState } from 'react';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import PageFrame from '../../components/PageFrame';
 
 const ApplicationManagement = () => {
     
     return (
+        <PageFrame userType={'shelter'} username={'user'}>
         <body className="flex flex-col min-h-screen bg-background">
-            <Header userType={"shelter"} username={'user'} />
-
             <ManageApplication />
-
-            <Footer userType={"shelter"} />
         </body>
-
+        </PageFrame>
     );
 };
 
