@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { removeUser } from "../utils/credential";
 
 const Logo = () => (
     <Link to="/" className="flex items-center hover:scale-105">
@@ -26,7 +27,7 @@ const Logged = ({username, showMenu, setShowMenu}) => (
     </button>
 );
 
-const UserMenu = ({userType}) => {
+const UserMenu = ({userType, logout}) => {
     if (userType === 'seeker') {
         return (
             <div className="bg-gray-50 rounded-lg z-50 absolute right-0 flex flex-col px-2">
@@ -44,7 +45,7 @@ const UserMenu = ({userType}) => {
                         <Link>Edit profile</Link>
                     </li>
                     <li className="user-menu-item">
-                        <Link>Sign out</Link>
+                        <button onClick={() => {removeUser(); logout()}}>Sign out</button>
                     </li>
                 </ul>
             </div>
@@ -83,7 +84,7 @@ const UserMenu = ({userType}) => {
     }
 }
 
-const Header = ({userType, username}) => {
+const Header = ({userType, username, logout}) => {
     const [showMenu, setShowMenu] = useState(false);
 
     const headerColor = () => {
@@ -108,7 +109,7 @@ const Header = ({userType, username}) => {
                 {userType !== 'guest' && <Logged username={username} showMenu={showMenu} setShowMenu={setShowMenu}/>}
             </div>
         </nav>
-        {userType !== 'guest' && showMenu && <UserMenu userType={userType}/>}
+        {userType !== 'guest' && showMenu && <UserMenu userType={userType} logout={logout}/>}
         </header>
         </>
         
