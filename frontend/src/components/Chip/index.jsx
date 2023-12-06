@@ -14,7 +14,7 @@ const Chip = ({label, value, c_color}) => {
 
     return <>
         <div className={chipClasses} data-dismissible="chip">
-            <div class="mr-0 mt-px flex-none">{label}: {value}</div>
+            <div className="mr-0 mt-px flex-none">{label}: {value}</div>
         </div>
     </>;
 }

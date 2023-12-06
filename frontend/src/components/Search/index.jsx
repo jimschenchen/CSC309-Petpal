@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { APIContext } from "../../contexts/APIContext";
 // import { useLocation } from "react-router-dom"
 
@@ -10,6 +10,7 @@ import Card from "../Card";
 import Chip from "../Chip";
 
 import CircularProgress from '@mui/material/CircularProgress';
+import Skeleton from '@mui/material/Skeleton';
 
 var chipColorMap = {
   "breed": "bg-pink-500",
@@ -35,7 +36,10 @@ const Search = () => {
     const [ currentPage, setCurrentPage ] = useState(1);
     const [ hasMorePage, setHasMorePage ] = useState(true);
 
-    var page_size = 6;
+    const infiniteScrollRef = useRef(null);
+
+    // adaptive set the page_size
+    var page_size = 8;
     if (window.innerWidth >= 2560) {
         page_size = 24
     } else if (window.innerWidth >= 1920) {
@@ -65,19 +69,12 @@ const Search = () => {
       }
     }
 
-
     const fetchMorePets = () => {
       setTimeout(() => {
         getNextPetsList();
-      }, 500)
-
-      // auto scroll down
-      const scrollHeight = window.innerHeight * 0.1;
-      window.scrollTo({
-        top: window.scrollY + scrollHeight,
-        behavior: 'smooth' // 平滑滚动
-      });
+      }, 1000)
     }
+
 
     // Get infiniteScrollHeight
     const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -127,16 +124,25 @@ const Search = () => {
           {/* <!-- ... research_row end ... --> */}
         </div>
 
-        <div id="chip_row" className="flex items-center p-2">
+        <div id="chip_row" className="flex items-center p-2 mx-4">
           <div id="filter_row" className="flex item-center mr-4">
+            {
+              Object.entries(filters).filter(([key, value])  => {return key != "sort" && value != "Any"}).length > 0 ? <p class="text-base sm:text-xl pl-3 mr-4">Filtered by:</p> : ""
+            }
 
-            {Object.entries(filters).filter(([key, value])  => {return value != "Any"}).map(([key, value]) => (
+            {Object.entries(filters).filter(([key, value])  => {return key != "sort" && value != "Any"}).map(([key, value]) => (
               <Chip key={key} label={key} value={value} c_color={chipColorMap[key]} />
             ))}
 
           </div>
           <div id="sort_row" className="flex item-center mr-4">
+            {
+              Object.entries(filters).filter(([key, value])  => {return key == "sort" && value != "Any"}).length > 0 ? <p class="text-base sm:text-xl pl-3 mr-4">Sorted by:</p> : ""
+            }
 
+            {Object.entries(filters).filter(([key, value])  => {return key == "sort" && value != "Any"}).map(([key, value]) => (
+              <Chip key={key} label={key} value={value} c_color={chipColorMap[key]} />
+            ))}
 
           </div>
         </div>
@@ -147,6 +153,7 @@ const Search = () => {
 
           <InfiniteScroll
             id="cardsContainer"
+            ref={infiniteScrollRef}
             className="flex justify-center lg:justify-start flex-wrap pb-4 lg:pb-8 overflow-y-auto"
             dataLength={pets.length} //This is important field to render the next data
             next={fetchMorePets}

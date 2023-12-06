@@ -26,7 +26,7 @@ const Sidebar = () => {
     }`;
 
     const toggleFilter = () => {
-        setFilters(filtersTemp);
+        setFilters({...filtersTemp});
     }
 
     const handleFilterChange = (e) => {

@@ -51,8 +51,7 @@ function Webpages() {
       <Route exact path="pet_details" element={< PetDetails/>} />
       <Route exact path="seeker/:userId" element={< SeekerAccountUpdate/>} />
       <Route exact path="shelter/:userId" element={< ShelterAccountUpdate/>} />
-      
-      
+
     </Routes>
   </BrowserRouter>);
 }
@@ -61,7 +60,9 @@ function App() {
   if (!sessionStorage.getItem('keepUser') && !getUser().remember) {
     removeUser();
   }
-  return <Webpages/>;
+  return <APIContext.Provider value={useAPIContext()}>
+      <Webpages />
+  </APIContext.Provider>;
 }
 
 export default App;
