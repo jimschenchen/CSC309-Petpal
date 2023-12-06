@@ -40,17 +40,19 @@ function Webpages() {
 
       <Route path="*" element={<NotFound />} />
 
-      <Route exact path="shelter/*" element={<Shelter_Details />} />
+      <Route exact path="shelter_detail/:userId" element={<Shelter_Details />} />
       <Route exact path="manage_pets" element={< PetsManagement/>} />
       <Route exact path="create_pet" element={< PetsCreation/>} />
       <Route exact path="manage_applications" element={< ApplicationManagement/>} />
-      <Route exact path="update_pet" element={< PetsUpdate/>} />
+      <Route exact path="pets/:petId" element={< PetsUpdate/>} />
       <Route exact path="add_review" element={< AddReview/>} />
       <Route exact path="create_applications" element={< CreateApplication/>} />
       <Route exact path="my_applications" element={< MyApplication/>} />
       <Route exact path="pet_details" element={< PetDetails/>} />
-      <Route exact path="seeker_update" element={< SeekerAccountUpdate/>} />
-      <Route exact path="shelter_update" element={< ShelterAccountUpdate/>} />
+      <Route exact path="seeker/:userId" element={< SeekerAccountUpdate/>} />
+      <Route exact path="shelter/:userId" element={< ShelterAccountUpdate/>} />
+      
+      
     </Routes>
   </BrowserRouter>);
 }

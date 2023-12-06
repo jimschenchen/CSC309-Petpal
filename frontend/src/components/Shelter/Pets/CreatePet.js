@@ -4,8 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const CreatePet = () => {
     const [name, setName] = useState('');
-    const [photos, setPhotos] = useState('');
     const [breed, setBreed] = useState('');
+    const [color, setColor] = useState('');
     const [age, setAge] = useState('');
     const [size, setSize] = useState('');
     const [gender, setGender] = useState('');
@@ -13,11 +13,21 @@ const CreatePet = () => {
 
     const navigate = useNavigate();
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async  (e) =>{
         e.preventDefault();
-        const pet = {name, photos, breed, age, size, gender, description};
-        navigate('/manage_pets');
-        console.log(pet);
+        const pet = {name, breed, color, size, age, gender, description};
+        try {
+            // Make a POST request to create the pet
+            console.log(pet);
+            const response = await  Request(`/pets/`, "POST", pet );
+            console.log(response);
+    
+            // Redirect to manage_pets page after successful create
+            navigate('/manage_pets');
+        } catch (err) {
+            console.error("Error creating pet:", err);
+        }
+        
     }
     return (
         <div class="container mx-auto p-8">
@@ -31,12 +41,12 @@ const CreatePet = () => {
                         <input type="text" required value={name} onChange={(e) => setName(e.target.value)} id="name" name="name" class="w-full border rounded px-3 py-2"/>
                     </div>
                     <div>
-                        <label for="photos" class="block mb-1 font-bold">Pet Photos:</label>
-                        <input type="file" required value={photos} onChange={(e) => setPhotos(e.target.value)} id="photos" name="photos" multiple/>
-                    </div>
-                    <div>
                         <label for="breed" class="block mb-1 font-bold">Breed:</label>
                         <input type="text" required value={breed} onChange={(e) => setBreed(e.target.value)} id="breed" name="breed" class="w-full border rounded px-3 py-2"/>
+                    </div>
+                    <div>
+                        <label for="color" class="block mb-1 font-bold">Color:</label>
+                        <input type="text" required value={color} onChange={(e) => setColor(e.target.value)} id="color" name="color" min="0" class="w-full border rounded px-3 py-2"/>
                     </div>
                     <div>
                         <label for="age" class="block mb-1 font-bold">Age:</label>
