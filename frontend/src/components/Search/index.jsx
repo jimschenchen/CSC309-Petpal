@@ -54,6 +54,7 @@ const Search = () => {
       if (restPage) {
         currentPageTemp = 1;
         setCurrentPage(1);
+        setHasMorePage(true);
       }
 
       console.log("currentPageTemp: " + currentPageTemp)
@@ -116,6 +117,7 @@ const Search = () => {
     useEffect(() => {
       setIsLoading(true);
       setPets([]);
+      setHasMorePage(true);
       setTimeout(() => {
         getNextPetsList(true);
         setIsLoading(false);
