@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import SortIcon from '@mui/icons-material/Sort';
 import { useContext } from "react";
 import { APIContext } from "../../contexts/APIContext";
 // import { useLocation } from "react-router-dom"
@@ -19,7 +21,7 @@ const Sidebar = () => {
         setSidebarVisible(!sidebarVisible);
     };
 
-    const sidebarClasses = `bg-background text-blue-gray-700 w-full h-max space-y-3 px-4 z-50 pb-[25rem] lg:relative lg:w-64 transition-transform duration-200 ease-in-out ${
+    const sidebarClasses = `bg-background text-blue-gray-700 w-full h-full space-y-3 px-4 z-50 pb-[25rem] lg:relative lg:w-64 transition-transform duration-200 ease-in-out ${
         sidebarVisible ? 'absolute inset-y-0 left-0 translate-x-0' : 'absolute inset-y-0 left-0 -translate-x-full lg:translate-x-0'
     }`;
 
@@ -40,9 +42,7 @@ const Sidebar = () => {
           </a>
 
           <div id="filter_heading" className="pt-8 sm:pt-0 flex items-center">
-            <span className="material-icons">
-              filter_alt
-            </span>
+            <FilterAltIcon/>
             <h2 className="text-2xl font-extrabold pl-3">Filtered By:</h2>
           </div>
 
@@ -125,9 +125,7 @@ const Sidebar = () => {
 
 
           <div id="sort_heading" className="pt-8 sm:pt-4 flex items-center">
-            <span className="material-icons">
-              sort
-            </span>
+            <SortIcon/>
             <h2 className="text-2xl font-extrabold pl-3">Sorted By:</h2>
           </div>
 
