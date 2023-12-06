@@ -10,7 +10,7 @@ const ManageApplication = () => {
 
     return (
         
-        <main class="mt-0 py-6 px-2">
+        <main className="mt-0 py-6 px-2">
       {/* <!-- Shelter Management Header --> */}
 
       {/* <!-- Application Management --> */}
@@ -18,17 +18,17 @@ const ManageApplication = () => {
 
 
           {/* <!-- Example Applications (This would be looped or mapped in a real-world scenario) --> */}
-          <div class="flex justify-center items-center">
+          <div className="flex justify-center items-center">
               {/* <!-- Table --> */}
-              <div class="flex mx-3 w-full max-w-[800px] bg-background flex-col">
-                  <div class="font-bold text-xl my-3 mx-3 left-0">My Applications</div>
+              <div className="flex mx-3 w-full max-w-[800px] bg-background flex-col">
+                  <div className="font-bold text-xl my-3 mx-3 left-0">My Applications</div>
       
       
                   {/* <!-- table head --> */}
-                  <div class="flex justify-between font-semibold border-b-2 border-black px-3 py-1">
-                      <div class="flex w-2/6 sm:w-1/3 justify-start">Pet name</div>
-                      <div class="sm:w-1/3 sm:block hidden">Last update</div>
-                      <div class="sm:flex sm:w-1/3 sm:justify-center hidden">Status</div>
+                  <div className="flex justify-between font-semibold border-b-2 border-black px-3 py-1">
+                      <div className="flex w-2/6 sm:w-1/3 justify-start">Pet name</div>
+                      <div className="sm:w-1/3 sm:block hidden">Last update</div>
+                      <div className="sm:flex sm:w-1/3 sm:justify-center hidden">Status</div>
                   </div>
       
                   {/* <!-- table row --> */}

@@ -74,55 +74,55 @@ const UpdatePet = () => {
     };
 
     return (
-        <div class="container mx-auto p-8">
-            <h2 class="text-2xl font-bold mb-4 text-center">Update Pet</h2>
+        <div className="container mx-auto p-8">
+            <h2 className="text-2xl font-bold mb-4 text-center">Update Pet</h2>
 
-            <form class="bg-white p-6 rounded shadow-md" onSubmit={handleSubmit}>
+            <form className="bg-white p-6 rounded shadow-md" onSubmit={handleSubmit}>
                 {/* <!-- Pet Information Section --> */}
-                <div class="mb-6">
+                <div className="mb-6">
                     <div>
-                        <label for="name" class="block mb-1 font-bold">Pet Name:</label>
-                        <input type="text" required value={name} onChange={(e) => setName(e.target.value)} id="name" name="name" class="w-full border rounded px-3 py-2"/>
+                        <label htmlFor="name" className="block mb-1 font-bold">Pet Name:</label>
+                        <input type="text" required value={name} onChange={(e) => setName(e.target.value)} id="name" name="name" className="w-full border rounded px-3 py-2"/>
                     </div>
                     <div>
-                        <label for="breed" class="block mb-1 font-bold">Breed:</label>
-                        <input type="text" required value={breed} onChange={(e) => setBreed(e.target.value)} id="breed" name="breed" class="w-full border rounded px-3 py-2"/>
+                        <label htmlFor="breed" className="block mb-1 font-bold">Breed:</label>
+                        <input type="text" required value={breed} onChange={(e) => setBreed(e.target.value)} id="breed" name="breed" className="w-full border rounded px-3 py-2"/>
                     </div>
                     <div>
-                        <label for="color" class="block mb-1 font-bold">Color:</label>
-                        <input type="text" required value={color} onChange={(e) => setColor(e.target.value)} id="color" name="color" class="w-full border rounded px-3 py-2"/>
+                        <label htmlFor="color" className="block mb-1 font-bold">Color:</label>
+                        <input type="text" required value={color} onChange={(e) => setColor(e.target.value)} id="color" name="color" className="w-full border rounded px-3 py-2"/>
                     </div>
                     <div>
-                        <label for="size" class="block mb-1 font-bold">Size:</label>
-                        <input type="text" required value={size} onChange={(e) => setSize(e.target.value)} id="size" name="size" class="w-full border rounded px-3 py-2"/>
+                        <label htmlFor="size" className="block mb-1 font-bold">Size:</label>
+                        <input type="text" required value={size} onChange={(e) => setSize(e.target.value)} id="size" name="size" className="w-full border rounded px-3 py-2"/>
                     </div>
                     <div>
-                        <label for="age" class="block mb-1 font-bold">Age:</label>
-                        <input type="number" required value={age} onChange={(e) => setAge(e.target.value)} id="age" name="age" min="0" class="w-full border rounded px-3 py-2"/>
+                        <label htmlFor="age" className="block mb-1 font-bold">Age:</label>
+                        <input type="number" required value={age} onChange={(e) => setAge(e.target.value)} id="age" name="age" min="0" className="w-full border rounded px-3 py-2"/>
                     </div>
                     <div>
-                        <label for="gender" class="block mb-1 font-bold">Gender:</label>
-                        <input type="text" required value={gender} onChange={(e) => setGender(e.target.value)} id="gender" name="gender" class="w-full border rounded px-3 py-2"/>
+                        <label htmlFor="gender" className="block mb-1 font-bold">Gender:</label>
+                        <input type="text" required value={gender} onChange={(e) => setGender(e.target.value)} id="gender" name="gender" className="w-full border rounded px-3 py-2"/>
                     </div>
                     <div>
-                        <label for="status" class="block mb-1 font-bold">Status:</label>
-                        <input type="text" value={status} onChange={(e) => setStatus(e.target.value)} id="status" name="status" class="w-full border rounded px-3 py-2"/>
+                        <label htmlFor="status" className="block mb-1 font-bold">Status:</label>
+                        <input type="text" value={status} onChange={(e) => setStatus(e.target.value)} id="status" name="status" className="w-full border rounded px-3 py-2"/>
                     </div>
                     <div>
-                        <label for="description" class="block mb-1 font-bold">Description:</label>
-                        <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} name="description" class="w-full border rounded px-3 py-2" rows="4"></textarea>
+                        <label htmlFor="description" className="block mb-1 font-bold">Description:</label>
+                        <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} name="description" className="w-full border rounded px-3 py-2" rows="4"></textarea>
                     </div>
                     <div>
-                        <label for="medical_history" class="block mb-1 font-bold">Medical History:</label>
-                        <textarea id="medical_history" value={medicalH} onChange={(e) => setMedicalH(e.target.value)} name="medicalH" class="w-full border rounded px-3 py-2" rows="4"></textarea>
+                        <label htmlFor="medical_history" className="block mb-1 font-bold">Medical History:</label>
+                        <textarea id="medical_history" value={medicalH} onChange={(e) => setMedicalH(e.target.value)} name="medicalH" className="w-full border rounded px-3 py-2" rows="4"></textarea>
                     </div>
                     <div>
-                        <label for="behavior" class="block mb-1 font-bold">Behavior:</label>
-                        <textarea id="behavior" value={behavior} onChange={(e) => setBehavior(e.target.value)} name="behavior" class="w-full border rounded px-3 py-2" rows="4"></textarea>
+                        <label htmlFor="behavior" className="block mb-1 font-bold">Behavior:</label>
+                        <textarea id="behavior" value={behavior} onChange={(e) => setBehavior(e.target.value)} name="behavior" className="w-full border rounded px-3 py-2" rows="4"></textarea>
                     </div>
                 </div>
-                <div class="flex justify-between">
-                    <button type="submit" class="bg-primary text-white hover:font-bold py-2 px-4 rounded">
+                <div className="flex justify-between">
+                    <button type="submit" className="bg-primary text-white hover:font-bold py-2 px-4 rounded">
                         Update
                     </button>
                     <Link to="/manage_pets" className="bg-primary text-white hover:font-bold py-2 px-4 rounded">

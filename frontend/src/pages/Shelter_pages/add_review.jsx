@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ReviewCreation from '../../components/Shelter/DetailPage/AddReview';
+import ReviewCreation from '../../components/Shelter/DetailPage/ReviewAdd';
 import PageFrame from "../../components/PageFrame";
 
 
