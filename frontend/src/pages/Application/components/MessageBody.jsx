@@ -45,20 +45,40 @@ const MessageBlock = ({data}) => {
   
 }
 
-const MessageBody = ({commentData, applicationId}) => {
-  const arr = [];
-  for (let i = commentData.results.length - 1; i > -1; i--) {
-    arr.push(commentData.results[i]);
-  }
-  const [items, setItems] = useState(arr);
+const MessageBody = ({applicationId}) => {
+  const [items, setItems] = useState(null);
   const messages = useRef();
   const [inputMessage, setInputMessage] = useState('');
 
+  const [isLoading, setIsLoading] = useState(true);
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     messages.current.scrollTop = messages.current.scrollHeight;
-  })
+  }, []);
+
+  useEffect(() => {
+    // fetch message data
+    fetch(
+      `https://petpal.api.jimschenchen.com/comments/application/${applicationId}/comments/`,
+      {
+          method: "GET", 
+          headers:{
+              'Content-Type': 'application/json', 
+              'Authorization': `Bearer ${getUser().token}`
+          }
+      }
+    )
+    .then(res => res.json())
+    .then(data => {
+      const arr = [];
+      for (let i = data.results.length - 1; i > -1; i--) {
+        arr.push(data.results[i]);
+      }
+      setItems(arr);
+      setIsLoading(false);
+    });
+  }, []);
 
   const sendHandle = () => {
     if (inputMessage.length == 0) {
@@ -86,9 +106,10 @@ const MessageBody = ({commentData, applicationId}) => {
       <div id='msg-content' className="flex flex-col justify-between w-full -mt-1 h-[70vh] bg-[#EFEFEF] 
         rounded-b-lg p-4 sm:p-10 border-seeker border-shelter">
         <div ref={messages} className="w-full h-full flex flex-col gap-4 overflow-y-auto my-4">
-        { items.map((comment, index) => (
+        {!isLoading && items.map((comment, index) => (
               <MessageBlock key={index} data={comment}/>
           ))}
+        {isLoading && <center><CircularProgress color='inherit'/></center>}
         </div>
           
           <div className="flex justify-end items-center gap-2">
