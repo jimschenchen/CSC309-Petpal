@@ -11,6 +11,7 @@ const PageFrame = ({requiredLogin, requiredUserType, children}) => {
 
     const logout = () => {
         setLog(false);
+        navigate('/');
     }
 
     if (requiredLogin && !isLogged()) {
