@@ -35,7 +35,7 @@ function Webpages() {
       </Route>
 
       <Route exact path="auth/*" element={<Auth/>}/>
-      <Route exact path="application/*" element={<Application/>}></Route>
+      <Route exact path="application/:applicationId" element={<Application/>}></Route>
       <Route exact path="notification/*" element={<Notification/>}></Route>
 
       <Route path="*" element={<NotFound />} />
