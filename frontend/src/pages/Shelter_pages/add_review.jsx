@@ -1,11 +1,8 @@
-import { useState } from 'react';
 import ReviewCreation from '../../components/Shelter/DetailPage/ReviewAdd';
 import PageFrame from "../../components/PageFrame";
 
 
 const AddReview = () => {
-    const userType = 'seeker';
-    const username = 'User';
 
     return (
         <PageFrame>

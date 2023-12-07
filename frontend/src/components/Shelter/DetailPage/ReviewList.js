@@ -26,7 +26,7 @@ const Reviews = ({shelter}) => {
       ))}
       <div className="flex justify-end mt-2">
         <div>
-          <Link to="/add_review" className="rounded font-sans hover:font-bold bg-primary text-white px-3 py-2">Add
+          <Link to={`/add_review/${shelter.id}`} className="rounded font-sans hover:font-bold bg-primary text-white px-3 py-2">Add
             reviews
           </Link>
         </div>

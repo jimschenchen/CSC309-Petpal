@@ -1,17 +1,17 @@
 import useFetchGet from '../../../utils/useFetch';
+import useFlexFetch from '../../../utils/useFlexFetch';
 import PetItem from './PetItem';
 import { useEffect, useState } from "react";
 
 const PetList = ({shelter}) => {
   const [pets, setPets] = useState([]);
-  const {data, isLoading, error} = useFetchGet(`pets/`);
+  const {data, isLoading, error} = useFlexFetch(`pets/`, 'GET');
 
 
   useEffect(() => {
     if (data && !isLoading) {
       const filteredPets = data.results.filter(pet => pet.shelter === shelter.id);
       setPets(filteredPets);
-      console.log(pets);
     }
   }, [data, isLoading]);
 
