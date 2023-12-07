@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Request } from '../../utils/Request';
 import PageFrame from '../../components/PageFrame';
+import { getUser } from "../../utils/credential";
 
 const ShelterAccountUpdate = () => {
 
@@ -12,8 +13,9 @@ const ShelterAccountUpdate = () => {
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
     const [description, setDescription] = useState('');
+    const {user_type} = useState('shelter');
 
-    const getUser = async () => {
+    const getShelter = async () => {
         try {
             const res = await Request(`/accounts/users/${userId}/profile/`, "GET");
             console.log(res);
@@ -29,7 +31,7 @@ const ShelterAccountUpdate = () => {
     }
 
     useEffect(() => {
-        getUser();
+        getShelter();
     }, [userId])
     const navigate = useNavigate();
 
@@ -41,25 +43,36 @@ const ShelterAccountUpdate = () => {
         e.preventDefault();
 
         const updatedShelter = {
+            user_type,
             email,
             name,
             address,
             phone_number: phone,
             description,
-            avatar,
 
         };
-        console.log(updatedShelter);
+        console.log('updatedShelter', updatedShelter);
 
         try {
-            // Make a PUT request to update the pet
-            const response = await Request(`/accounts/user`, "PUT", updatedShelter);
+            // Make a PUT request to update the profile
+            const response = await fetch(`https://petpal.api.jimschenchen.com/accounts/user/`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getUser().token}`
+                },
+                body: JSON.stringify(updatedShelter)
+            });
+            console.log('Profile updated:', await response.json());
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
             console.log(response);
 
-            // Redirect to manage_pets page after successful update
-            navigate('/shelter/');
+            // Redirect to the appropriate page after successful creation
+            navigate(`/shelter_detail/${getUser().userId}`);
         } catch (err) {
-            console.error("Error updating shelter:", err);
+            console.error("Error updating Profile:", err);
         }
     };
 
