@@ -85,7 +85,7 @@ const SeekerAccountUpdate = () => {
                             <div className="dm:flex dm:justify-between">
                                 <div className="mb-4 dm:flex dm:items-center">
                                     <div>
-                                        <img src="/src/img/seeker-picture.png" alt="Profile Picture" className="w-32 h-32 mr-6 rounded" />
+                                        <img src={avatar} alt="Profile Picture" className="w-32 h-32 mr-6 rounded" />
                                     </div>
                                     <div>
                                         <label htmlFor="avatar" className="block text-sm font-bold mb-2">Upload Profile Picture:</label>

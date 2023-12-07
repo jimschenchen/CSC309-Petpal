@@ -24,6 +24,7 @@ import MyApplication from './pages/Seeker_pages/my_application';
 import PetDetails from './pages/Pet_Detail/pet_details';
 import SeekerAccountUpdate from './pages/Seeker_pages/edit_profile_seeker';
 import ShelterAccountUpdate from './pages/Shelter_pages/edit_profile_shelter';
+import SheltersList from './pages/Shelter_pages/shelters_list';
 
 
 function Webpages() {
@@ -41,6 +42,7 @@ function Webpages() {
       <Route path="*" element={<NotFound />} />
 
       <Route exact path="shelter_detail/:userId" element={<Shelter_Details />} />
+      <Route exact path="shelters" element={<SheltersList />} />
       <Route exact path="manage_pets" element={< PetsManagement/>} />
       <Route exact path="create_pet" element={< PetsCreation/>} />
       <Route exact path="manage_applications" element={< ApplicationManagement/>} />
