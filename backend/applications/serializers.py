@@ -24,8 +24,11 @@ class ApplicationSerializer(serializers.ModelSerializer):
             return fields
 
         def get_pet_name(self, obj):
-            pet = obj.pet
-            return pet.name if pet else ""
+            try:
+                pet = Pet.objects.get(id=obj.pet_id)
+                return pet.name
+            except Pet.DoesNotExist:
+                return None
 
         # exclude = ['to_user', 'from_user']
         # extra_kwargs = {
