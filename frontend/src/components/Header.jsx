@@ -76,7 +76,7 @@ const UserMenu = ({userType, logout}) => {
                     <Link>Edit profile</Link>
                 </li>
                 <li className="user-menu-item">
-                <Link>Sign out</Link>
+                <button onClick={() => {removeUser(); logout();}}>Sign out</button>
                 </li>
             </ul>
             </div>
