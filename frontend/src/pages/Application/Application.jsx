@@ -85,7 +85,8 @@ const Application = () => {
                     {isLoading && <CircularProgress color="inherit"/>}
                     {!isLoading && <>
                         <TabHeader activeTab={activeTab} setActiveTab={setActiveTab}/>
-                        {activeTab === 'msg-tab' && <MessageBody commentData={commentData}/>}
+                        {activeTab === 'msg-tab' && 
+                        <MessageBody commentData={commentData} applicationId={applicationId}/>}
                         {activeTab === 'app-tab' && <ApplicationBody applicationData={applicationData} petData={petData}/>}
                     </>}
                     
