@@ -32,10 +32,6 @@ const SeekerAccountUpdate = () => {
     }, [data, isLoading]);
     const navigate = useNavigate();
 
-    const handleAvatarChange = (e) => {
-
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -89,11 +85,11 @@ const SeekerAccountUpdate = () => {
                                     </div>
                                     <div>
                                         <label htmlFor="avatar" className="block text-sm font-bold mb-2">Upload Profile Picture:</label>
-                                        <input type="file" id="avatar" name="avatar" onChange={handleAvatarChange} />
+                                        <input type="file" id="avatar" name="avatar" onChange={''} />
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-end">
-                                    <Link to="/change-password-seeker" className="bg-primary text-white hover:font-bold py-2 px-4 rounded text-xs md:text-base">Change Password</Link>
+                                    <Link to={`/change_password/${getUser().userId}`} className="bg-primary text-white hover:font-bold py-2 px-4 rounded text-xs md:text-base">Change Password</Link>
                                 </div>
                             </div>
 

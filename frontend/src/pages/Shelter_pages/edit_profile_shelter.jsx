@@ -96,7 +96,7 @@ const ShelterAccountUpdate = () => {
                                 </div>
                             </div>
                             <div className="flex items-center justify-end">
-                                <Link to="/change-password-seeker" className="bg-primary text-white hover:font-bold py-2 px-4 rounded text-xs md:text-base">Change Password</Link>
+                            <Link to={`/change_password/${getUser().userId}`} className="bg-primary text-white hover:font-bold py-2 px-4 rounded text-xs md:text-base">Change Password</Link>
                             </div>
                         </div>
 
