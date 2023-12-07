@@ -12,7 +12,7 @@ const CreateApplication = () => {
     ])
 
     return (
-        <PageFrame userType={userType} username={username}>
+        <PageFrame>
             <body className="bg-background">
 
                 <main class="mt-0 p-6">

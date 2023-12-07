@@ -4,8 +4,8 @@ const AdoptContent = ({ pet, onAdoptClick }) => {
         <div className="adopt-content">
             {/* Shelter and adoption status */}
             <div>
-                <div class="font-bold">Shelter:</div>
-                <a href="shelter-detail-public.html" class="text-primary hover:underline">Visit shelter page</a>
+                <div className="font-bold">Shelter:</div>
+                <a href="shelter-detail-public.html" className="text-primary hover:underline">Visit shelter page</a>
             </div>
             <div className="mb-4 gap-3">
                 <label className="font-bold">Adoption Status:</label>

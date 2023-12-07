@@ -1,14 +1,26 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { getUser } from "../../../utils/credential";
 
 const ManagePetItem = ({ pet }) => {
+    const navigate = useNavigate();
     const handleDelete = async () => {
         if(window.confirm(`Are you sure you want to delete ${pet.name}?`)) {
             try {
-                fetch(`https://petpal.api.jimschenchen.com/pets/pet/${pet.id}`,{
-                    method: 'DELETE'
+                const response = await fetch(`https://petpal.api.jimschenchen.com/pets/pet/${pet.id}`,{
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${getUser().token}`
+                    }
                 });
-                console.log(`Pet ${pet.name} deleted successfully`);
-                Navigate('/manage_pets');
+                if (response.ok) {
+                    console.log(`Pet ${pet.name} deleted successfully`);
+                    // Navigate to '/manage_pets/' and then reload the page
+                    navigate('/manage_pets/', { replace: true });
+                    window.location.reload();
+                } else {
+                    console.error("Failed to delete pet");
+                }
             } catch (err) {
                 console.error("Error deleting pet:", err);
             }

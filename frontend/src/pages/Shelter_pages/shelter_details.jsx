@@ -31,7 +31,7 @@ const ShelterDetails = () => {
       }, [])
 
     return (
-        <PageFrame userType={'shelter'} username={'user'}>
+        <PageFrame>
         <body className="bg-background ">
             
 

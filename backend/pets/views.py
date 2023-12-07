@@ -5,6 +5,8 @@ from rest_framework import permissions
 from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from .models import Pet
 from .serializers import PetSerializer
@@ -26,7 +28,7 @@ class PetListCreateView(generics.ListCreateAPIView):
     serializer_class = PetSerializer
     permission_classes = [IsShelterOrReadOnly]
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    filterset_fields = ['shelter', 'status', 'breed', 'age', 'gender']
+    filterset_fields = ['shelter', 'status', 'breed', 'age', 'gender', 'name']
     ordering_fields = ['name', 'age', 'size']
     pagination_class = PageNumberPagination
     pagination_class.page_size_query_param = 'page_size'
@@ -119,3 +121,15 @@ class PetUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
             raise PermissionDenied("You do not have permission to delete this pet.")
         # ... delete related applications and comments ...
         super().perform_destroy(instance)
+
+
+class PetMetaGetView(APIView):
+    def get(self, request, format=None):
+        breed = Pet.objects.values_list('breed', flat=True).distinct()
+        breed_list = list(breed)
+        gender_list = ["male", "female", "other"]
+        size_list = ["small", "medium", "large"]
+        age = Pet.objects.values_list('age', flat=True).distinct()
+        age_list = list(age)
+
+        return Response({'breed': breed_list, 'gender': gender_list, 'size': size_list, 'age': age_list})

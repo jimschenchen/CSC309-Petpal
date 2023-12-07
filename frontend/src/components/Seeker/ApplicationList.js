@@ -1,16 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ApplicationItemSeeker from "./ApplicationItemSeeker";
+import { getUser } from "../../utils/credential";
+import useFetchGet from "../../utils/useFetch";
 
 const ManageApplication = () => {
-    const [applications, setApplications] = useState([
+    const [applications, setApplications] = useState([]);
+    const {data, isLoading, error} = useFetchGet(`applications/`);
+    const userId = getUser().userId;
 
-        { id: 1, PetName: 'Tom (P192837)', LastUpdate: '2023-09-30', Status: 'pending'},
-    
-      ]);
-
+    useEffect(() => {
+      if (data && !isLoading) {
+        // Map through the applications and format the last_updated_time
+        const formattedApplications = data.results.map(app => ({
+            ...app,
+            last_updated_time: app.last_updated_time.split('T')[0] // Extracts only the date part
+        }));
+        setApplications(formattedApplications);
+        console.log(applications);
+      }
+    }, [data, isLoading]);
     return (
         
-        <main class="mt-0 py-6 px-2">
+        <main className="mt-0 py-6 px-2">
       {/* <!-- Shelter Management Header --> */}
 
       {/* <!-- Application Management --> */}
@@ -18,22 +29,22 @@ const ManageApplication = () => {
 
 
           {/* <!-- Example Applications (This would be looped or mapped in a real-world scenario) --> */}
-          <div class="flex justify-center items-center">
+          <div className="flex justify-center items-center">
               {/* <!-- Table --> */}
-              <div class="flex mx-3 w-full max-w-[800px] bg-background flex-col">
-                  <div class="font-bold text-xl my-3 mx-3 left-0">My Applications</div>
+              <div className="flex mx-3 w-full max-w-[800px] bg-background flex-col">
+                  <div className="font-bold text-xl my-3 mx-3 left-0">My Applications</div>
       
       
                   {/* <!-- table head --> */}
-                  <div class="flex justify-between font-semibold border-b-2 border-black px-3 py-1">
-                      <div class="flex w-2/6 sm:w-1/3 justify-start">Pet name</div>
-                      <div class="sm:w-1/3 sm:block hidden">Last update</div>
-                      <div class="sm:flex sm:w-1/3 sm:justify-center hidden">Status</div>
+                  <div className="flex justify-between font-semibold border-b-2 border-black px-3 py-1">
+                      <div className="flex w-2/6 sm:w-1/3 justify-start">Pet name</div>
+                      <div className="sm:w-1/3 sm:block hidden">Last update</div>
+                      <div className="sm:flex sm:w-1/3 sm:justify-center hidden">Status</div>
                   </div>
       
                   {/* <!-- table row --> */}
                   {applications.map(application => (
-              <ApplicationItemSeeker key={application.id} PetName={application.PetName} LastUpdate={application.LastUpdate} Status={application.Status}/>
+              <ApplicationItemSeeker key={application.id} PetName={application.pet} LastUpdate={application.last_updated_time} Status={application.status}/>
             ))}
               </div> 
             </div>
