@@ -15,20 +15,22 @@ class ApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
         fields = "__all__"
-        extra_fields = ['pet_name']
+        # extra_fields = ['pet_name']
 
-        def get_fields(self):
-            fields = super(ApplicationSerializer, self).get_fields()
-            # Add extra fields here
-            fields.update(self.Meta.extra_fields)
-            return fields
+        # def get_fields(self):
+        #     fields = super(ApplicationSerializer, self).get_fields()
+        #     # Add extra fields here
+        #     fields.update(self.Meta.extra_fields)
+        #     return fields
 
         def get_pet_name(self, obj):
-            try:
-                pet = Pet.objects.get(id=obj.pet_id)
-                return pet.name
-            except Pet.DoesNotExist:
-                return None
+            # try:
+            #     pet = Pet.objects.get(id=obj.pet_id)
+            #     return pet.name
+            # except Pet.DoesNotExist:
+            #     return None
+            return "1"
+
 
         # exclude = ['to_user', 'from_user']
         # extra_kwargs = {
