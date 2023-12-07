@@ -148,14 +148,10 @@ const MessageBody = ({applicationId}) => {
             next={fetchMoreMsg}
             hasMore={hasMorePage}
             scrollableTarget="message"
-            loader={<div className="flex justify-center items-center basis-full p-4">
-              <CircularProgress />
+            loader={<div className="flex justify-center items-center basis-full p-4 text-black">
+              <CircularProgress color='inherit'/>
             </div>}
-            endMessage={
-              <p className="flex justify-center items-center basis-full p-4">
-                <b>Yay! You have seen it all</b>
-              </p>
-            }
+            endMessage={<></>}
             inverse={true}
           >
             {!isLoading && items.map((comment, index) => (

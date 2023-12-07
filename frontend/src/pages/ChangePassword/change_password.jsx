@@ -3,12 +3,14 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import PageFrame from '../../components/PageFrame';
 import { getUser, removeUser } from "../../utils/credential";
 import useFetchGet from '../../utils/useFetch';
+import { Dialog } from '@mui/material';
 
 const ChangePassword = () => {
 
     const { userId } = useParams();
     const [password, setPassword] = useState('');
     const [newpassword, setNewpassword] = useState('');
+    const [showRedirModal, setShowRedirModal] = useState(false);
 
     const navigate = useNavigate();
 
@@ -38,15 +40,17 @@ const ChangePassword = () => {
             console.log(response);
 
             // Redirect to the appropriate page after successful creation
-            removeUser(); 
-            window.alert('Password changed successfully, please log in using new password');
-            navigate('/auth/login')
+            // removeUser(); 
+            // window.alert('Password changed successfully, please log in using new password');
+            // navigate('/auth/login')
+            setShowRedirModal(true);
         } catch (err) {
             console.error("Error updating Profile:", err);
         }
     };
 
     return (
+        <>
         <PageFrame>
             <div className="bg-background">
 
@@ -78,12 +82,34 @@ const ChangePassword = () => {
                             {/* <!-- Submit Button --> */}
                             <div className="mt-6 flex ">
                                 <button type="submit" className="w-3/4 sm:w-full bg-primary text-white hover:font-bold py-2 px-4 rounded mr-6 text-center">Change Password</button>
-                                <Link to={'/'} className="w-1/4 sm:w-full bg-primary text-white hover:font-bold py-2 px-4 rounded text-center">Back</Link>
+                                <button onClick={() => navigate(-1)} className="w-1/4 sm:w-full bg-primary text-white hover:font-bold py-2 px-4 rounded text-center">Back</button>
                             </div>
                         </form>
                     </div>
                 </main>
-            </div></PageFrame>
+            </div>
+            </PageFrame>
+            <Dialog
+            open={showRedirModal}
+            >
+                <div className='p-4 flex flex-col gap-3'>
+                    <div>
+                        Password changed successfully. Please log in using new password.
+                    </div>
+                    <div className='flex justify-center'>
+                    <button 
+                    onClick={() => {removeUser(); navigate('/auth/login')}}
+                    onClose={() => {removeUser(); navigate('/auth/login')}}
+                    className='bg-primary text-white hover:font-bold py-1 px-5 rounded'>
+                        Ok
+                    </button>
+                    </div>
+                    
+                </div>
+
+                
+            </Dialog>
+            </>
     );
 };
 
