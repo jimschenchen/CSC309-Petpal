@@ -25,6 +25,7 @@ import PetDetails from './pages/Pet_Detail/pet_details';
 import SeekerAccountUpdate from './pages/Seeker_pages/edit_profile_seeker';
 import ShelterAccountUpdate from './pages/Shelter_pages/edit_profile_shelter';
 import SheltersList from './pages/Shelter_pages/shelters_list';
+import ChangePassword from './pages/ChangePassword/change_password';
 
 
 function Webpages() {
@@ -53,6 +54,8 @@ function Webpages() {
       <Route exact path="pet_detail/:petId" element={< PetDetails/>} />
       <Route exact path="seeker/:userId" element={< SeekerAccountUpdate/>} />
       <Route exact path="shelter/:userId" element={< ShelterAccountUpdate/>} />
+      <Route exact path="change_password/:userId" element={< ChangePassword/>} />
+      
 
     </Routes>
   </BrowserRouter>);
