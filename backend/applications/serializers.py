@@ -14,6 +14,12 @@ class ApplicationSerializer(serializers.ModelSerializer):
         model = Application
         fields = "__all__"
         extra_fields = ['pet_name']
+        
+        def get_fields(self):
+            fields = super(ApplicationSerializer, self).get_fields()
+            # Add extra fields here
+            fields.update(self.Meta.extra_fields)
+            return fields
 
         def get_pet_name(self, obj):
             pet = obj.pet
