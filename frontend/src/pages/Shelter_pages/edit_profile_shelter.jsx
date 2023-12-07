@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Request } from '../../utils/Request';
 import PageFrame from '../../components/PageFrame';
-import { getUser } from "../../utils/credential";
+import { getUser, updateUsername } from "../../utils/credential";
 
 const ShelterAccountUpdate = () => {
 
@@ -70,6 +70,7 @@ const ShelterAccountUpdate = () => {
             console.log(response);
 
             // Redirect to the appropriate page after successful creation
+            updateUsername(updatedShelter.name);
             navigate(`/shelter_detail/${getUser().userId}`);
         } catch (err) {
             console.error("Error updating Profile:", err);

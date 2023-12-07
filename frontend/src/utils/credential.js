@@ -30,6 +30,13 @@ export const isLogged = () => {
     return getUser().userType !== 'guest';
 }
 
+export const updateUsername = (username) => {
+    var userInfo = getUser();
+    userInfo.username = username;
+    var attr = {expires: 7};
+    Cookies.set('user', JSON.stringify(userInfo), attr);
+}
+
 export const getUser = () => {
     if (Cookies.get('user')) {
         return JSON.parse(Cookies.get('user'));

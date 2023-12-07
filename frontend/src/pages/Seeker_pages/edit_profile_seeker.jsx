@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import PageFrame from '../../components/PageFrame';
-import { getUser } from "../../utils/credential";
+import { getUser, updateUsername } from "../../utils/credential";
 import useFetchGet from '../../utils/useFetch';
 
 const SeekerAccountUpdate = () => {
@@ -62,6 +62,7 @@ const SeekerAccountUpdate = () => {
             console.log(response);
 
             // Redirect to the appropriate page after successful creation
+            updateUsername(updatedSeeker.name);
             navigate(`/`);
         } catch (err) {
             console.error("Error updating Profile:", err);
