@@ -50,7 +50,7 @@ baseURL = "https://petpal.api.jimschenchen.com") => {
         fetch(getUrl(), getRequest(), { signal: abortControl.signal })
             .then(res => {
                 if (!res.ok) {
-                    throw Error(res);
+                    throw Error(res.status);
                 }
                 return res.json();
             })

@@ -18,7 +18,7 @@ const PageFrame = ({requiredLogin, requiredUserType, children}) => {
     }
 
     if (requiredUserType && userInfo.userType !== requiredUserType) {
-        navigate('/')
+        navigate('/');
     }
 
     return ( 
