@@ -100,7 +100,7 @@ const Notification = () => {
     const [filter, setFilter] = useState('unread');
 
     const getUrl = () => {
-        const page_size = 15;
+        const page_size = 10;
         if (filter === 'unread') {
             return `https://petpal.api.jimschenchen.com/notifications/?is_read=0&page_size=${page_size}&page=${nextPageNum}`;
         }
@@ -178,10 +178,14 @@ const Notification = () => {
                             <option value="all">All</option>
                         </select>
                     </div>
+                    <div id="scroll" className="overflow-y-auto h-[calc(100vh-9rem)] no-scrollbar">
+                        <div className="h-screen">
+
                     <InfiniteScroll
                     dataLength={items.length}
                     next={fetchData}
                     hasMore={hasMore}
+                    scrollableTarget="scroll"
                     loader={<div className="h-fit flex justify-center w-full overflow-hidden"><CircularProgress color="inherit"/></div>}
                     endMessage={
                         <div className="w-full flex justify-center mt-2 border-t-2 border-black">No more notifications</div>
@@ -192,6 +196,10 @@ const Notification = () => {
                             <NotificationCard key={index} notification={item} index={index} setItems={setItems}/>
                         ))}
                     </InfiniteScroll>
+                    </div>
+
+                    </div>
+
                     {/* {!isLoading && <NotificationCard notification={data.results[0]}/>} */}
                 </div> 
             </div>

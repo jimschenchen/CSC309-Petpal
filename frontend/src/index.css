@@ -108,6 +108,9 @@ code {
 }
 
 @layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
   /* .filter-none {
     filter: none;
   }
