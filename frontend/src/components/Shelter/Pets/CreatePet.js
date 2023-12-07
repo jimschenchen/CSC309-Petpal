@@ -1,33 +1,59 @@
 import { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
+import { getUser } from "../../../utils/credential";
 
 
 const CreatePet = () => {
+    const [status, setStatus] = useState('available');
     const [name, setName] = useState('');
     const [breed, setBreed] = useState('');
     const [color, setColor] = useState('');
-    const [age, setAge] = useState('');
     const [size, setSize] = useState('');
+    const [age, setAge] = useState();
     const [gender, setGender] = useState('');
     const [description, setDescription] = useState('');
+    const [medicalHistory, setMedicalHistory] = useState('');
+    const [behavior, setBehavior] = useState('');
 
     const navigate = useNavigate();
 
-    const handleSubmit = async  (e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const pet = {name, breed, color, size, age, gender, description};
+        const newPet = {
+            status,
+            name,
+            breed,
+            color,
+            size,
+            age,
+            gender,
+            description,
+            medical_history: medicalHistory,
+            behavior,
+        };
+
         try {
             // Make a POST request to create the pet
-            console.log(pet);
-            const response = await  Request(`/pets/`, "POST", pet );
+            console.log('newPet', newPet);
+            const response = await fetch(`https://petpal.api.jimschenchen.com/pets/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getUser().token}`
+                },
+                body: JSON.stringify(newPet)
+            });
+            console.log('Pet added:', await response.json());
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
             console.log(response);
-    
-            // Redirect to manage_pets page after successful create
-            navigate('/manage_pets');
+
+            // Redirect to the appropriate page after successful creation
+            navigate('/manage_pets/');
         } catch (err) {
             console.error("Error creating pet:", err);
         }
-        
     }
     return (
         <div className="container mx-auto p-8">
@@ -63,6 +89,14 @@ const CreatePet = () => {
                     <div>
                         <label htmlFor="description" className="block mb-1 font-bold">Description:</label>
                         <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} name="description" className="w-full border rounded px-3 py-2" rows="4"></textarea>
+                    </div>
+                    <div>
+                        <label htmlFor="medicalHistory" className="block mb-1 font-bold">Medical History:</label>
+                        <textarea id="medicalHistory" value={medicalHistory} onChange={(e) => setMedicalHistory(e.target.value)} name="medicalHistory" className="w-full border rounded px-3 py-2" rows="4"></textarea>
+                    </div>
+                    <div>
+                        <label htmlFor="behavior" className="block mb-1 font-bold">Behavior:</label>
+                        <textarea id="behavior" value={behavior} onChange={(e) => setBehavior(e.target.value)} name="behavior" className="w-full border rounded px-3 py-2" rows="4"></textarea>
                     </div>
                 </div>
                 <div className="flex justify-between">
