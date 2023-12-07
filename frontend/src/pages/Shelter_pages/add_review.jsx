@@ -8,7 +8,7 @@ const AddReview = () => {
     const username = 'User';
 
     return (
-        <PageFrame userType={userType} username={username}>
+        <PageFrame>
             <body className="bg-background">
 
                 <main className="mt-0 p-6">

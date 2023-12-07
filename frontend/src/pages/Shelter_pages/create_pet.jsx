@@ -5,7 +5,7 @@ import PageFrame from '../../components/PageFrame';
 const PetsCreation = () => {
 
     return (
-        <PageFrame userType={'shelter'} username={'user'}>
+        <PageFrame>
         <body className="bg-background">
 
             <main className="mt-0 p-6">

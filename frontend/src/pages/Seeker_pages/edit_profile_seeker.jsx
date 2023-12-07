@@ -64,7 +64,7 @@ const SeekerAccountUpdate = () => {
     };
 
     return (
-        <PageFrame userType={'seeker'} username={'user'}>
+        <PageFrame>
         <div className="bg-background">
 
             <main className="mt-0 p-0">

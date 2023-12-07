@@ -1,13 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ApplicationItemSeeker from "./ApplicationItemSeeker";
+import { getUser } from "../../utils/credential";
+import useFetchGet from "../../utils/useFetch";
 
 const ManageApplication = () => {
-    const [applications, setApplications] = useState([
+    const [applications, setApplications] = useState([]);
+    const {data, isLoading, error} = useFetchGet(`applications/`);
+    const userId = getUser().userId;
 
-        { id: 1, PetName: 'Tom (P192837)', LastUpdate: '2023-09-30', Status: 'pending'},
-    
-      ]);
-
+    useEffect(() => {
+      if (data && !isLoading) {
+        // Map through the applications and format the last_updated_time
+        const formattedApplications = data.results.map(app => ({
+            ...app,
+            last_updated_time: app.last_updated_time.split('T')[0] // Extracts only the date part
+        }));
+        setApplications(formattedApplications);
+        console.log(applications);
+      }
+    }, [data, isLoading]);
     return (
         
         <main className="mt-0 py-6 px-2">
@@ -33,7 +44,7 @@ const ManageApplication = () => {
       
                   {/* <!-- table row --> */}
                   {applications.map(application => (
-              <ApplicationItemSeeker key={application.id} PetName={application.PetName} LastUpdate={application.LastUpdate} Status={application.Status}/>
+              <ApplicationItemSeeker key={application.id} PetName={application.pet} LastUpdate={application.last_updated_time} Status={application.status}/>
             ))}
               </div> 
             </div>

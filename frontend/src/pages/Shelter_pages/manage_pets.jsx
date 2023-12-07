@@ -8,7 +8,7 @@ const PetsManagement = () => {
 
 
     return (
-        <PageFrame userType={'shelter'} username={'user'}>
+        <PageFrame>
         <div className="flex flex-col min-h-screen bg-background">
             
 

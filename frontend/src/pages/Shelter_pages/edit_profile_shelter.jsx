@@ -64,7 +64,7 @@ const ShelterAccountUpdate = () => {
     };
 
     return (
-        <PageFrame userType={'shelter'} username={'user'}>
+        <PageFrame>
         <div className="bg-background">
             <main className="mt-0 p-0">
                 <div className="container mx-auto p-8">

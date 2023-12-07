@@ -1,14 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ApplicationItemShelter from "./ApplicationItemShelter";
+import useFetchGet from "../../../utils/useFetch";
+import { getUser } from "../../../utils/credential";
 
 const ManageApplication = () => {
-    const [applications, setApplications] = useState([
+    const [applications, setApplications] = useState([]);
 
-        { id: 1, UserName: 'Sum Seeker', PetName: 'Tom (P192837)', LastUpdate: '2023-09-30', Status: 'pending'},
-        { id: 2, UserName: 'Hanli', PetName: 'Mumu (P201234)', LastUpdate: '2023-10-1', Status: 'pending'},
-        { id: 3, UserName: 'Bob', PetName: 'Jerry (P201824)', LastUpdate: '2023-10-5', Status: 'pending'}
-    
-      ]);
+    const {data, isLoading, error} = useFetchGet(`applications/`);
+    const userId = getUser().userId;
+
+    useEffect(() => {
+      if (data && !isLoading) {
+        // Map through the applications and format the last_updated_time
+        const formattedApplications = data.results.map(app => ({
+            ...app,
+            last_updated_time: app.last_updated_time.split('T')[0] // Extracts only the date part
+        }));
+        setApplications(formattedApplications);
+        console.log(applications);
+      }
+    }, [data, isLoading]);
 
     return (
         
@@ -38,7 +49,7 @@ const ManageApplication = () => {
       
                   {/* <!-- table row --> */}
                   {applications.map(application => (
-              <ApplicationItemShelter key={application.id} UserName={application.UserName} PetName={application.PetName} LastUpdate={application.LastUpdate} Status={application.Status}/>
+              <ApplicationItemShelter key={application.id} UserName={application.name} PetName={application.pet} LastUpdate={application.last_updated_time} Status={application.status}/>
             ))}
               </div> 
             </div>

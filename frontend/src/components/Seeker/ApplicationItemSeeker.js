@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 const ApplicationItemSeeker = ({ UserName, PetName, LastUpdate, Status }) => {
     return (
