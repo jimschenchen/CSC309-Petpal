@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from applications.models import Application
+from pets.models import Pet
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
@@ -12,6 +13,12 @@ class ApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
         fields = "__all__"
+        extra_fields = ['pet_name']
+
+        def get_pet_name(self, obj):
+            pet = obj.pet
+            return pet.name if pet else ""
+
         # exclude = ['to_user', 'from_user']
         # extra_kwargs = {
         #     'from_user': {'read_only': True},
