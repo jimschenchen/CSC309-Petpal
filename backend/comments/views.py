@@ -114,9 +114,7 @@ class ApplicationCommentListCreateAPIView(generics.ListCreateAPIView):
         sender = self.request.user
 
         message = serializer.validated_data.get('message')
-
-        comment = Comment(sender=sender, content_object=application, message=message)
-        comment.save()
+        comment = serializer.save(sender=sender, content_object=application, message=message)
 
         # create notification for shelter
         if self.request.user == application.from_user:
