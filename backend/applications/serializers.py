@@ -10,11 +10,13 @@ class ApplicationSerializer(serializers.ModelSerializer):
     from_user = serializers.PrimaryKeyRelatedField(read_only=True)
     to_user = serializers.PrimaryKeyRelatedField(read_only=True)
 
+    pet_name = serializers.SerializerMethodField()
+
     class Meta:
         model = Application
         fields = "__all__"
         extra_fields = ['pet_name']
-        
+
         def get_fields(self):
             fields = super(ApplicationSerializer, self).get_fields()
             # Add extra fields here
