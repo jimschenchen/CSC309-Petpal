@@ -58,13 +58,13 @@ const UserMenu = ({userType, logout}) => {
 
             <ul className="pt-2 pb-1 px-2 border-primary border-b-2">
                 <li className="user-menu-item">
-                <Link>Shelter details</Link>
+                <Link to={`/shelter_detail/${getUser().userId}`}>Shelter details</Link>
                 </li>
                 <li className="user-menu-item">
-                    <Link>Manage Pets</Link>
+                    <Link to={`/manage_pets`}>Manage Pets</Link>
                 </li>
                 <li className="user-menu-item">
-                    <Link>Manage Applications</Link>
+                    <Link to={`/manage_applications`}>Manage Applications</Link>
                 </li>
                 <li className="user-menu-item">
                 <Link to='/notification'>Notification</Link>
@@ -73,7 +73,7 @@ const UserMenu = ({userType, logout}) => {
 
             <ul className="pt-1 pb-2 px-2 border-primary">
                 <li className="user-menu-item">
-                    <Link>Edit profile</Link>
+                    <Link to={`/shelter/${getUser().userId}`}>Edit profile</Link>
                 </li>
                 <li className="user-menu-item">
                 <button onClick={() => {removeUser(); logout();}}>Sign out</button>

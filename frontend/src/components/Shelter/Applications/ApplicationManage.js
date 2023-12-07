@@ -49,7 +49,7 @@ const ManageApplication = () => {
       
                   {/* <!-- table row --> */}
                   {applications.map(application => (
-              <ApplicationItemShelter key={application.id} UserName={application.name} PetName={application.pet} LastUpdate={application.last_updated_time} Status={application.status}/>
+              <ApplicationItemShelter Id={application.id} UserName={application.name} PetName={application.pet} LastUpdate={application.last_updated_time} Status={application.status}/>
             ))}
               </div> 
             </div>
