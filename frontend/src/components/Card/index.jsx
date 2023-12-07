@@ -2,6 +2,8 @@
 // import { APIContext } from "../../contexts/APIContext";
 // import { useLocation } from "react-router-dom"
 
+import { Link } from "react-router-dom";
+
 
 const Card = ({item}) => {
     // const { userName } = useContext(APIContext);
@@ -12,7 +14,7 @@ const Card = ({item}) => {
 
 
     return <>
-        <a href="{item.link}" className="relative flex flex-auto lg:flex-auto max-w-[15rem] max-h-[24rem] lg:max-w-[14rem] lg:max-h-[24rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md m-4 hover:shadow-2xl">
+        <Link to={`/pet_detail/${item.id}/`} className="relative flex flex-auto lg:flex-auto max-w-[15rem] max-h-[24rem] lg:max-w-[14rem] lg:max-h-[24rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md m-4 hover:shadow-2xl">
           <div className="relative m-0 min-h-[10rem] max-h-[10rem] rounded-t-xl overflow-hidden bg-transparent bg-clip-border text-gray-700 shadow-none">
               <img className="object-cover h-full w-full" src={item.image} alt="Pet image" />
           </div>
@@ -49,7 +51,7 @@ const Card = ({item}) => {
                   Id: {item.id} | Updated: {item.date}
               </p>
           </div>
-      </a>
+      </Link>
     </>;
 }
 

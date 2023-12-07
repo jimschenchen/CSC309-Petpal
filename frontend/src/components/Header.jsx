@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { removeUser } from "../utils/credential";
+import { getUser, removeUser } from "../utils/credential";
 
 const Logo = () => (
     <Link to="/" className="flex items-center hover:scale-105">
@@ -12,8 +12,8 @@ const Logo = () => (
 
 const Guest = () => (
     <div className="flex items-center">
-        <Link to='auth/login' className="navbar-btn-white">Log in</Link>
-        <Link to='auth/signup' className="navbar-btn-white">Sign up</Link>
+        <Link to='/auth/login' className="navbar-btn-white">Log in</Link>
+        <Link to='/auth/signup' className="navbar-btn-white">Sign up</Link>
     </div>
 );
 
@@ -33,7 +33,7 @@ const UserMenu = ({userType, logout}) => {
             <div className="bg-gray-50 rounded-lg z-50 absolute right-0 flex flex-col px-2">
                 <ul className="pt-2 pb-1 px-2 border-primary border-b-2">
                     <li className="user-menu-item">
-                    <Link>My Applications</Link>
+                    <Link to = '/my_applications'>My Applications</Link>
                     </li>
                     <li className="user-menu-item">
                     <Link to='/notification'>Notification</Link>
@@ -42,7 +42,7 @@ const UserMenu = ({userType, logout}) => {
 
                 <ul className="pt-1 pb-2 px-2 border-primary">
                     <li className="user-menu-item">
-                        <Link>Edit profile</Link>
+                        <Link to = {`/seeker/${getUser().userId}/`}>Edit profile</Link>
                     </li>
                     <li className="user-menu-item">
                         <button onClick={() => {removeUser(); logout()}}>Sign out</button>

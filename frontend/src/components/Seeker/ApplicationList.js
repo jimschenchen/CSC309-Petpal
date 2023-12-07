@@ -44,7 +44,7 @@ const ManageApplication = () => {
       
                   {/* <!-- table row --> */}
                   {applications.map(application => (
-              <ApplicationItemSeeker key={application.id} PetName={application.pet} LastUpdate={application.last_updated_time} Status={application.status}/>
+              <ApplicationItemSeeker ID={application.id} PetName={application.pet} LastUpdate={application.last_updated_time} Status={application.status}/>
             ))}
               </div> 
             </div>

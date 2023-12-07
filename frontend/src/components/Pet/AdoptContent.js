@@ -15,14 +15,14 @@ const AdoptContent = ({ pet, onAdoptClick }) => {
             default:
                 return "text-primary";
         }
-    }
-
+    };
+    
     return (
         <div className="adopt-content detail-active-page lg:w-4/5 flex flex-col gap-2">
             {/* Shelter and adoption status */}
             <div className="flex gap-2">
                 <div className="font-bold">Shelter:</div>
-                <Link to={'TODO'} className="text-primary hover:underline">
+                <Link to={`/shelter_detail/${pet.shelter}/`} className="text-primary hover:underline">
                     Visit shelter page
                 </Link>
             </div>
@@ -30,7 +30,7 @@ const AdoptContent = ({ pet, onAdoptClick }) => {
                 <div className="font-bold">Adoption Status:</div>
                 <p className={statusColor(pet.status)}>{pet.status.charAt(0).toUpperCase() + pet.status.slice(1)}</p>
             </div>
-            {pet.status==='available' && <Link to={'TODO'} className="bg-primary w-fit text-white hover:font-bold py-2 px-4 rounded">
+            {pet.status==='available' && <Link to={`/create_application/${pet.id}`} className="bg-primary w-fit text-white hover:font-bold py-2 px-4 rounded">
                 Adopt {pet.name}
             </Link>}
             {pet.status !== 'available' && 

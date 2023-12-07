@@ -1,20 +1,45 @@
 import { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
+import { getUser } from "../../utils/credential";
 
 
-const SendApplication = () => {
+const SendApplication = ({pet}) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
     const [information, setInformation] = useState('');
-
     const navigate = useNavigate();
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault();
-        const application = {name, email, phone, information};
-        navigate('/shelter_details');
-        console.log(application);
+        const newApplication = {
+            name,
+            email,
+            additional_information: information,
+            pet:pet.id,
+        };
+
+        try {
+            // Make a POST request to create the pet
+            console.log('newApplication', newApplication);
+            const response = await fetch(`https://petpal.api.jimschenchen.com/applications/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getUser().token}`
+                },
+                body: JSON.stringify(newApplication)
+            });
+            console.log('Application sent:', await response.json());
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log(response);
+
+            // Redirect to the appropriate page after successful creation
+            navigate('/my_applications/');
+        } catch (err) {
+            console.error("Error creating pet:", err);
+        }
     }
     return (
         <div className="container mx-auto p-8">
@@ -30,10 +55,6 @@ const SendApplication = () => {
                     <div>
                         <label htmlFor="email" className="block mb-1 font-bold">Email:</label>
                         <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} id="email" name="email" className="w-full border rounded px-3 py-2"/>
-                    </div>
-                    <div>
-                        <label htmlFor="phone" className="block mb-1 font-bold">Phone:</label>
-                        <input type="text" required value={phone} onChange={(e) => setPhone(e.target.value)} id="phone" name="phone" className="w-full border rounded px-3 py-2"/>
                     </div>
                     <div>
                         <label htmlFor="information" className="block mb-1 font-bold">Additional Information:</label>
