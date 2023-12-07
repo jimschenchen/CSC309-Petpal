@@ -30,7 +30,7 @@ const Logged = ({username, showMenu, setShowMenu}) => (
 const UserMenu = ({userType, logout}) => {
     if (userType === 'seeker') {
         return (
-            <div className="bg-gray-50 rounded-lg z-50 absolute right-0 flex flex-col px-2">
+            <div className="bg-gray-50 rounded-lg z-50 absolute right-0 flex flex-col px-2 border-2 border-primary">
                 <ul className="pt-2 pb-1 px-2 border-primary border-b-2">
                     <li className="user-menu-item">
                     <Link>My Applications</Link>
@@ -54,7 +54,7 @@ const UserMenu = ({userType, logout}) => {
     else if (userType === 'shelter'){
         return (
             <div 
-            className="bg-gray-50 border-primary rounded-lg z-50 absolute right-0 flex flex-col px-2">
+            className="bg-gray-50 border-primary border-2 rounded-lg z-50 absolute right-0 flex flex-col px-2">
 
             <ul className="pt-2 pb-1 px-2 border-primary border-b-2">
                 <li className="user-menu-item">
