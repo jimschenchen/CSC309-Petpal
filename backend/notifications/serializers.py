@@ -11,13 +11,15 @@ class NotificationRelatedField(serializers.RelatedField):
     def to_representation(self, value):
         if isinstance(value, Comment):
             if isinstance(value.content_object, User):
-                return {'type': 'comment-shelter'}
+                return {'type': 'comment-shelter',
+                        'shelter_id': value.content_object.id}
             elif isinstance(value.content_object, Application):
                 return {'type':'comment-application', 
                         'application_id': value.content_object.id,
                         'pet_name': value.content_object.pet.name}
         elif isinstance(value, Application):
             return {'type': 'application',
+                    'application_id': value.content_object.id,
                     'pet_name': value.pet.name}
         raise Exception('Unexpected type of related object')
 

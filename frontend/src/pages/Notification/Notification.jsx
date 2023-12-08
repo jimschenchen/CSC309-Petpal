@@ -30,6 +30,18 @@ const NotificationCard = ({notification, index, setItems}) => {
         }
     }
 
+    // const getUrl = () => {
+    //     switch (notification.content_object.type){
+    //         case 'application':
+    //             return `/application/${notification.application_id}`
+    //         case 'comment-application':
+    //             return ``
+    //         case 'comment-shelter':
+    //             return <CommentIcon className={icon_color()}/>
+    //     }
+    // }
+    // console.log(notification);
+
     const message = () => {
         switch(notification.content_object.type) {
             case 'application':
@@ -61,7 +73,8 @@ const NotificationCard = ({notification, index, setItems}) => {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${getUser().token}`
                         } 
-                    }).then(navigate('/'));
+                    }).then(res => res.json())
+                    .then(data => console.log(data));
             }}>
                 <Icon/>
                 <div className="font-normal hover:underline">{message()}</div>

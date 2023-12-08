@@ -103,7 +103,7 @@ const Header = ({userType, username, logout}) => {
         <>
         <header className="w-full z-50">
         <nav className={"px-4 h-10 sm:h-12 " + headerColor()}>
-            <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl h-full">
+            <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen h-full">
                 <Logo/>
                 {userType === 'guest' && <Guest/>}
                 {userType !== 'guest' && <Logged username={username} showMenu={showMenu} setShowMenu={setShowMenu}/>}

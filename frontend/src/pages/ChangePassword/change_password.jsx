@@ -40,7 +40,7 @@ const ChangePassword = () => {
             console.log(response);
 
             // Redirect to the appropriate page after successful creation
-            // removeUser(); 
+            removeUser(); 
             // window.alert('Password changed successfully, please log in using new password');
             // navigate('/auth/login')
             setShowRedirModal(true);
