@@ -8,11 +8,19 @@ import { APIContext } from "../../contexts/APIContext";
 import useFetchGet from "../../utils/useFetch";
 import { Request } from "../../utils/Request";
 
+import { useSearchParams } from "react-router-dom";
+
+
 const Sidebar = () => {
-    // const location = useLocation();
-    // const url = location.pathname;
-    // const today = new Date();
-    // var semester;
+    // Search Parameter
+    const [ searchParams, setSearchParams ] = useSearchParams({
+      name: "Any",
+      breed: "Any",
+      age: "Any",
+      size: "Any",
+      gender: "Any",
+      sort: "Any",
+    });
 
     // Script for sidebar
     const { sidebarVisible, setSidebarVisible } = useContext(APIContext);
@@ -30,6 +38,11 @@ const Sidebar = () => {
 
     const toggleFilter = () => {
         setFilters({...filtersTemp});
+        // Only display non-default filters
+        const newSearchParams = Object.fromEntries(
+          Object.entries(filtersTemp).filter(([key, value]) => value !== "Any")
+        );
+        setSearchParams(newSearchParams);
     }
 
     const handleFilterChange = (e) => {
@@ -42,8 +55,22 @@ const Sidebar = () => {
       setFilterMeta(meta);
     }
 
+    const loadSearchParamFilters = () => {
+      const searchParamsFilters = {
+        name: searchParams.get("name") || "Any",
+        breed: searchParams.get("breed") || "Any",
+        age: searchParams.get("age") || "Any",
+        size: searchParams.get("size") || "Any",
+        gender: searchParams.get("gender") || "Any",
+        sort: searchParams.get("sort") || "Any",
+      };
+      setFilters(searchParamsFilters);
+      setFiltersTemp(searchParamsFilters);
+    }
+
     useEffect(() => {
       initialFiltersMeta();
+      loadSearchParamFilters();
     }, [])
 
     return <>

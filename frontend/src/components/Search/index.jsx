@@ -10,7 +10,7 @@ import Card from "../Card";
 import Chip from "../Chip";
 
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { useSearchParams } from "react-router-dom";
 
 var chipColorMap = {
   "breed": "bg-pink-500",
@@ -22,12 +22,6 @@ var chipColorMap = {
 }
 
 const Search = () => {
-    // const { userName } = useContext(APIContext);
-    // const location = useLocation();
-    // const url = location.pathname;
-    // const today = new Date();
-    // var semester;
-
     // Script for sidebar
     const { sidebarVisible, setSidebarVisible } = useContext(APIContext);
     const { filters, setFilters } = useContext(APIContext);
@@ -38,8 +32,19 @@ const Search = () => {
     const [ hasMorePage, setHasMorePage ] = useState(true);
     const [ isLoading, setIsLoading ] = useState(false);
 
+    const [ pageLoadTime, setPageLoadTime ] = useState(1);
+
     const infiniteScrollRef = useRef(null);
     const inputRef = useRef();
+
+    const [ searchParams, setSearchParams ] = useSearchParams({
+      name: "Any",
+      breed: "Any",
+      age: "Any",
+      size: "Any",
+      gender: "Any",
+      sort: "Any",
+    });
 
     // adaptive set the page_size
     var page_size = 8;
@@ -53,22 +58,38 @@ const Search = () => {
 
     const handleSearchByName = (e) => {
       const inputValue = inputRef.current.value;
-      setFilters({ ...filters, "name": inputValue });
+      const updatedFilters = { ...filters, "name": inputValue };
+      setFilters(updatedFilters);
+      const newSearchParams = Object.fromEntries(
+        Object.entries(updatedFilters).filter(([key, value]) => value !== "Any")
+      );
+      setSearchParams(newSearchParams);
     }
 
-    const getNextPetsList = async (restPage = false) => {
+    const getNextPetsList = async (resetPage = false, firstLoad = false) => {
       var currentPageTemp = currentPage;
-      if (restPage) {
+      if (resetPage) {
         currentPageTemp = 1;
         setCurrentPage(1);
         setHasMorePage(true);
       }
 
-      // console.log("currentPageTemp: " + currentPageTemp)
-
       var url = "/pets/?page=" + currentPageTemp + "&page_size=" + page_size + ""
 
-      for (const [key, value] of Object.entries(filters)) {
+      var filtersTemp = filters;
+      if (firstLoad) {
+        // using searchParams if first load
+        filtersTemp = {
+          name: searchParams.get("name") || "Any",
+          breed: searchParams.get("breed") || "Any",
+          age: searchParams.get("age") || "Any",
+          size: searchParams.get("size") || "Any",
+          gender: searchParams.get("gender") || "Any",
+          sort: searchParams.get("sort") || "Any",
+        };
+      }
+
+      for (const [key, value] of Object.entries(filtersTemp)) {
         if (value !== "Any") {
           if (key === "sort") {
             url += "&" + "ordering" + "=" + value;
@@ -82,7 +103,7 @@ const Search = () => {
         const res = await Request(url, "GET");
 
         const newPets = res.results;
-        if (restPage) {
+        if (resetPage) {
           setPets(newPets);
         }
         else {
@@ -116,21 +137,26 @@ const Search = () => {
     // Note: the empty deps array [] means
     // this useEffect will run once
     // similar to componentDidMount()
-    useEffect(() => {
-      getNextPetsList(true);
-    }, [])
+
 
     // Update filters
     useEffect(() => {
-      setIsLoading(true);
-      setPets([]);
-      setHasMorePage(true);
-      setTimeout(() => {
+      // NOTE: don't know why filters will update twice when first load; so we need to use pageLoadTime to prevent it
+      if (pageLoadTime > 2) {
+        setIsLoading(true);
+        setPets([]);
+        setHasMorePage(true);
         getNextPetsList(true);
         setIsLoading(false);
-      }, 1000)
-
+      }
+      setPageLoadTime(prev => prev + 1);
     }, [filters]);
+
+    // NOTE: put empty useEffect after filters useEffect so the date got from empty useEffect will override the filters useEffect
+    useEffect(() => {
+      // using searchParams if first load
+      getNextPetsList(true, true);
+    }, [])
 
 
     const toggleSidebar = () => {
