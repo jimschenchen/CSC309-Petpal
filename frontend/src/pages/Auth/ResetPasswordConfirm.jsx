@@ -42,6 +42,10 @@ const ResetPasswordConfirm = () => {
 
     const {uid, token} = useParams();
 
+    useEffect(() => {
+        removeUser();
+    }, []);
+
     const validate = () => {
         if (password !== password2) {
             setError("Passwords don't match");
@@ -74,7 +78,7 @@ const ResetPasswordConfirm = () => {
             body: JSON.stringify(requestBody)
         }).then(res => {
             if (!res.ok) {
-                throw Error(res.status);
+                throw Error(res.json());
             }
             navigate('/auth/login');
         }).catch(err => {
