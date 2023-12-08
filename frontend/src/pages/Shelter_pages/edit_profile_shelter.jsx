@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Request } from '../../utils/Request';
 import PageFrame from '../../components/PageFrame';
-import { getUser, updateUsername } from "../../utils/credential";
+import { getUser, removeUser, updateUsername } from "../../utils/credential";
 
 const ShelterAccountUpdate = () => {
 
@@ -38,6 +38,29 @@ const ShelterAccountUpdate = () => {
     const handleAvatarChange = (e) => {
 
     };
+
+    const handleDelete = async () => {
+        if(window.confirm(`Are you sure you want to delete ${name}?`)) {
+            try {
+                const response = await fetch(`https://petpal.api.jimschenchen.com/accounts/users/${userId}`,{
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${getUser().token}`
+                    }
+                });
+                if (response.ok) {
+                    console.log(`User ${name} deleted successfully`);
+                    removeUser();
+                    navigate('/');
+                } else {
+                    console.error("Failed to delete user");
+                }
+            } catch (err) {
+                console.error("Error deleting user:", err);
+            }
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -126,8 +149,11 @@ const ShelterAccountUpdate = () => {
                             <textarea required value={description} onChange={(e) => setDescription(e.target.value)} id="description" name="description" rows="5"
                                 className="w-full px-3 py-2 border rounded-md"></textarea>
                         </div>
-
+                        <div className='flex justify-between'>
                         <button type="submit" className="bg-primary text-white hover:font-bold py-2 px-4 rounded">Update Account</button>
+                        <button onClick={handleDelete} className="bg-primary text-white hover:font-bold py-2 px-4 rounded">Delete Account</button>
+                        </div>
+                        
                     </form>
                 </div>
             </main>
