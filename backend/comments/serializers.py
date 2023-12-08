@@ -15,8 +15,16 @@ class CommentRelatedField(serializers.RelatedField):
 
 class CommentSerializer(serializers.ModelSerializer):
     content_object = CommentRelatedField(read_only=True)
+    sender_name = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Comment
-        fields = ['id', 'sender', 'content_object', 'message', 'creation_time']
-        read_only_fields = ['id', 'sender', 'content_object', 'creation_time']
+        fields = ['id', 'sender', 'content_object', 'message', 'creation_time', 'sender_name']
+        read_only_fields = ['id', 'sender', 'content_object', 'creation_time', 'sender_name']
+
+    def get_sender_name(self, obj):
+        try:
+            sender = User.objects.get(id=obj.sender_id)
+            return sender.name
+        except User.DoesNotExist:
+            return None
