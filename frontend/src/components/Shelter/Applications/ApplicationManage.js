@@ -1,62 +1,253 @@
 import { useEffect, useState } from "react";
 import ApplicationItemShelter from "./ApplicationItemShelter";
-import useFetchGet from "../../../utils/useFetch";
 import { getUser } from "../../../utils/credential";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { CircularProgress } from "@mui/material";
+import { useSearchParams } from "react-router-dom";
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const ManageApplication = () => {
-    const [applications, setApplications] = useState([]);
+  const page_size = 10;
+  const [applications, setApplications] = useState([]);
+  const [hasMore, setHasMore] = useState(false);
+  const [nextUrl, setNextUrl] = useState(null);
 
-    const {data, isLoading, error} = useFetchGet(`applications/`);
-    const userId = getUser().userId;
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-      if (data && !isLoading) {
-        // Map through the applications and format the last_updated_time
-        const formattedApplications = data.results.map(app => ({
-            ...app,
-            last_updated_time: app.last_updated_time.split('T')[0] // Extracts only the date part
-        }));
-        setApplications(formattedApplications);
-        console.log(applications);
+  // filter & sort hooks
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const getFullUrl = () => {
+    var base = `https://petpal.api.jimschenchen.com/applications/?page=1&page_size=${page_size}`;
+    if (searchParams.get('sort_by')) {
+      base += `&sort_by=${searchParams.get('sort_by')}`;
+    }
+    if (searchParams.get(`status`)) {
+      base += `&status=${searchParams.get('status')}`;
+    }
+    return base;
+  }
+
+  // check search param valid
+  useEffect(() => {
+    console.log('fired');
+    if (searchParams.get('status') &&
+      !['pending', 'accepted', 'withdrawn', 'denied'].includes(searchParams.get('status'))) {
+      setSearchParams(prev => {
+        prev.set('status', '');
+        return prev;
+      })
+    }
+
+    if (!searchParams.get('sort_by') &&
+    !['created_time', 'last_updated_time', '-created_time', '-last_updated_time']
+    .includes(searchParams.get('sort_by'))) {
+      setSearchParams(prev => {
+        prev.set('sort_by', '-last_updated_time');
+        return prev
+      })
+    }
+  }, []);
+
+  //search param update
+  useEffect(() => {
+    setApplications([]);
+    setIsLoading(true);
+    setHasMore(true);
+    console.log(getFullUrl());
+    fetch(getFullUrl(),{
+      method: "GET",
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getUser().token}`
       }
-    }, [data, isLoading]);
+    })
+    .then(res => res.json())
+    .then(data => {
+      setData(data);
+      setIsLoading(false);
+    })
+    .catch(err => {
+      setIsLoading(false);
+      setError(err.message);
+    });
+  }, [searchParams]);
 
-    return (
+  useEffect(() => {
+    if (data && !isLoading) {
+      setApplications(data.results);
+      console.log(data);
+      if (data.next) {
+        setHasMore(true);
+        setNextUrl(data.next);
+      }
+      else {
+        setHasMore(false);
+      }
+    }
+  }, [data, isLoading]);
 
-        <main className="mt-0 py-6 px-2">
-      {/* <!-- Shelter Management Header --> */}
 
-      {/* <!-- Application Management --> */}
-      <section>
-          <h2 className="text-2xl font-bold mb-4 text-center">Manage Applications</h2>
+  const fetchData = () => {
+    if (!hasMore) {return;}
+    fetch(nextUrl, {
+      method: "GET",
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getUser().token}`
+      }
+    })
+    .then(res => {
+      if (!res.ok) {
+          throw Error('Could not fetch applications');
+      }
+      return res.json();
+    })
+    .then(data => {
+      setApplications((prev) => [...prev, ...data.results]);
+      if (data.next) {
+          setHasMore(true);
+          setNextUrl(data.next);
+      }
+      else {
+          setHasMore(false);
+      }
+    });
+  }
 
+  const handleCreatedClick = () => {
+    switch(searchParams.get('sort_by')) {
+      case 'created_time':
+        setSearchParams(prev => {
+          prev.set('sort_by', '-created_time');
+          return prev;
+        });
+        break;
+      case '-created_time':
+        setSearchParams(prev => {
+          prev.set('sort_by', 'created_time');
+          return prev;
+        });
+        break;
+      default:
+        setSearchParams(prev => {
+          prev.set('sort_by', '-created_time');
+          return prev;
+        });
+        break;
+    }
+  }
 
-          {/* <!-- Example Applications (This would be looped or mapped in a real-world scenario) --> */}
-          <div className="flex justify-center items-center">
-              {/* <!-- Table --> */}
-              <div className="flex mx-3 w-full max-w-[800px] bg-background flex-col">
-                  <div className="font-bold text-xl my-3 mx-3 left-0">Applications</div>
+  const handleLastUpdateClick = () => {
+    switch(searchParams.get('sort_by')) {
+      case 'last_updated_time':
+        setSearchParams(prev => {
+          prev.set('sort_by', '-last_updated_time');
+          return prev;
+        });
+        break;
+      case '-last_updated_time':
+        setSearchParams(prev => {
+          prev.set('sort_by', 'last_updated_time');
+          return prev;
+        });
+        break;
+      default:
+        setSearchParams(prev => {
+          prev.set('sort_by', '-last_updated_time');
+          return prev;
+        });
+        break;
+    }
+  }
 
-                  {/* <!-- table head --> */}
-                  <div className="flex justify-between font-semibold border-b-2 border-black px-3 py-1">
-                      <div className="flex w-2/6 sm:w-1/3 justify-start">User name</div>
-                      <div className="flex w-2/6 sm:w-1/3 justify-start">Pet name</div>
-                      <div className="sm:w-1/3 sm:block hidden">Last update</div>
-                      <div className="sm:flex sm:w-1/3 sm:justify-center hidden">Status</div>
-                      <div className="flex w-1/3 justify-end">Actions</div>
-                  </div>
+  return (
+        <div className="flex justify-center items-center">
+            {/* <!-- Table --> */}
+            <div className="flex mx-3 w-full max-w-[800px] bg-background flex-col">
+              <div className="flex justify-between m-3">
+              <div className="font-bold text-xl left-0">Manage Applications</div>
+                <select defaultValue={searchParams.get('status')} 
+                onChange={(e) => {setSearchParams(prev => {
+                  if (e.target.value === 'all') {prev.set('status', '')}
+                  else {prev.set('status', e.target.value)}
+                  return prev;
+                })}} className="rounded-lg focus:ring-primary focus:outline-none focus:ring-1 px-2 py-1 text-xs lg:text-base">
+                    <option value="all">All</option>
+                    <option value="pending" >Pending</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="denied">Denied</option>
+                    <option value="withdrawn">Withdrawn</option>
+                </select>
+              </div>
+                
+    
+    
+                {/* <!-- table head --> */}
+                <div className="flex justify-between font-semibold border-b-2 border-black py-1">
+                    <div className="sm:w-1/4  w-1/3 text-center">Pet name</div>
 
-                  {/* <!-- table row --> */}
-                  {applications.map(application => (
-              <ApplicationItemShelter Id={application.id} UserName={application.name} PetName={application.pet_name} LastUpdate={application.last_updated_time} Status={application.status}/>
-            ))}
-              </div> 
-            </div>
-      </section>
+                    <button 
+                    onClick={handleLastUpdateClick}
+                    className="sm:w-1/4  w-1/3 text-center flex justify-center">
+                      <div className="flex justify-center items-center">Last update</div>
+                      <div className="flex flex-col justify-center">
+                        {searchParams.get('sort_by')==='-last_updated_time' && 
+                        <ArrowDropDownIcon fontSize="small"/>}
+                        {searchParams.get('sort_by')==='last_updated_time' && 
+                        <ArrowDropUpIcon fontSize="small"/>}
+                      </div>
+                    </button>
 
-  </main>
+                    <button 
+                    onClick={handleCreatedClick}
+                    className="sm:w-1/4  w-1/3 text-center flex justify-center">
+                      <div className="flex justify-center items-center">Created</div>
+                      <div className="flex flex-col justify-center">
+                      {searchParams.get('sort_by')==='-created_time' && 
+                        <ArrowDropDownIcon fontSize="small"/>}
+                        {searchParams.get('sort_by')==='created_time' && 
+                        <ArrowDropUpIcon fontSize="small"/>}
+                      </div>
+                    </button>
 
-    );
+                    <div className="sm:w-1/4  w-1/3 text-center">Status</div>
+                </div>
+                <div id="applications-content" 
+                className="overflow-y-scroll 
+                sm:h-[calc(100vh-11rem)] h-[calc(100vh-10.5rem)]">
+                  <div className="h-[calc(100vh-5rem)]">
+                    <InfiniteScroll
+                    dataLength={applications.length}
+                    next={fetchData}
+                    hasMore={hasMore}
+                    scrollableTarget="applications-content"
+                    loader={<div className="h-fit flex justify-center w-full overflow-hidden mt-3"><CircularProgress color="inherit"/></div>}
+                    endMessage={<center className="text-sm">You have seen all applications</center>} 
+                    >
+                      {/* <!-- table row --> */}
+                      {applications.map(application => (
+                        <ApplicationItemShelter 
+                        key={application.id} 
+                        ID={application.id} 
+                        PetName={application.pet_name} 
+                        LastUpdate={application.last_updated_time}
+                        Created={application.created_time} 
+                        Status={application.status}/>
+                      ))}  
+                    </InfiniteScroll>
+                    {!isLoading && hasMore && <center className="text-sm">Scroll to see more applications</center>}
+                    </div>
+
+                </div>
+                
+            </div> 
+          </div>
+
+  );
 };
 
 export default ManageApplication;

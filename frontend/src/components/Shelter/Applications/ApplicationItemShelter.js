@@ -1,21 +1,39 @@
-import { useState } from "react";
+import Moment from "react-moment";
 import { Link } from "react-router-dom";
 
-const ApplicationItemShelter = ({ Id, UserName, PetName, LastUpdate, Status }) => {
+const ApplicationItemSeeker = ({ ID, PetName, LastUpdate, Status, Created }) => {
+
+    const statusColor = (status) => {
+        switch(status){
+            case "Accepted":
+                return 'text-green-600';
+            case "Pending":
+                return 'text-yellow-600';
+            case "Withdrawn":
+                return 'text-red-600';
+            case "Denied":
+                return 'text-red-600';
+            default:
+                return 'text-primary';
+        }
+    }
+
     return (
-        <Link to={`/application/${Id}`} className="flex justify-between font-normal px-2 sm:px-4 py-2 sm:py-4 my-2 bg-white rounded-lg hover:bg-gray-100 hover:shadow-md ">
-                      <div className="flex w-2/6 sm:w-1/3 justify-start">{UserName}</div>
-                      <div className="flex w-3/6 sm:w-1/3 justify-start">{PetName}</div>
-                      <div className="sm:w-1/3 sm:block hidden">{LastUpdate}</div>
-                      <div className="sm:flex sm:w-1/3 sm:justify-center hidden">
-                          {Status}
-                      </div>
-                      <div className="flex w-1/6  sm:w-1/3 justify-end"> 
-                          <button className="bg-primary text-white text-sm hover:font-bold py-1 px-2 sm:px-4 sm:text-base rounded">Make Decision</button>
-                      </div>
-                  </Link>
+        <Link to = {`/application/${ID}`} className="flex justify-center sm:justify-between font-normal px-2 sm:px-4 py-2 sm:py-4 my-2 bg-white rounded-lg hover:bg-gray-100 hover:shadow-md ">
+            <div className="sm:w-1/4  w-1/3 text-center">{PetName}</div>
+            <div className="sm:w-1/4  w-1/3 text-center">
+                <Moment format="MMM DD, YYYY">{LastUpdate}</Moment>
+            </div>
+            <div className="sm:w-1/4 sm:block text-center hidden w-1/2">
+                <Moment format="MMM DD, YYYY">{Created}</Moment>
+            </div>
+            <div 
+            className={`sm:w-1/4  w-1/3 text-center ${statusColor(Status)}`}>
+                {Status}
+            </div>
+        </Link>
         
     );
 };
 
-export default ApplicationItemShelter;
+export default ApplicationItemSeeker;

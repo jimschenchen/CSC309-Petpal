@@ -232,7 +232,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://petpal.jimschenchen.com"
 ]
 
-DOMAIN = 'localhost:3000'
+DOMAIN = 'https://petpal.jimschenchen.com'
 SITE_NAME = 'Petpal'
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
