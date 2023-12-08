@@ -211,6 +211,8 @@ const Notification = () => {
                             <NotificationCard key={index} notification={item} index={index} setItems={setItems}/>
                         ))}
                     </InfiniteScroll>
+                    {hasMore && <center>Scroll to see more notifications</center>}
+
                     </div>
 
                     </div>

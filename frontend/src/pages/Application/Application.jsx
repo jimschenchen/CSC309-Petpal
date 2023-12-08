@@ -84,7 +84,7 @@ const Application = () => {
 
     return ( 
         <PageFrame requiredLogin={true}>
-            <div className="h-full w-full flex items-center justify-center">
+            <div className="h-full w-full flex items-center justify-center px-4">
                 <div className="max-w-[800px] w-full flex flex-col items-center">
                     {isLoading && <CircularProgress color="inherit"/>}
                     {!isLoading && <>
