@@ -77,7 +77,7 @@ const SeekerAccountUpdate = () => {
 
         try {
             // Make a PUT request to update the profile
-            const response = await fetch(`http://127.0.0.1:8000/accounts/user/`, {
+            const response = await fetch(`https://petpal.api.jimschenchen.com/accounts/user/`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${getUser().token}`
