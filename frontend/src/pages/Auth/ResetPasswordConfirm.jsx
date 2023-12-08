@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ErrorDisplay } from "./components/FormFields";
 import { CircularProgress } from "@mui/material";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router";
+import { removeUser } from "../../utils/credential";
 
 const ResetTitle = () => {
     return ( 
