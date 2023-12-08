@@ -218,7 +218,7 @@ const ManageApplication = () => {
                 </div>
                 <div id="applications-content" 
                 className="overflow-y-scroll 
-                sm:h-[calc(100vh-11rem)] h-[calc(100vh-10.5rem)]">
+                sm:h-[calc(100vh-11rem)] h-[calc(100vh-10.5rem)] no-scrollbar">
                   <div className="h-[calc(100vh-5rem)]">
                     <InfiniteScroll
                     dataLength={applications.length}
