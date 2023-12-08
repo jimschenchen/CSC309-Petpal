@@ -17,74 +17,80 @@ const Guest = () => (
     </div>
 );
 
-const Logged = ({username, showMenu, setShowMenu}) => (
+const Logged = ({ username, showMenu, setShowMenu }) => (
     <button className="flex items-center justify-end hover:scale-105"
-    onClick={() => setShowMenu(!showMenu)}>
-        <AccountCircleIcon fontSize="large" style={{ color: 'white' }}/>
+        onClick={() => setShowMenu(!showMenu)}>
+        <AccountCircleIcon fontSize="large" style={{ color: 'white' }} />
         <div className="text-white font-medium text-sm sm:text-lg py-1 sm:py-2 px-0 mx-1">
             {username}
         </div>
     </button>
 );
 
-const UserMenu = ({userType, logout}) => {
+const UserMenu = ({ userType, logout }) => {
     if (userType === 'seeker') {
         return (
             <div className="bg-gray-50 rounded-lg z-50 absolute right-0 flex flex-col px-2 border-2 border-primary">
                 <ul className="pt-2 pb-1 px-2 border-primary border-b-2">
                     <li className="user-menu-item">
-                    <Link to = '/my_applications'>My Applications</Link>
+                        <Link to='/my_applications'>My Applications</Link>
                     </li>
                     <li className="user-menu-item">
-                    <Link to='/notification'>Notification</Link>
+                        <Link to='/notification'>Notification</Link>
+                    </li>
+                    <li className="user-menu-item">
+                        <Link to='/shelters'>All Shelters</Link>
                     </li>
                 </ul>
 
                 <ul className="pt-1 pb-2 px-2 border-primary">
                     <li className="user-menu-item">
-                        <Link to = {`/seeker/${getUser().userId}/`}>Edit profile</Link>
+                        <Link to={`/seeker/${getUser().userId}/`}>Edit profile</Link>
                     </li>
                     <li className="user-menu-item">
-                        <button onClick={() => {removeUser(); logout()}}>Sign out</button>
+                        <button onClick={() => { removeUser(); logout() }}>Sign out</button>
                     </li>
                 </ul>
             </div>
         );
     }
-    else if (userType === 'shelter'){
+    else if (userType === 'shelter') {
         return (
-            <div 
-            className="bg-gray-50 border-primary border-2 rounded-lg z-50 absolute right-0 flex flex-col px-2">
+            <div
+                className="bg-gray-50 border-primary border-2 rounded-lg z-50 absolute right-0 flex flex-col px-2">
 
-            <ul className="pt-2 pb-1 px-2 border-primary border-b-2">
-                <li className="user-menu-item">
-                <Link to={`/shelter_detail/${getUser().userId}`}>Shelter details</Link>
-                </li>
-                <li className="user-menu-item">
-                    <Link to={`/manage_pets`}>Manage Pets</Link>
-                </li>
-                <li className="user-menu-item">
-                    <Link to={`/manage_applications`}>Manage Applications</Link>
-                </li>
-                <li className="user-menu-item">
-                <Link to='/notification'>Notification</Link>
-                </li>
-            </ul>
+                <ul className="pt-2 pb-1 px-2 border-primary border-b-2">
+                    <li className="user-menu-item">
+                        <Link to={`/shelter_detail/${getUser().userId}`}>Shelter details</Link>
+                    </li>
+                    <li className="user-menu-item">
+                        <Link to={`/manage_pets`}>Manage Pets</Link>
+                    </li>
+                    <li className="user-menu-item">
+                        <Link to={`/manage_applications`}>Manage Applications</Link>
+                    </li>
+                    <li className="user-menu-item">
+                        <Link to='/notification'>Notification</Link>
+                    </li>
+                    <li className="user-menu-item">
+                        <Link to='/shelters'>All Shelters</Link>
+                    </li>
+                </ul>
 
-            <ul className="pt-1 pb-2 px-2 border-primary">
-                <li className="user-menu-item">
-                    <Link to={`/shelter/${getUser().userId}`}>Edit profile</Link>
-                </li>
-                <li className="user-menu-item">
-                <button onClick={() => {removeUser(); logout();}}>Sign out</button>
-                </li>
-            </ul>
+                <ul className="pt-1 pb-2 px-2 border-primary">
+                    <li className="user-menu-item">
+                        <Link to={`/shelter/${getUser().userId}`}>Edit profile</Link>
+                    </li>
+                    <li className="user-menu-item">
+                        <button onClick={() => { removeUser(); logout(); }}>Sign out</button>
+                    </li>
+                </ul>
             </div>
         );
     }
 }
 
-const Header = ({userType, username, logout}) => {
+const Header = ({ userType, username, logout }) => {
     const [showMenu, setShowMenu] = useState(false);
 
     const headerColor = () => {
@@ -99,21 +105,21 @@ const Header = ({userType, username, logout}) => {
         }
     }
 
-    return ( 
+    return (
         <>
-        <header className="w-full z-50">
-        <nav className={"px-4 h-10 sm:h-12 " + headerColor()}>
-            <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen h-full">
-                <Logo/>
-                {userType === 'guest' && <Guest/>}
-                {userType !== 'guest' && <Logged username={username} showMenu={showMenu} setShowMenu={setShowMenu}/>}
-            </div>
-        </nav>
-        {userType !== 'guest' && showMenu && <UserMenu userType={userType} logout={logout}/>}
-        </header>
+            <header className="w-full z-50">
+                <nav className={"px-4 h-10 sm:h-12 " + headerColor()}>
+                    <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen h-full">
+                        <Logo />
+                        {userType === 'guest' && <Guest />}
+                        {userType !== 'guest' && <Logged username={username} showMenu={showMenu} setShowMenu={setShowMenu} />}
+                    </div>
+                </nav>
+                {userType !== 'guest' && showMenu && <UserMenu userType={userType} logout={logout} />}
+            </header>
         </>
-        
+
     );
 }
- 
+
 export default Header;

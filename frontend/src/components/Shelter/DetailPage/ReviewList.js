@@ -21,7 +21,7 @@ const Reviews = ({shelter}) => {
       {reviews.map(review => (
         <div key={review.id} className="mb-4">
           <p>{review.message}</p>
-          <small>- {review.sender}</small>
+          <small>- {review.sender_name}</small>
         </div>
       ))}
       <div className="flex justify-end mt-2">

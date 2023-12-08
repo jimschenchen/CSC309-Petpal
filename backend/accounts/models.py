@@ -36,9 +36,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     
     #Avatar
+    # avatar = models.ImageField(
+    #     upload_to='avatars/', 
+    #     blank=True, 
+    #     null=True,
+    #     default='users/default_avatar'
+    # )
     avatar = models.ImageField(
-        upload_to='avatars/', 
-        blank=True, 
+        blank=True,
         null=True,
         default='users/default_avatar'
     )
@@ -53,7 +58,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         if not self.avatar:
             self.avatar = self.default_avatar
         super(User, self).save(*args, **kwargs)
-    
+
     # User Types
     SHELTER = 'shelter'
     PET_SEEKER = 'pet_seeker'
