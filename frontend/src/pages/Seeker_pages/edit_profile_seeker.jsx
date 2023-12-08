@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import PageFrame from '../../components/PageFrame';
-import { getUser, updateUsername } from "../../utils/credential";
+import { getUser, removeUser, updateUsername } from "../../utils/credential";
 import useFetchGet from '../../utils/useFetch';
 
 const SeekerAccountUpdate = () => {
@@ -31,6 +31,29 @@ const SeekerAccountUpdate = () => {
         }
     }, [data, isLoading]);
     const navigate = useNavigate();
+
+    const handleDelete = async () => {
+        if(window.confirm(`Are you sure you want to delete ${name}?`)) {
+            try {
+                const response = await fetch(`https://petpal.api.jimschenchen.com/accounts/users/${userId}`,{
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${getUser().token}`
+                    }
+                });
+                if (response.ok) {
+                    console.log(`User ${name} deleted successfully`);
+                    removeUser();
+                    navigate('/');
+                } else {
+                    console.error("Failed to delete user");
+                }
+            } catch (err) {
+                console.error("Error deleting user:", err);
+            }
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -104,23 +127,26 @@ const SeekerAccountUpdate = () => {
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="phone" className="block mb-1 font-bold">Phone Number:</label>
-                                <input type="text"  value={phone} onChange={(e) => setPhone(e.target.value)} id="phone" name="phone"
+                                <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} id="phone" name="phone"
                                     className="w-full px-3 py-2 border rounded-md" />
                             </div>
 
                             <div className="mb-4">
                                 <label htmlFor="address" className="block text-sm font-bold mb-2">Address:</label>
-                                <textarea  value={address} onChange={(e) => setAddress(e.target.value)} id="address" name="address" rows="3"
+                                <textarea value={address} onChange={(e) => setAddress(e.target.value)} id="address" name="address" rows="3"
                                     className="w-full px-3 py-2 border rounded-md"></textarea>
                             </div>
 
                             <div className="mb-4">
                                 <label htmlFor="description" className="block text-sm font-bold mb-2">Description:</label>
-                                <textarea  value={description} onChange={(e) => setDescription(e.target.value)} id="description" name="description" rows="5"
+                                <textarea value={description} onChange={(e) => setDescription(e.target.value)} id="description" name="description" rows="5"
                                     className="w-full px-3 py-2 border rounded-md"></textarea>
                             </div>
 
-                            <button type="submit" className="bg-primary text-white hover:font-bold py-2 px-4 rounded">Update Account</button>
+                            <div className='flex justify-between'>
+                                <button type="submit" className="bg-primary text-white hover:font-bold py-2 px-4 rounded">Update Account</button>
+                                <button onClick={handleDelete} className="bg-primary text-white hover:font-bold py-2 px-4 rounded">Delete Account</button>
+                            </div>
                         </form>
                     </div>
                 </main>
