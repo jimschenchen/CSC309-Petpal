@@ -1,13 +1,18 @@
 import { EmailField, ErrorDisplay } from "./components/FormFields";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
+import { getUser, removeUser } from "../../utils/credential";
 
 const ResetPassword = () => {
     const [email, setEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+        removeUser();
+    }, []);
 
     const handleEmailConfirm = () => {
         // check is email valid

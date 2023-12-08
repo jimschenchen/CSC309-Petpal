@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ErrorDisplay } from "./components/FormFields";
 import { CircularProgress } from "@mui/material";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router";
+import { removeUser } from "../../utils/credential";
 
 const ResetTitle = () => {
     return ( 
@@ -42,6 +43,10 @@ const ResetPasswordConfirm = () => {
 
     const {uid, token} = useParams();
 
+    useEffect(() => {
+        removeUser();
+    }, []);
+
     const validate = () => {
         if (password !== password2) {
             setError("Passwords don't match");
@@ -74,7 +79,7 @@ const ResetPasswordConfirm = () => {
             body: JSON.stringify(requestBody)
         }).then(res => {
             if (!res.ok) {
-                throw Error(res.status);
+                throw Error(JSON.stringify(res.json()));
             }
             navigate('/auth/login');
         }).catch(err => {
