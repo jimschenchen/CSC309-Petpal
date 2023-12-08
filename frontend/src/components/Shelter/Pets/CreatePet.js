@@ -60,7 +60,7 @@ const CreatePet = () => {
             for (let [key, value] of formData.entries()) {
                 console.log(`${key}: ${value}`);
             }
-            const response = await fetch(`http://127.0.0.1:8000/pets/`, {
+            const response = await fetch(`petpal.api.jimschenchen.com/pets/`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${getUser().token}`
