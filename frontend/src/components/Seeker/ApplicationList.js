@@ -42,16 +42,17 @@ const ManageApplication = () => {
       })
     }
 
-    if (searchParams.get('sort_by') &&
+    if (!searchParams.get('sort_by') &&
     !['created_time', 'last_updated_time', '-created_time', '-last_updated_time']
     .includes(searchParams.get('sort_by'))) {
       setSearchParams(prev => {
-        prev.set('sort_by', '');
+        prev.set('sort_by', '-last_updated_time');
         return prev
       })
     }
   }, []);
 
+  //search param update
   useEffect(() => {
     setApplications([]);
     setIsLoading(true);

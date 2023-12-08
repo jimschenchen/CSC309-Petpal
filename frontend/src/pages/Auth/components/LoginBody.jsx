@@ -20,7 +20,7 @@ const RememberAndResetPassword = ({rememberMe, setRememberMe}) => (
             onChange={() => {setRememberMe(!rememberMe);}}/> 
             <label className="text-sm" onClick={() => {setRememberMe(!rememberMe);}}>Remember me</label>
         </div>
-        {/* <Link className="text-sm hover:underline"> Forgot Password?</Link> */}
+        <Link to='../reset/password' className="text-sm hover:underline"> Forgot Password?</Link>
     </div>
 );
 
@@ -65,8 +65,6 @@ const LoginBody = () => {
                 return res.json();
             })
             .then(data => {
-                console.log(data.user_info)
-
                 var accountType = data.user_info.user_type;
                 if (accountType === 'pet_seeker') {
                     accountType = 'seeker';
