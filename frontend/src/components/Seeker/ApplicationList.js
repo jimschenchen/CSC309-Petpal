@@ -204,7 +204,7 @@ const ManageApplication = () => {
 
                     <button 
                     onClick={handleCreatedClick}
-                    className="sm:w-1/4  w-1/3 text-center flex justify-center">
+                    className="sm:w-1/4  w-1/3 text-center hidden sm:flex justify-center">
                       <div className="flex justify-center items-center">Created</div>
                       <div className="flex flex-col justify-center">
                       {searchParams.get('sort_by')==='-created_time' && 
