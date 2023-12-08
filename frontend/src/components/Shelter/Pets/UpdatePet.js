@@ -20,6 +20,17 @@ const UpdatePet = () => {
     const [status, setStatus] = useState('');
     const [addition, setAddition] = useState('');
 
+    const SIZE_CHOICES = [
+        { value: 'small', label: 'Small' },
+        { value: 'medium', label: 'Medium' },
+        { value: 'large', label: 'Large' },
+    ];
+
+    const GENDER_CHOICES = [
+        { value: 'male', label: 'Male' },
+        { value: 'female', label: 'Female' },
+    ];
+
     const STATUS_CHOICES = [
         { value: 'available', label: 'Available' },
         { value: 'pending', label: 'Pending' },
@@ -116,7 +127,19 @@ const UpdatePet = () => {
                     </div>
                     <div>
                         <label htmlFor="size" className="block mb-1 font-bold">Size:</label>
-                        <input type="text" required value={size} onChange={(e) => setSize(e.target.value)} id="size" name="size" className="w-full border rounded px-3 py-2" />
+                        <select
+                            id="size"
+                            name="size"
+                            value={size}
+                            onChange={(e) => setSize(e.target.value)}
+                            className="w-full border rounded px-3 py-2"
+                        >
+                            {SIZE_CHOICES.map(choice => (
+                                <option key={choice.value} value={choice.value}>
+                                    {choice.label}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div>
                         <label htmlFor="age" className="block mb-1 font-bold">Age:</label>
@@ -124,7 +147,19 @@ const UpdatePet = () => {
                     </div>
                     <div>
                         <label htmlFor="gender" className="block mb-1 font-bold">Gender:</label>
-                        <input type="text" required value={gender} onChange={(e) => setGender(e.target.value)} id="gender" name="gender" className="w-full border rounded px-3 py-2" />
+                        <select
+                            id="gender"
+                            name="gender"
+                            value={gender}
+                            onChange={(e) => setGender(e.target.value)}
+                            className="w-full border rounded px-3 py-2"
+                        >
+                            {GENDER_CHOICES.map(choice => (
+                                <option key={choice.value} value={choice.value}>
+                                    {choice.label}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div>
                         <label htmlFor="status" className="block mb-1 font-bold">Status:</label>
