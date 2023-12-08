@@ -204,7 +204,7 @@ const ManageApplication = () => {
 
                     <button 
                     onClick={handleCreatedClick}
-                    className="sm:w-1/4  w-1/3 text-center flex justify-center">
+                    className="sm:w-1/4  w-1/3 text-center hidden sm:flex justify-center">
                       <div className="flex justify-center items-center">Created</div>
                       <div className="flex flex-col justify-center">
                       {searchParams.get('sort_by')==='-created_time' && 
@@ -218,7 +218,7 @@ const ManageApplication = () => {
                 </div>
                 <div id="applications-content" 
                 className="overflow-y-scroll 
-                sm:h-[calc(100vh-11rem)] h-[calc(100vh-10.5rem)]">
+                sm:h-[calc(100vh-11rem)] h-[calc(100vh-10.5rem)] no-scrollbar">
                   <div className="h-[calc(100vh-5rem)]">
                     <InfiniteScroll
                     dataLength={applications.length}
