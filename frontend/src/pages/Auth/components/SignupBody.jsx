@@ -52,7 +52,7 @@ const SignupBody = ({activeTab}) => {
             return 'pet_seeker';
         }
         else {
-            return 'pet_shelter';
+            return 'shelter';
         }
     }
 
