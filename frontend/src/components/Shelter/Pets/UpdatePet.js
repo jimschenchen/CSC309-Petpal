@@ -95,7 +95,7 @@ const UpdatePet = () => {
 
         try {
             // Make a PUT request to update the pet
-            const response = await fetch(`petpal.api.jimschenchen.com/pets/pet/${petId}/`, {
+            const response = await fetch(`http://petpal.api.jimschenchen.com/pets/pet/${petId}/`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${getUser().token}`
