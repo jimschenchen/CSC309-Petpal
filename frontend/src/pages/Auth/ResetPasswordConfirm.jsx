@@ -78,7 +78,7 @@ const ResetPasswordConfirm = () => {
             body: JSON.stringify(requestBody)
         }).then(res => {
             if (!res.ok) {
-                throw Error(res.json());
+                throw Error(JSON.stringify(res.json()));
             }
             navigate('/auth/login');
         }).catch(err => {
