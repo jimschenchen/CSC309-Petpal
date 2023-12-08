@@ -179,6 +179,7 @@ if USE_S3:
     # STATICFILES_STORAGE = 'petpal.storage_backends.StaticStorage'
 
     # using local static files
+    STATIC_URL = "static/"
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
     # s3 public media settings
