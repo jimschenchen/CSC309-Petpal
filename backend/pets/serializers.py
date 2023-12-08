@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import Pet
+from .models import User
 
 
 class ChoiceField(serializers.ChoiceField):
@@ -23,10 +24,18 @@ class ChoiceField(serializers.ChoiceField):
 
 class PetSerializer(serializers.ModelSerializer):
     size = ChoiceField(choices=Pet.SIZE_CHOICES)
+    shelter_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Pet
         fields = ['id', 'shelter', 'status', 'image', 'name', 'breed', 'color', 'size', 'age', 'gender', 'description',
-                  'medical_history', 'behavior', 'addition']
+                  'medical_history', 'behavior', 'addition', "shelter_name"]
         read_only_fields = ['id', 'shelter']
 
+
+    def get_shelter_name(self, obj):
+        try:
+            shelter = User.objects.get(id=obj.shelter_id)
+            return shelter.name
+        except User.DoesNotExist:
+            return None
