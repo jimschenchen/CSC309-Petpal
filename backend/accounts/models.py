@@ -45,14 +45,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     avatar = models.ImageField(
         blank=True,
         null=True,
-        default='users/default_avatar'
+        default='static/images/default_seeker_avatar.png'
     )
     @cached_property
     def default_avatar(self):
         if self.user_type == self.SHELTER:
-            return 'static/images/default_shelter_avatar.png'
+            return 'https://bucket-petpal.s3.amazonaws.com/media/static/images/default_shelter_avatar.png'
         else:
-            return 'static/images/default_seeker_avatar.png'
+            return 'https://bucket-petpal.s3.amazonaws.com/media/static/images/default_seeker_avatar.png'
 
     def save(self, *args, **kwargs):
         if not self.avatar:
