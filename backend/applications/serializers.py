@@ -10,12 +10,14 @@ class ApplicationSerializer(serializers.ModelSerializer):
     from_user = serializers.PrimaryKeyRelatedField(read_only=True)
     to_user = serializers.PrimaryKeyRelatedField(read_only=True)
 
-    # pet_name = serializers.SerializerMethodField()
+    pet_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Application
-        fields = "__all__"
+        # fields = "__all__"
+        fields = ["from_user", "to_user", "pet", "name", "email", "additional_information", "last_updated_time", "created_time", "pet_name"]
         # extra_fields = ['pet_name']
+
 
         # def get_fields(self):
         #     fields = super(ApplicationSerializer, self).get_fields()
@@ -23,12 +25,12 @@ class ApplicationSerializer(serializers.ModelSerializer):
         #     fields.update(self.Meta.extra_fields)
         #     return fields
 
-        # def get_pet_name(self, obj):
-        #     # try:
-        #     #     pet = Pet.objects.get(id=obj.pet_id)
-        #     #     return pet.name
-        #     # except Pet.DoesNotExist:
-        #     #     return None
+        def get_pet_name(self, obj):
+            try:
+                pet = Pet.objects.get(id=obj.pet_id)
+                return pet.name
+            except Pet.DoesNotExist:
+                return None
         #     return "1"
 
 
