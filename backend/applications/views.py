@@ -29,7 +29,7 @@ class ApplicationsView(APIView):
             Applications could be filtered by status or be sorted by creation time and last update time. Pagination support.",
         manual_parameters=[
             openapi.Parameter('status', openapi.IN_QUERY, description="Filter by status", type=openapi.TYPE_STRING),
-            openapi.Parameter('sort_by', openapi.IN_QUERY, description="Sort by 'status', '-status', 'created_time', '-created_time', 'last_updated_time' or '-last_updated_time'", type=openapi.TYPE_STRING),
+            openapi.Parameter('sort_by', openapi.IN_QUERY, description="Sort by 'created_time', '-created_time', 'last_updated_time' or '-last_updated_time'", type=openapi.TYPE_STRING),
             openapi.Parameter('page', openapi.IN_QUERY, description="Page number", type=openapi.TYPE_INTEGER),
             openapi.Parameter('page_size', openapi.IN_QUERY, description="Page Size", type=openapi.TYPE_INTEGER, default=10),
         ],
@@ -47,18 +47,20 @@ class ApplicationsView(APIView):
         # Pet shelter and pet seeker both can see their own applications
         if user.is_shelter:
             if input_status:
-                applications = Application.objects.filter(to_user=user, status=input_status)
+                applications = Application.objects.filter(to_user=user, status__iexact=input_status)
             else:
                 applications = Application.objects.filter(to_user=user)
         else:
             if input_status:
-                applications = Application.objects.filter(from_user=user, status=input_status)
+                applications = Application.objects.filter(from_user=user, status__iexact=input_status)
             else:
                 applications = Application.objects.filter(from_user=user)
 
         # Sorting
         sort_by = request.query_params.get('sort_by', 'last_updated_time') # default sorting by 'last_updated_time'
-        if sort_by not in ['created_time', 'last_updated_time', 'status', '-created_time', '-last_updated_time', '-status']:
+        if sort_by == '':
+            sort_by = 'last_updated_time'
+        if sort_by not in ['created_time', 'last_updated_time', '-created_time', '-last_updated_time']:
             return Response({"error": "Invalid sorting parameter."}, status=status.HTTP_400_BAD_REQUEST)
         applications = applications.order_by(sort_by)
 
