@@ -51,7 +51,7 @@ const CreatePet = () => {
         formData.append('description', description);
         formData.append('medical_history', medicalHistory);
         formData.append('behavior', medicalHistory);
-        // formData.append('image', image);
+        formData.append('image', image);
 
         try {
             // Make a POST request to create the pet
@@ -60,7 +60,7 @@ const CreatePet = () => {
             for (let [key, value] of formData.entries()) {
                 console.log(`${key}: ${value}`);
             }
-            const response = await fetch(`https://petpal.api.jimschenchen.com/pets/`, {
+            const response = await fetch(`http://127.0.0.1:8000/pets/`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${getUser().token}`

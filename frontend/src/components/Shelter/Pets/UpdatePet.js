@@ -87,7 +87,7 @@ const UpdatePet = () => {
         formData.append('description', description);
         formData.append('medical_history', medicalH);
         formData.append('behavior', behavior);
-        // formData.append('image', image);
+        formData.append('image', image);
 
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
@@ -95,7 +95,7 @@ const UpdatePet = () => {
 
         try {
             // Make a PUT request to update the pet
-            const response = await fetch(`https://petpal.api.jimschenchen.com/pets/pet/${petId}/`, {
+            const response = await fetch(`http://127.0.0.1:8000/pets/pet/${petId}/`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${getUser().token}`
