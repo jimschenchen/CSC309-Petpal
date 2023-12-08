@@ -10,7 +10,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
     from_user = serializers.PrimaryKeyRelatedField(read_only=True)
     to_user = serializers.PrimaryKeyRelatedField(read_only=True)
 
-    pet_name = serializers.SerializerMethodField()
+    pet_name = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Application
