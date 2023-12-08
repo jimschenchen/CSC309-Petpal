@@ -13,12 +13,19 @@ import { getUser } from "../../utils/credential";
 const Application = () => {
     const [activeTab, setActiveTab] = useState('msg-tab');
     const { applicationId } = useParams();
-    
+    const {tab} = useParams();
+
+
     const [applicationData, setApplicationData] = useState(null);
     const [petData, setPetData] = useState(null);
     const [commentData, setCommentData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        if (tab === 'message') {setActiveTab('msg-tab')}
+        if (tab === 'form') {setActiveTab('app-tab')}
+    }, []);
 
     const reloadApplication = () => {
         setIsLoading(true);

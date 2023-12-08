@@ -3,12 +3,10 @@ import SmsIcon from '@mui/icons-material/Sms';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import CommentIcon from '@mui/icons-material/Comment';
 import CloseIcon from '@mui/icons-material/Close';
-import { Link, useNavigate } from "react-router-dom";
-import useFetchGet from "../../utils/useFetch";
+import { useNavigate } from "react-router-dom";
 import { getUser } from "../../utils/credential";
 import moment from 'moment';
 import { useEffect, useState } from "react";
-import zIndex from "@mui/material/styles/zIndex";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { CircularProgress } from "@mui/material";
 
@@ -30,29 +28,29 @@ const NotificationCard = ({notification, index, setItems}) => {
         }
     }
 
-    // const getUrl = () => {
-    //     switch (notification.content_object.type){
-    //         case 'application':
-    //             return `/application/${notification.application_id}`
-    //         case 'comment-application':
-    //             return ``
-    //         case 'comment-shelter':
-    //             return <CommentIcon className={icon_color()}/>
-    //     }
-    // }
-    // console.log(notification);
+    const getUrl = () => {
+        switch (notification.content_object.type){
+            case 'application':
+                return `/application/${notification.content_object.application_id}/form`
+            case 'comment-application':
+                return `/application/${notification.content_object.application_id}/message`
+            case 'comment-shelter':
+                return `/shelter_details/${notification.content_object.shelter_id}`
+        }
+    }
+    console.log(notification);
 
     const message = () => {
         switch(notification.content_object.type) {
             case 'application':
                 switch(notification.action_code) {
                     case 'U':
-                        return `Application for ${notification.content_object.pet_name} is updated`;
+                        return `Application Updated for ${notification.content_object.pet_name}`;
                     case 'C':
                         return `New application for ${notification.content_object.pet_name}`;        
                 }
             case 'comment-application':
-                return `New message from the application of ${notification.content_object.pet_name}`;
+                return `New message from application for ${notification.content_object.pet_name}`;
             case 'comment-shelter':
                 return `You received a comment`;
             default:
@@ -74,14 +72,18 @@ const NotificationCard = ({notification, index, setItems}) => {
                             'Authorization': `Bearer ${getUser().token}`
                         } 
                     }).then(res => res.json())
-                    .then(data => console.log(data));
+                    .then(() => navigate(getUrl()));
             }}>
                 <Icon/>
-                <div className="font-normal hover:underline">{message()}</div>
+                <div className="font-normal hover:underline text-xs md:text-base lg:text-lg h-full flex items-center">
+                    <div className="h-fit">{message()}</div>
+                </div>
             </button>
             <div className="flex justify-end font-light gap-1">
-                <div className="text-xs text-right h-fit" >{time()}</div>
-                <button onClick={ () => {
+                <div className="text-xs md:text-sm lg:text-base text-right align-middle h-full flex items-center" >
+                    <div className="h-fit">{time()}</div>
+                </div>
+                <button className="align-center" onClick={ () => {
                     setItems((prev) => {
                         var arr = [];
                         for (let i = 0; i < prev.length; i++) {
@@ -98,7 +100,7 @@ const NotificationCard = ({notification, index, setItems}) => {
                             'Authorization': `Bearer ${getUser().token}`
                         } 
                     });
-                }}> <CloseIcon/> </button>
+                }}> <CloseIcon fontSize="inherit"/> </button>
             </div>
             
         </div>
@@ -179,13 +181,13 @@ const Notification = () => {
             <div className="flex justify-center items-center">
                 <div className="scroll-my-3 flex mx-3 w-full h-full max-w-[800px] bg-background flex-col">
                     <div className="my-3 mx-3 flex justify-between">
-                        <div className="font-bold text-2xl">Notifications</div>
+                        <div className="font-bold text-lg md:text-xl lg:text-2xl">Notifications</div>
                         <select onChange={(e) => {
                                 setItems([]);
                                 setNextPageNum(1);
                                 setHasMore(true);
                                 setFilter(e.target.value)
-                            }} className="rounded-lg focus:ring-primary focus:outline-none focus:ring-1 px-2 py-1">
+                            }} className="rounded-lg focus:ring-primary focus:outline-none focus:ring-1 px-2 py-1 text-xs lg:text-base">
                             <option value="unread">Unread</option>
                             <option value="read">Read</option>
                             <option value="all">All</option>
