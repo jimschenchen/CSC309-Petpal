@@ -105,6 +105,7 @@ const Search = () => {
         const newPets = res.results;
         if (resetPage) {
           setPets(newPets);
+          console.log("Reset page",newPets);
         }
         else {
           setPets([...pets, ...newPets]);

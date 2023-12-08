@@ -41,7 +41,7 @@ const Card = ({item}) => {
               <div className="flex items-center -space-x-3">
               </div>
               <p className="block font-sans text-sm font-light leading-relaxed text-inherit antialiased">
-                  Id: {item.id} | Shelter: {item.date}
+                  Id: {item.id} | Shelter: {item.shelter_name}
               </p>
           </div>
       </Link>

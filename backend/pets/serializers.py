@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import Pet
-from .models import User
+from accounts.models import User
 
 
 class ChoiceField(serializers.ChoiceField):
@@ -31,7 +31,6 @@ class PetSerializer(serializers.ModelSerializer):
         fields = ['id', 'shelter', 'status', 'image', 'name', 'breed', 'color', 'size', 'age', 'gender', 'description',
                   'medical_history', 'behavior', 'addition', "shelter_name"]
         read_only_fields = ['id', 'shelter']
-
 
     def get_shelter_name(self, obj):
         try:
