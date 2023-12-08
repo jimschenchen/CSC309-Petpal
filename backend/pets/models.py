@@ -43,8 +43,14 @@ class Pet(models.Model):
 
     shelter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pets')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=AVAILABLE)
-    image = models.ImageField(upload_to='pets/', null=True, blank=True, default='static/images/default_pet_image.png')
-    
+    # image = models.ImageField(upload_to='pets/', null=True, blank=True, default='static/images/default_pet_image.png')
+
+    image = models.ImageField(
+        blank=True,
+        null=True,
+        default='static/images/default_pet_image.png'
+    )
+
     @cached_property
     def default_image(self):
         return 'static/images/default_pet_image.png'  # Path to the default pet image

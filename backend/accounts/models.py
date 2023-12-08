@@ -50,9 +50,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     @cached_property
     def default_avatar(self):
         if self.user_type == self.SHELTER:
-            return 'https://bucket-petpal.s3.amazonaws.com/media/static/images/default_shelter_avatar.png'
+            return 'static/images/default_shelter_avatar.png'
         else:
-            return 'https://bucket-petpal.s3.amazonaws.com/media/static/images/default_seeker_avatar.png'
+            return 'static/images/default_seeker_avatar.png'
 
     def save(self, *args, **kwargs):
         if not self.avatar:
