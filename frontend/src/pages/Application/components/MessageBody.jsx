@@ -132,7 +132,7 @@ const MessageBody = ({applicationId}) => {
   }
 
   return (
-      <div id='msg-content' className="flex flex-col justify-between w-full -mt-1 h-[70vh] bg-[#EFEFEF] 
+      <div id='msg-content' className="flex flex-col justify-between w-full -mt-1 h-[70vh] max-h-[850px] bg-[#EFEFEF] 
         rounded-b-lg p-4 sm:p-10 border-seeker border-shelter">
 
         {/* <div ref={messages} className="w-full h-full flex flex-col gap-4 overflow-y-auto my-4">
@@ -141,9 +141,10 @@ const MessageBody = ({applicationId}) => {
           ))}
         </div> */}
 
-        <div id="message" ref={messages} className="w-full h-full flex flex-col-reverse gap-4 overflow-y-auto my-4">
+        <div id="message" ref={messages} className="w-full h-full flex flex-col-reverse gap-4 overflow-y-scroll my-4">
+          <div className='h-screen'>
           <InfiniteScroll
-            className="w-full h-full flex flex-col-reverse gap-4 overflow-y-auto my-4"
+            className="w-full h-full flex flex-col-reverse gap-4 overflow-y-auto my-4 bottom-0"
             dataLength={items.length} //This is important field to render the next data
             next={fetchMoreMsg}
             hasMore={hasMorePage}
@@ -159,6 +160,8 @@ const MessageBody = ({applicationId}) => {
               ))}
             {isLoading && <center><CircularProgress color='inherit'/></center>}
           </InfiniteScroll>
+          </div>
+          
         </div>
 
         <div className="flex justify-end items-center gap-2">
