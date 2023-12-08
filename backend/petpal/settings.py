@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    'djoser',
     'django_filters',
     "notifications",
     "drf_yasg",
@@ -168,6 +169,14 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Email host setup
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
 SIMPLE_JWT = {
     'TOKEN_OBTAIN_SERIALIZER': 'accounts.serializers.CustomTokenObtainPairSerializer',
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
@@ -179,3 +188,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "https://petpal.jimschenchen.com"
 ]
+
+DOMAIN = 'localhost:3000'
+SITE_NAME = 'Petpal'
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_URL': 'auth/reset/confirm/{uid}/{token}',
+}
