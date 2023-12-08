@@ -80,7 +80,7 @@ const NotificationCard = ({notification, index, setItems}) => {
                 <div className="font-normal hover:underline">{message()}</div>
             </button>
             <div className="flex justify-end font-light gap-1">
-                <div>{time()}</div>
+                <div className="text-xs text-right h-fit" >{time()}</div>
                 <button onClick={ () => {
                     setItems((prev) => {
                         var arr = [];

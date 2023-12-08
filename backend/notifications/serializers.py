@@ -19,7 +19,7 @@ class NotificationRelatedField(serializers.RelatedField):
                         'pet_name': value.content_object.pet.name}
         elif isinstance(value, Application):
             return {'type': 'application',
-                    'application_id': value.content_object.id,
+                    'application_id': value.id,
                     'pet_name': value.pet.name}
         raise Exception('Unexpected type of related object')
 
