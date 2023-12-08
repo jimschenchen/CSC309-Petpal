@@ -22,7 +22,7 @@ const ManageApplication = () => {
     }, [data, isLoading]);
 
     return (
-        
+
         <main className="mt-0 py-6 px-2">
       {/* <!-- Shelter Management Header --> */}
 
@@ -36,8 +36,7 @@ const ManageApplication = () => {
               {/* <!-- Table --> */}
               <div className="flex mx-3 w-full max-w-[800px] bg-background flex-col">
                   <div className="font-bold text-xl my-3 mx-3 left-0">Applications</div>
-      
-      
+
                   {/* <!-- table head --> */}
                   <div className="flex justify-between font-semibold border-b-2 border-black px-3 py-1">
                       <div className="flex w-2/6 sm:w-1/3 justify-start">User name</div>
@@ -46,10 +45,10 @@ const ManageApplication = () => {
                       <div className="sm:flex sm:w-1/3 sm:justify-center hidden">Status</div>
                       <div className="flex w-1/3 justify-end">Actions</div>
                   </div>
-      
+
                   {/* <!-- table row --> */}
                   {applications.map(application => (
-              <ApplicationItemShelter Id={application.id} UserName={application.name} PetName={application.pet} LastUpdate={application.last_updated_time} Status={application.status}/>
+              <ApplicationItemShelter Id={application.id} UserName={application.name} PetName={application.pet_name} LastUpdate={application.last_updated_time} Status={application.status}/>
             ))}
               </div> 
             </div>
