@@ -19,6 +19,7 @@ const UpdatePet = () => {
     const [behavior, setBehavior] = useState('');
     const [status, setStatus] = useState('');
     const [addition, setAddition] = useState('');
+    const [image, setImage] = useState('');
 
     const SIZE_CHOICES = [
         { value: 'small', label: 'Small' },
@@ -41,7 +42,7 @@ const UpdatePet = () => {
     const getPet = async () => {
         try {
             const res = await Request(`/pets/pet/${petId}`, "GET");
-            console.log(res);
+            console.log('res', res)
             setStatus(res?.status);
             setName(res?.name);
             setColor(res?.color);
@@ -64,34 +65,42 @@ const UpdatePet = () => {
 
     const navigate = useNavigate();
 
+    const handleImageChange = (e) => {
+        // Check if files are selected and update state
+        if (e.target.files && e.target.files[0]) {
+            setImage(e.target.files[0]);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Construct the updated pet data object
-        const updatedPet = {
-            status,
-            name,
-            breed,
-            color,
-            size,
-            age,
-            gender,
-            description,
-            medical_history: medicalH,
-            behavior,
-            addition,
-        };
-        console.log(updatedPet);
+        const formData = new FormData();
+        formData.append('status', status);
+        formData.append('name', name);
+        formData.append('breed', breed);
+        formData.append('color', color);
+        formData.append('size', size);
+        formData.append('age', age);
+        formData.append('gender', gender);
+        formData.append('description', description);
+        formData.append('medical_history', medicalH);
+        formData.append('behavior', behavior);
+        // formData.append('image', image);
+
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
 
         try {
             // Make a PUT request to update the pet
             const response = await fetch(`https://petpal.api.jimschenchen.com/pets/pet/${petId}/`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${getUser().token}`
                 },
-                body: JSON.stringify(updatedPet)
+                body: formData
             });
             console.log('Pet updated:', await response.json());
             if (!response.ok) {
@@ -113,6 +122,10 @@ const UpdatePet = () => {
             <form className="bg-white p-6 rounded shadow-md" onSubmit={handleSubmit}>
                 {/* <!-- Pet Information Section --> */}
                 <div className="mb-6">
+                    <div>
+                        <label htmlFor="avatar" className="block mb-1 font-bold">Upload Pet's Image:</label>
+                        <input type="file" id="avatar" name="avatar" onChange={handleImageChange} />
+                    </div>
                     <div>
                         <label htmlFor="name" className="block mb-1 font-bold">Pet Name:</label>
                         <input type="text" required value={name} onChange={(e) => setName(e.target.value)} id="name" name="name" className="w-full border rounded px-3 py-2" />

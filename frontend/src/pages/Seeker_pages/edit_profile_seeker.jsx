@@ -32,6 +32,13 @@ const SeekerAccountUpdate = () => {
     }, [data, isLoading]);
     const navigate = useNavigate();
 
+    const handleImageChange = (e) => {
+        // Check if files are selected and update state
+        if (e.target.files && e.target.files[0]) {
+            setAvatar(e.target.files[0]);
+        }
+    };
+
     const handleDelete = async () => {
         if(window.confirm(`Are you sure you want to delete ${name}?`)) {
             try {
@@ -58,25 +65,23 @@ const SeekerAccountUpdate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const updatedSeeker = {
-            user_type,
-            email,
-            name,
-            address,
-            phone_number: phone,
-            description,
-        };
-        console.log(updatedSeeker);
+        const formData = new FormData();
+        formData.append('user_type', 'pet_seeker');
+        formData.append('email', email);
+        formData.append('name', name);
+        formData.append('address', address);
+        formData.append('phone_number', phone);
+        formData.append('description', description);
+        // formData.append('avatar', avatar);
 
         try {
             // Make a PUT request to update the profile
             const response = await fetch(`https://petpal.api.jimschenchen.com/accounts/user/`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${getUser().token}`
                 },
-                body: JSON.stringify(updatedSeeker)
+                body: formData
             });
             console.log('Profile updated:', await response.json());
             if (!response.ok) {
@@ -85,7 +90,7 @@ const SeekerAccountUpdate = () => {
             console.log(response);
 
             // Redirect to the appropriate page after successful creation
-            updateUsername(updatedSeeker.name);
+            updateUsername(name);
             navigate(`/`);
         } catch (err) {
             console.error("Error updating Profile:", err);
@@ -109,7 +114,7 @@ const SeekerAccountUpdate = () => {
                                     </div>
                                     <div>
                                         <label htmlFor="avatar" className="block text-sm font-bold mb-2">Upload Profile Picture:</label>
-                                        <input type="file" id="avatar" name="avatar" onChange={''} />
+                                        <input type="file" id="avatar" name="avatar" onChange={handleImageChange} />
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-end">

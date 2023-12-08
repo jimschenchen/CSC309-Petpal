@@ -35,8 +35,11 @@ const ShelterAccountUpdate = () => {
     }, [userId])
     const navigate = useNavigate();
 
-    const handleAvatarChange = (e) => {
-
+    const handleImageChange = (e) => {
+        // Check if files are selected and update state
+        if (e.target.files && e.target.files[0]) {
+            setAvatar(e.target.files[0]);
+        }
     };
 
     const handleDelete = async () => {
@@ -65,26 +68,23 @@ const ShelterAccountUpdate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const updatedShelter = {
-            user_type,
-            email,
-            name,
-            address,
-            phone_number: phone,
-            description,
-
-        };
-        console.log('updatedShelter', updatedShelter);
+        const formData = new FormData();
+        formData.append('user_type', 'shelter');
+        formData.append('email', email);
+        formData.append('name', name);
+        formData.append('address', address);
+        formData.append('phone_number', phone);
+        formData.append('description', description);
+        // formData.append('avatar', avatar);
 
         try {
             // Make a PUT request to update the profile
             const response = await fetch(`https://petpal.api.jimschenchen.com/accounts/user/`, {
                 method: 'PATCH',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${getUser().token}`
                 },
-                body: JSON.stringify(updatedShelter)
+                body: formData
             });
             console.log('Profile updated:', await response.json());
             if (!response.ok) {
@@ -93,7 +93,7 @@ const ShelterAccountUpdate = () => {
             console.log(response);
 
             // Redirect to the appropriate page after successful creation
-            updateUsername(updatedShelter.name);
+            updateUsername(name);
             navigate(`/shelter_detail/${getUser().userId}`);
         } catch (err) {
             console.error("Error updating Profile:", err);
@@ -116,7 +116,7 @@ const ShelterAccountUpdate = () => {
                                 </div>
                                 <div>
                                     <label htmlFor="avatar" className="block text-sm font-bold mb-2">Upload Profile Picture:</label>
-                                    <input type="file" id="avatar" name="avatar" onChange={handleAvatarChange} />
+                                    <input type="file" id="avatar" name="avatar" onChange={handleImageChange} />
                                 </div>
                             </div>
                             <div className="flex items-center justify-end">
