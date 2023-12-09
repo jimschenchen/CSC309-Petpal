@@ -10,7 +10,7 @@ const Contact = ({ shelter }) => {
     const googleMapsURL = `https://www.google.com/maps/search/?api=1&query=${encodeAddressForURL(shelter?.address)}`;
   
     return (
-      <div className="bg-white p-6 rounded-lg shadow duration-300 
+        <div className="bg-white p-6 rounded-lg shadow duration-300 
          hover:bg-gray-100 hover:shadow-md hover:p-8 text-base">
             <div className="text-left">
                 <strong>Location:</strong> {shelter?.address}
