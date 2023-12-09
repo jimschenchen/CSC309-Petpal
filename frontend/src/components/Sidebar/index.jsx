@@ -111,7 +111,7 @@ const Sidebar = () => {
           <div className="relative h-10 w-auto min-w-[100px]">
             <select name="status"
                     className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-red-500 focus:border-2 focus:border-primary focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                    value={filtersTemp.age}
+                    value={filtersTemp.status}
                     onChange={handleFilterChange}>
 
               <option value="Any">Any</option>

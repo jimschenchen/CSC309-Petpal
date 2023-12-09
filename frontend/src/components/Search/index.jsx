@@ -19,6 +19,8 @@ var chipColorMap = {
   'gender': 'bg-green-500',
   'sort': 'bg-orange-500',
   'name': 'bg-purple-500',
+  'status': 'bg-rose-500',
+  'shelter': 'bg-emerald-500',
 }
 
 const Search = () => {
@@ -109,7 +111,7 @@ const Search = () => {
         const newPets = res.results;
         if (resetPage) {
           setPets(newPets);
-          console.log("Reset page",newPets);
+          console.log("Reset page", newPets);
         }
         else {
           setPets([...pets, ...newPets]);

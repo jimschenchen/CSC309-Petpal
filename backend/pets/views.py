@@ -141,7 +141,7 @@ class PetMetaGetView(APIView):
         age = Pet.objects.values_list('age', flat=True).distinct()
         age_list = list(age)
         status_list = ['available', 'pending', 'adopted', 'withdrawn', 'all']
-        shelter = User.objects.filter(user_type=User.SHELTER).values_list('name', flat=True).distinct()
+        shelter = User.objects.filter(user_type=User.SHELTER).values_list('name', 'id').distinct()
         shelter_list = list(shelter)
 
         return Response({'breed': breed_list, 'gender': gender_list, 'size': size_list, 'age': age_list, 'status': status_list, 'shelter': shelter_list})
