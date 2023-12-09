@@ -29,7 +29,7 @@ class PetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pet
         fields = ['id', 'shelter', 'status', 'image', 'name', 'breed', 'color', 'size', 'age', 'gender', 'description',
-                  'medical_history', 'behavior', 'addition', "shelter_name"]
+                  'medical_history', 'behavior', 'addition', "shelter_name", "last_updated_time", "created_time"]
         read_only_fields = ['id', 'shelter']
 
     def get_shelter_name(self, obj):
