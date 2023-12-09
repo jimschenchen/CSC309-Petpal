@@ -32,9 +32,9 @@ class Pet(models.Model):
     ]
 
     # Size choice
-    SMALL = 'small'
-    MEDIUM = 'medium'
-    LARGE = 'large'
+    SMALL = '1'
+    MEDIUM = '2'
+    LARGE = '3'
     SIZE_CHOICES = [
         (SMALL, 'small'),
         (MEDIUM, 'medium'),

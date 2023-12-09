@@ -117,8 +117,11 @@ Note: Please do not publish `backend/.env` to avoid information leakage.
 ### Project Hosting Platform: Vercel
 + Frontend and backend are hosted as two separate projects on Vercel.
 + Go to [Vercel](vercel.com), add new project, select the repo holding your code, `Root Directory` select to `frontend` if you are hosting `frontend` first. Click deploy. Create a new project and select `Root Directory` as `backend` to host our `backend`. Select `Framework Preset` as `Create React Project` if you are hosting `backend`.
++ Go to `settings` -> `Environment Variables` and add all the Environment Variables there. Please refer to section [Environment Variables](#environment-variables) .
++ Note: Since serverless deployment is stateless, local storage and local database are not allowed. Please setup your own database and your own storage and set Environment Variables properly in section [Environment Variables](#environment-variables).
 
-
+### Postgresql
+We are using [supabase](https://supabase.com/) as our Postgresql. Create an account, create an project and copy all the database information to [Environment Variables (#environment-variables).
 
 
 ## Environment Variables

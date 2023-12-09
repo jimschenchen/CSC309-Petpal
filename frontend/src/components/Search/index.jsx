@@ -96,6 +96,22 @@ const Search = () => {
       }
 
       for (const [key, value] of Object.entries(filtersTemp)) {
+        if (key === "size") {
+          switch (value) {
+            case "small":
+              value = '1';
+              break;
+            case "medium":
+              value = '2';
+              break;
+            case "large":
+              value = '3';
+              break;
+            default:
+              value = 'Any';
+              break;
+        }
+
         if (value !== "Any") {
           if (key === "sort") {
             url += "&" + "ordering" + "=" + value;
@@ -103,6 +119,7 @@ const Search = () => {
             url += "&" + key + "=" + value;
           }
         }
+
       }
 
       console.log("url", url);
