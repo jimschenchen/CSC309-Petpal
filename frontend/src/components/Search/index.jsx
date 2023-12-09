@@ -96,33 +96,35 @@ const Search = () => {
       }
 
       for (const [key, value] of Object.entries(filtersTemp)) {
+        var valueTemp = value;
         if (key === "size") {
           switch (value) {
             case "small":
-              value = '1';
+              valueTemp = '1';
               break;
             case "medium":
-              value = '2';
+              valueTemp = '2';
               break;
             case "large":
-              value = '3';
+              valueTemp = '3';
               break;
             default:
-              value = 'Any';
+              valueTemp = 'Any';
               break;
+          }
         }
 
-        if (value !== "Any") {
+        if (valueTemp !== "Any") {
           if (key === "sort") {
-            url += "&" + "ordering" + "=" + value;
+            url += "&" + "ordering" + "=" + valueTemp;
           } else {
-            url += "&" + key + "=" + value;
+            url += "&" + key + "=" + valueTemp;
           }
         }
 
       }
 
-      console.log("url", url);
+      // console.log("url", url);
 
       try {
         const res = await Request(url, "GET");
