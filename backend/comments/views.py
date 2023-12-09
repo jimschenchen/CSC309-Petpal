@@ -112,6 +112,14 @@ class ApplicationCommentListCreateAPIView(generics.ListCreateAPIView):
         return Comment.objects.filter(content_type__model='application',
                                       object_id=application.id).order_by('-creation_time')
 
+    def get_serializer_context(self):
+        sender = self.request.user
+        application_id = self.kwargs.get('application_id')
+        application = get_object_or_404(Application, pk=application_id)
+        return {'sender': sender, 'content_object': application}
+        
+    
+    
     def perform_create(self, serializer):
         application_id = self.kwargs['application_id']
         application = get_object_or_404(Application, pk=application_id)
