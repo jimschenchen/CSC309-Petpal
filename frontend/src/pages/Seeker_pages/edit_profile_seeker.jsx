@@ -4,6 +4,11 @@ import PageFrame from '../../components/PageFrame';
 import { getUser, removeUser, updateUsername } from "../../utils/credential";
 import useFetchGet from '../../utils/useFetch';
 import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 
 const SeekerAccountUpdate = () => {
@@ -18,11 +23,12 @@ const SeekerAccountUpdate = () => {
     const [description, setDescription] = useState('');
     const { user_type } = useState('seeker');
     const { data, isLoading, error } = useFetchGet(`accounts/users/${userId}/profile/`);
-    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [open, setOpen] = useState(false);
     console.log(data);
 
-    const handleDeleteClick = () => {
-        setOpenDeleteDialog(true);
+    const handleDelete = async () => {
+        // Instead of window.confirm, we open the dialog
+        setOpen(true);
     };
 
     useEffect(() => {
@@ -37,6 +43,7 @@ const SeekerAccountUpdate = () => {
             console.log(seeker);
         }
     }, [data, isLoading]);
+
     const navigate = useNavigate();
 
     const handleImageChange = (e) => {
@@ -58,6 +65,7 @@ const SeekerAccountUpdate = () => {
             });
             if (response.ok) {
                 console.log(`User ${name} deleted successfully`);
+                handleClose();
                 removeUser();
                 navigate('/');
             } else {
@@ -66,11 +74,12 @@ const SeekerAccountUpdate = () => {
         } catch (err) {
             console.error("Error deleting user:", err);
         }
-        setOpenDeleteDialog(false);
+        setOpen(true);
     };
-    const handleDeleteCancel = () => {
-        setOpenDeleteDialog(false);
-      };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -163,30 +172,48 @@ const SeekerAccountUpdate = () => {
 
                             <div className='flex justify-between'>
                                 <button type="submit" className="bg-primary text-white hover:font-bold py-2 px-4 rounded">Update Account</button>
-                                <button onClick={handleDeleteClick} className="bg-primary text-white hover:font-bold py-2 px-4 rounded">Delete Account</button>
+                                <button type="button" onClick={handleDelete} className="bg-primary text-white hover:font-bold py-2 px-4 rounded">Delete Account</button>
                             </div>
                         </form>
                     </div>
                 </main>
 
-                <Dialog open={openDeleteDialog} onClose={handleDeleteCancel}>
-                    <div className="px-4 py-2">
-                        <div className="text-lg">Are you sure you want to delete {name}?</div>
-                        <div className="flex gap-2 mt-4 right-0 justify-end">
-                            <button
-                                className="text-green-600 hover:font-bold py-1 px-2"
-                                onClick={handleDeleteConfirm}>
-                                Confirm
-                            </button>
-                            <button
-                                className="text-red-600 hover:font-bold py-1 px-2"
-                                onClick={handleDeleteCancel}>
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </Dialog>
-
+                <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Confirm Pet Deletion"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Are you sure you want to delete {name}?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions><Button onClick={handleDeleteConfirm} autoFocus sx={{
+                    backgroundColor: '#10B981', // Tailwind green-600
+                    color: 'white',
+                    '&:hover': {
+                        backgroundColor: '#059669', // Tailwind green-700
+                    },
+                    py: 1, // theme.spacing(1)
+                    px: 2, // theme.spacing(2)
+                }}>
+                    Confirm
+                </Button>
+                    <Button onClick={handleClose} sx={{
+                        backgroundColor: '#EF4444', // Tailwind red-600
+                        color: 'white',
+                        '&:hover': {
+                            backgroundColor: '#DC2626', // Tailwind red-700
+                        },
+                        py: 1, // theme.spacing(1)
+                        px: 2, // theme.spacing(2)
+                    }}>Cancel</Button>
+                </DialogActions>
+            </Dialog>
             </div></PageFrame>
 
 
