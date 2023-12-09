@@ -44,6 +44,8 @@ const Search = () => {
       size: "Any",
       gender: "Any",
       sort: "Any",
+      status: "Any",
+      shelter: "Any",
     });
 
     // adaptive set the page_size
@@ -86,6 +88,8 @@ const Search = () => {
           size: searchParams.get("size") || "Any",
           gender: searchParams.get("gender") || "Any",
           sort: searchParams.get("sort") || "Any",
+          status: searchParams.get("status") || "Any",
+          shelter: searchParams.get("shelter") || "Any",
         };
       }
 

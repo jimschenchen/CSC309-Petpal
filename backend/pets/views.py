@@ -56,6 +56,9 @@ class PetListCreateView(generics.ListCreateAPIView):
         if request.query_params.get('status', "") == "":
             request.query_params._mutable = True
             request.query_params["status"] = Pet.AVAILABLE
+        if request.query_params.get('status', "") == "all":
+            request.query_params._mutable = True
+            request.query_params["status"] = ""
         return super().get(request, *args, **kwargs)
 
     @swagger_auto_schema(
@@ -135,5 +138,8 @@ class PetMetaGetView(APIView):
         size_list = ["small", "medium", "large"]
         age = Pet.objects.values_list('age', flat=True).distinct()
         age_list = list(age)
+        status_list = ['available', 'pending', 'adopted', 'withdrawn', 'all']
+        shelter = User.objects.filters(user_type=User.SHELTER).values_list('name', flat=True).distinct()
+        shelter_list = list(shelter)
 
-        return Response({'breed': breed_list, 'gender': gender_list, 'size': size_list, 'age': age_list})
+        return Response({'breed': breed_list, 'gender': gender_list, 'size': size_list, 'age': age_list, 'status': status_list, 'shelter': shelter_list})
