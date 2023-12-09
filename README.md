@@ -122,6 +122,7 @@ Note: Please do not publish `backend/.env` to avoid information leakage.
 
 ### Postgresql
 We are using [supabase](https://supabase.com/) as our Postgresql. Create an account on [supabase](https://supabase.com/), create an project and copy all the database information to [Environment Variables](#environment-variables).
++ Please `python3 ./manage.py makemigrations` and `python3 ./manage.py migirate` locally once to make migrations on online database.
 
 ### Storage
 We are using AWS S3 as our storage. You can check this tutorial to create your S3: [tutorial](https://testdriven.io/blog/storing-django-static-and-media-files-on-amazon-s3/). Then add your S3 information to [Environment Variables](#environment-variables).
