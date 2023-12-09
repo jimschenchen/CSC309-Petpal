@@ -72,6 +72,7 @@ const Sidebar = () => {
       setFiltersTemp(searchParamsFilters);
     }
 
+
     useEffect(() => {
       initialFiltersMeta();
       loadSearchParamFilters();
