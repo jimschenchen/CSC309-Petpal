@@ -116,7 +116,8 @@ Note: Please do not publish `backend/.env` to avoid information leakage.
 
 ### Project Hosting Platform: Vercel
 + Frontend and backend are hosted as two separate projects on Vercel.
-+ Go to [Vercel](vercel.com), add new project, select the repo holding your code, `Root Directory` select to `frontend` if you are hosting `frontend` first. Click deploy. Create a new project and select `Root Directory` as `backend` to host our `backend`. Select `Framework Preset` as `Create React Project` if you are hosting `backend`.
++ Go to [Vercel](vercel.com), add new project, select the repo holding your code, `Root Directory` select to `frontend` if you are hosting `frontend` first. Click deploy. Frontend vercel config file are on `backend/vercel.json` and it's already set for you.
++ Create a new project and select `Root Directory` as `backend` to host our `backend`. Select `Framework Preset` as `Create React Project` if you are hosting `backend`.
 + Go to `settings` -> `Environment Variables` and add all the Environment Variables there. Please refer to section [Environment Variables](#environment-variables) .
 + **Note**: Since serverless deployment is stateless, local storage and local database are not allowed. Please setup your own database and your own storage and set Environment Variables properly in section [Environment Variables](#environment-variables).
 
@@ -142,6 +143,7 @@ We are using AWS S3 as our storage. You can check this tutorial to create your S
 **Email Host Server:**
 + Email Host are used to send email for resetting passwords.
 + Configuring following variables `EMAIL_HOST_USER` and `EMAIL_HOST_PASSWORD`
++ Setup and get variables from Gmail. tutorial: [tutorial](https://support.google.com/mail/answer/185833?hl=en)
 
 
 
