@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import PageFrame from '../../components/PageFrame';
 import { getUser, removeUser, updateUsername } from "../../utils/credential";
 import useFetchGet from '../../utils/useFetch';
+import Dialog from '@mui/material/Dialog';
+
 
 const SeekerAccountUpdate = () => {
 
@@ -16,7 +18,12 @@ const SeekerAccountUpdate = () => {
     const [description, setDescription] = useState('');
     const { user_type } = useState('seeker');
     const { data, isLoading, error } = useFetchGet(`accounts/users/${userId}/profile/`);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     console.log(data);
+
+    const handleDeleteClick = () => {
+        setOpenDeleteDialog(true);
+    };
 
     useEffect(() => {
         if (data && !isLoading) {
@@ -39,28 +46,31 @@ const SeekerAccountUpdate = () => {
         }
     };
 
-    const handleDelete = async () => {
-        if(window.confirm(`Are you sure you want to delete ${name}?`)) {
-            try {
-                const response = await fetch(`https://petpal.api.jimschenchen.com/accounts/users/${userId}`,{
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${getUser().token}`
-                    }
-                });
-                if (response.ok) {
-                    console.log(`User ${name} deleted successfully`);
-                    removeUser();
-                    navigate('/');
-                } else {
-                    console.error("Failed to delete user");
+    const handleDeleteConfirm = async () => {
+
+        try {
+            const response = await fetch(`https://petpal.api.jimschenchen.com/accounts/users/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getUser().token}`
                 }
-            } catch (err) {
-                console.error("Error deleting user:", err);
+            });
+            if (response.ok) {
+                console.log(`User ${name} deleted successfully`);
+                removeUser();
+                navigate('/');
+            } else {
+                console.error("Failed to delete user");
             }
+        } catch (err) {
+            console.error("Error deleting user:", err);
         }
-    }
+        setOpenDeleteDialog(false);
+    };
+    const handleDeleteCancel = () => {
+        setOpenDeleteDialog(false);
+      };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -151,12 +161,33 @@ const SeekerAccountUpdate = () => {
 
                             <div className='flex justify-between'>
                                 <button type="submit" className="bg-primary text-white hover:font-bold py-2 px-4 rounded">Update Account</button>
-                                <button onClick={handleDelete} className="bg-primary text-white hover:font-bold py-2 px-4 rounded">Delete Account</button>
+                                <button onClick={handleDeleteClick} className="bg-primary text-white hover:font-bold py-2 px-4 rounded">Delete Account</button>
                             </div>
                         </form>
                     </div>
                 </main>
+
+                <Dialog open={openDeleteDialog} onClose={handleDeleteCancel}>
+                    <div className="px-4 py-2">
+                        <div className="text-lg">Are you sure you want to delete {name}?</div>
+                        <div className="flex gap-2 mt-4 right-0 justify-end">
+                            <button
+                                className="text-green-600 hover:font-bold py-1 px-2"
+                                onClick={handleDeleteConfirm}>
+                                Confirm
+                            </button>
+                            <button
+                                className="text-red-600 hover:font-bold py-1 px-2"
+                                onClick={handleDeleteCancel}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </Dialog>
+
             </div></PageFrame>
+
+
     );
 };
 
