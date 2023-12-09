@@ -71,6 +71,23 @@ const Reviews = ({shelter}) => {
     });
   }, [posted]);
 
+
+  useEffect(() => {
+    // load meta
+    fetch(`https://petpal.api.jimschenchen.com/comments/shelter/${shelter.id}/comments/meta/`, {
+      method: "GET",
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getUser().token}`
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
+
+  }, []);
+
   const loadMore = () => {
     fetch(nextUrl, {
       method: "GET",

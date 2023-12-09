@@ -14,6 +14,9 @@ from notifications.models import create_notification
 from .permissions import IsRelatedUser, IsApplicationRelatedUser
 from .serializers import CommentSerializer
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 
 class ShelterCommentListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
@@ -153,3 +156,24 @@ class SpecificCommentView(RetrieveAPIView):
         comment = get_object_or_404(queryset, pk=self.kwargs.get('pk'))
         self.check_object_permissions(self.request, comment)
         return comment
+
+
+class ShelterCommentMetaGetView(APIView):
+    def get(self, request, shelter_id):
+        shelter = get_object_or_404(User, pk=shelter_id, user_type=User.SHELTER)
+        all_comments = Comment.objects.filter(content_type__model='user', object_id=shelter.id).order_by('-creation_time')
+        all_comments_count = all_comments.count()
+        not_null_comments_count = all_comments.exclude(rating__isnull=True).count()
+
+        rating_counts = {}
+        for rating in range(1, 6):
+            rating_counts[f'rating_{rating}_count'] = all_comments.filter(rating=rating).count()
+
+        # Prepare the response
+        response_data = {
+            'total_comments_count': all_comments_count,
+            'not_null_comments_count': not_null_comments_count,
+            **rating_counts  # This unpacks the rating_counts dict into the response_data
+        }
+
+        return Response(response_data)
