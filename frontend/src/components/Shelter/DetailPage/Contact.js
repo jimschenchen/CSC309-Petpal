@@ -6,7 +6,7 @@ const Contact = ({ shelter }) => {
 
   const encodedEmail = encodeURIComponent(shelter?.email);
 
-  // Construct the Google Maps URL with the shelter's addressd
+  // Construct the Google Maps URL with the shelter's addressd 
   const googleMapsURL = `https://www.google.com/maps/search/?api=1&query=${encodeAddressForURL(shelter?.address)}`;
 
   return (
