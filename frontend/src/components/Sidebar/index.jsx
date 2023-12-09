@@ -52,7 +52,7 @@ const Sidebar = () => {
         setSidebarVisible(!sidebarVisible);
     };
 
-    const sidebarClasses = `bg-background w-full overflow-y-scroll lg:h-[calc(100vh-11rem)] h-[calc(100vh-10.5rem)] no-scrollbar mr-0 rounded-lg bg-gray-100 border-gray-100 h-fit lg:m-4 px-4 pb-4 border-4 space-y-3 z-50 lg:relative lg:w-64 transition-transform duration-200 ease-in-out ${
+    const sidebarClasses = `bg-background w-full overflow-y-scroll lg:h-[calc(100vh-10rem)] no-scrollbar mr-0 rounded-lg bg-gray-100 border-gray-100 lg:m-4 px-4 pb-4 border-4 space-y-3 z-50 lg:relative lg:w-64 transition-transform duration-200 ease-in-out ${
         sidebarVisible ? 'absolute inset-y-0 left-0 translate-x-0' : 'absolute inset-y-0 left-0 lg:translate-x-0 -translate-x-[110%]'
     }`;
 
@@ -99,10 +99,6 @@ const Sidebar = () => {
 
     return <>
          <div id="sidebar" className={sidebarClasses}>
-          <a href="#" className={"flex justify-center items-center lg:hidden rounded-[7px] py-6 " + headerColor()}>
-            <img src="/logo.svg" className="mr-3 h-12" alt="PetPal logo" />
-            <span className="self-center text-3xl font-extrabold text-white">PetPal</span>
-          </a>
 
           <div id="filter_heading" className="pt-2 lg:pt-0 flex items-center">
             <FilterAltIcon/>

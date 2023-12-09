@@ -1,223 +1,202 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useFetchGet from "../../../utils/useFetch";
-
 import Rating from '@mui/material/Rating';
-import StarIcon from '@mui/icons-material/Star';
-import Avatar from '@mui/material/Avatar';
-import LinearProgress from '@mui/material/LinearProgress';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import InfiniteScroll from "react-infinite-scroll-component";
+import { CircularProgress } from "@mui/material";
+import { getUser } from "../../../utils/credential";
+
+const Review = ({review}) => {
+  return (
+    <div className="p-4 text-base md:text-lg border-gray-200 border-b-2">
+      {review.rating && <div><Rating value={review.rating} readOnly/></div>}
+      <p>{review.message}</p>
+      <h1 className="text-sm md:text-base text-right">{review.sender_name}</h1>
+    </div>
+  )
+ 
+}
+
 
 const Reviews = ({shelter}) => {
   const [reviews, setReviews] = useState([]);
-  const [hiddenReviews, setHiddenReviews] = useState([]);
-  console.log(shelter);
-  const {data, isLoading, error} = useFetchGet(`comments/shelter/${shelter.id}/comments/`);
 
-  const [ hasMorePage, setHasMorePage ] = useState(true);
+  const [avg_rating, setAvgRating] = useState(null);
 
-  const [reviewsMeta, setReviewsMeta] = useState({
-    1: {percentage: 0, count: 0,},
-    2: {percentage: 0, count: 0,},
-    3: {percentage: 0, count: 0,},
-    4: {percentage: 0, count: 0,},
-    5: {percentage: 0, count: 0,},
-    average: 0,
-    length: 0
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const reviewPerPage = 5;
+  const [message, setMessage] = useState('');
+  const [rating, setRating] = useState(null);
+  
+  const [nextUrl, setNextUrl] = useState(null);
+  const [ hasMorePage, setHasMorePage ] = useState(false);
+
+  const [posted, setPosted] = useState(false);
+  const [isPosting, setIsPosting] = useState(false);
+
 
   useEffect(() => {
-    if (data && !isLoading) {
-      calcReviewMeta(data.results);
-      setReviews(data.results.slice(0, reviewPerPage));
-      setHiddenReviews(data.results.slice(reviewPerPage));
-
-      console.log("review", data.results.slice(0, reviewPerPage));
-
-      if (data.results.slice(reviewPerPage) === 0) {
+    fetch(`https://petpal.api.jimschenchen.com/comments/shelter/${shelter.id}/comments?page=1&page_size=10`, {
+      method: "GET",
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getUser().token}`
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      setReviews(data.results);
+      if (data.next) {
+        setNextUrl(data.next);
+        setHasMorePage(true);
+      }
+      else {
+        setNextUrl(null);
         setHasMorePage(false);
       }
-    }
-  }, [data, isLoading]);
 
-  const calcReviewMeta = (reviews) => {
-    const realReviews = reviews.filter(review => review.rating !== null);
-    const meta = {
-      1: {
-        count: realReviews.filter(review => review.rating === 1).length,
-        percentage: realReviews.filter(review => review.rating === 1).length / realReviews.length * 100
-      },
-      2: {
-        count: realReviews.filter(review => review.rating === 2).length,
-        percentage: realReviews.filter(review => review.rating === 2).length / realReviews.length * 100
-      },
-      3: {
-        count: realReviews.filter(review => review.rating === 3).length,
-        percentage: realReviews.filter(review => review.rating === 3).length / realReviews.length * 100
-      },
-      4: {
-        count: realReviews.filter(review => review.rating === 4).length,
-        percentage: realReviews.filter(review => review.rating === 4).length / realReviews.length * 100
-      },
-      5: {
-        count: realReviews.filter(review => review.rating === 5).length,
-        percentage: realReviews.filter(review => review.rating === 5).length / realReviews.length * 100
-      },
-      average: realReviews.reduce((acc, cur) => acc + cur.rating, 0) / realReviews.length,
-      count: reviews.length
-    }
-    setReviewsMeta(meta)
-    console.log(meta);
+      return fetch(`https://petpal.api.jimschenchen.com/accounts/shelters/${shelter.id}`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getUser().token}`
+        }
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      setAvgRating(data.average_rating)
+      setIsLoading(false);
+    });
+  }, [posted]);
+
+  const loadMore = () => {
+    fetch(nextUrl, {
+      method: "GET",
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getUser().token}`
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      setReviews(prev => [...prev, ...data.results]);
+      if (data.next) {
+        setNextUrl(data.next);
+        setHasMorePage(true);
+      }
+      else {
+        setNextUrl(null);
+        setHasMorePage(false);
+      }
+    });
   }
 
-  const handleLoadMore = () => {
-    if (hiddenReviews.length > 0) {
-      const nextItems = hiddenReviews.slice(0, reviewPerPage);
-      setHiddenReviews(hiddenReviews.slice(reviewPerPage));
-      setReviews(prev => [...prev, ...nextItems]);
-    } else {
-      setHasMorePage(false);
+  const handlePost = () => {
+    if (message === '') {
+      setError('Comment cannot be empty');
+      return;
     }
-  }
 
-  const labels = {
-    0.5: 'Useless',
-    1: 'Useless+',
-    1.5: 'Poor',
-    2: 'Poor+',
-    2.5: 'Ok',
-    3: 'Ok+',
-    3.5: 'Good',
-    4: 'Good+',
-    4.5: 'Excellent',
-    5: 'Excellent+',
-    null: 'No Review'
-  };
+    setIsPosting(true);
 
-
-  const theme = createTheme({
-    palette: {
-      star: {
-        main: '#fbbc04',
+    fetch(`https://petpal.api.jimschenchen.com/comments/shelter/${shelter.id}/comments/`,
+    {
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getUser().token}`
       },
-    },
-  });
-
-  function LinearProgressWithLabel(props) {
-    return (
-      <ThemeProvider theme={theme}>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Box sx={{ minWidth: 25 }}>
-            <Typography variant="body2" color="text.secondary">{props.title}</Typography>
-          </Box>
-          <Box sx={{ width: "100%", mr: 1 }}>
-            <LinearProgress variant="determinate" color="star" {...props} />
-          </Box>
-          <Box sx={{ minWidth: 35 }}>
-            <Typography variant="body2" color="text.secondary">{`${Math.round(
-              props.count
-            )}`}</Typography>
-          </Box>
-        </Box>
-      </ThemeProvider>
-
-    );
+      body: JSON.stringify({
+        message: message,
+        rating: rating
+      })
+    })
+    .then(res => {
+      if(res.ok) {
+        setRating(null);
+        setMessage('');
+        setPosted(prev => !prev);
+        setIsPosting(false);
+      }
+    })
   }
-
 
   return (
-    <div className="mb-6 p-6 bg-white rounded-lg shadow duration-300 hover:bg-gray-100 hover:shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Review Summary</h2>
-
-      <div className="flex max-w-lg mb-4">
-        <div className="basis-3/4">
-          <LinearProgressWithLabel value={reviewsMeta[5].percentage} count={reviewsMeta[5].count} title={5} className="flex-initial"/>
-          <LinearProgressWithLabel value={reviewsMeta[4].percentage} count={reviewsMeta[4].count} title={4} className="flex-initial"/>
-          <LinearProgressWithLabel value={reviewsMeta[3].percentage} count={reviewsMeta[3].count} title={3} className="flex-initial"/>
-          <LinearProgressWithLabel value={reviewsMeta[2].percentage} count={reviewsMeta[2].count} title={2} className="flex-initial"/>
-          <LinearProgressWithLabel value={reviewsMeta[1].percentage} count={reviewsMeta[1].count} title={1} className="flex-initial"/>
-        </div>
-        <div className="basis-1/4 flex flex-col items-center">
-          <div className="text-5xl">
-            {reviewsMeta.average.toFixed(1)}
-          </div>
-
-          <div className="pl-0 mt-2 flex justify-start items-center gap-2">
-            <Rating
-              className=""
-              name="read-only"
-              size="small"
-              value={reviewsMeta.average.toFixed(1)}
-              readOnly
-              precision={0.5}
-              emptyIcon={
-                <StarIcon style={{ opacity: 1 }} fontSize="inherit" />
-              }
-            />
-            <p className="text-sm text-zinc-600">{labels[5]}</p>
-          </div>
-
-          <div className="text-sm">
-            {reviewsMeta.count} reviews
-          </div>
-        </div>
-      </div>
-
-      <h2 className="text-2xl font-bold mb-4 mt-4">Reviews</h2>
-
-      {reviews.map((review) => (
-        <div key={review.id} className="mb-4 flex flex-col">
-          <div className="flex justify-start items-center gap-2">
-            <Avatar sx={{ width: 28, height: 28 }}>
-              {" "}
-              <medium> {review.sender_name.slice(0, 1).toUpperCase()} </medium>
-            </Avatar>
-            <medium> {review.sender_name}</medium>
-          </div>
-
-          <div className="pl-0 mt-2 flex justify-start items-center gap-2">
-            <Rating
-              className=""
-              name="read-only"
-              size="small"
-              value={review.rating}
-              readOnly
-              emptyIcon={
-                <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
-              }
-            />
-            <p className="text-sm text-zinc-600">{labels[review.rating]}</p>
-          </div>
-
-          <p className="pl-1">{review.message}</p>
-        </div>
-      ))}
-
-      <div className="flex justify-center items-center">
-        {hasMorePage ? (
-          <div className="text-slate-600 underline" onClick={handleLoadMore}>
-            {" "}
-            Load more{" "}
-          </div>
-        ) : null}
-      </div>
-
-      <div className="flex justify-end mt-2">
-        <div>
-          <Link
-            to={`/add_review/${shelter.id}`}
-            className="rounded font-sans hover:font-bold bg-primary text-white px-3 py-2"
-          >
-            Add reviews
-          </Link>
-        </div>
-        <div></div>
+    <>
+    <div className="flex flex-col md:flex-row w-full">
+    <div className="md:w-1/2 flex flex-col gap-2 p-4 border-gray-200 border-b-2
+    md:border-r-2">
+      <h1 className="text-lg text-left">Average rating</h1>
+      <div className="flex items-center justify-center gap-2">
+        <div >{Math.round(shelter.average_rating*10)/10}</div>
+      <div className="w-fit"><Rating value={shelter.average_rating} precision={0.1} size="large" readOnly/></div>
       </div>
     </div>
+
+    <div className="md:w-1/2 flex flex-col gap-3 p-4 border-gray-200 border-b-2">
+      <h1 className="text-lg text-left">Add your review</h1>
+      <div className="w-full gap-3 flex-col flex justify-center">
+      
+      
+      <div className="flex flex-col gap-3">
+      <div>
+      <Rating 
+      value={rating}
+      size="large"
+      onChange={(event, newValue) => {
+        setRating(newValue);
+      }}/>
+      </div>
+      
+      </div>
+      <textarea value={message} placeholder="Leave your comment here" name="comment" id="comment" cols="30" 
+      className="border-2 border-black w-full p-2 rounded-lg"
+      onChange={(e) => {setError(''); setMessage(e.target.value)}}/>
+      {error && <p className="text-red-600">{error}</p>}
+      <div className="flex justify-center">
+        <button 
+        className="h-8 rounded font-sans hover:font-bold bg-shelter text-white py-2 w-full"
+        onClick={handlePost}>
+          {isPosting? <CircularProgress color="inherit" size="1rem"/>: "Post"}
+        </button>
+      </div>
+      </div>
+      
+    </div>
+    </div>
+    
+
+    {isLoading && 
+    <div className="h-fit flex justify-center w-full overflow-hidden mt-3">
+      <CircularProgress color="inherit"/></div>}
+
+    {!isLoading && 
+    <div className="h-screen">
+    <InfiniteScroll
+    dataLength={reviews.length}
+    next={loadMore}
+    hasMore={hasMorePage}
+    scrollableTarget='scrollTarget'
+    loader={<div className="h-fit flex justify-center w-full overflow-hidden mt-3"><CircularProgress color="inherit"/></div>}
+    endMessage={<></>}
+    >
+    {reviews.map((review) => (
+        <Review key={review.id} review={review}/>
+      ))}
+    </InfiniteScroll>
+    </div>}
+    
+    
+
+      {/* <div className="flex justify-center items-center">
+      {hasMorePage ? <div className="text-slate-600 underline" onClick={handleLoadMore}> Load more </div>
+       : null}
+      </div> */}
+    </>
+      
   );
 };
 
