@@ -32,9 +32,10 @@ const ShelterDetails = () => {
 
     return (
         <PageFrame>
+        <body className="bg-background ">
             
 
-            <div className="m-6 md:m-12 p-2 bg-background">
+            <div className="m-6 md:m-12 p-2">
                 {/* Shelter Header */}
                 {shelter && <ShelterHeader shelter={shelter} />}
 
@@ -58,6 +59,7 @@ const ShelterDetails = () => {
             </div>
 
             
+        </body>
         </PageFrame>
 
     );
