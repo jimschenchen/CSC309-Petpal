@@ -13,17 +13,17 @@ const Contact = ({ shelter }) => {
       <div className="bg-white p-6 rounded-lg shadow duration-300 hover:bg-gray-100 hover:shadow-md hover:p-8">
         <h2 className="text-2xl font-bold mb-4">Contact & Location</h2>
         <div>
-          <strong>Location:</strong> 
-          <a href={googleMapsURL} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+          <strong>Location: </strong> 
+          <a href={googleMapsURL} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
             {shelter?.address}
           </a>
         </div>
         <div>
-          <strong>Phone:</strong> {shelter?.phone_number}
+          <strong>Phone: </strong> {shelter?.phone_number}
         </div>
         <div>
-        <strong>Email:</strong> 
-        <a href={`mailto:${encodedEmail}`} className="text-blue-600 hover:underline">
+        <strong>Email: </strong> 
+        <a href={`mailto:${encodedEmail}`} className="text-primary hover:underline">
           {shelter?.email}
         </a>
       </div>
