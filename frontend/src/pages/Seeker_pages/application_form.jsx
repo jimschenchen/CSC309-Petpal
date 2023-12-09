@@ -15,7 +15,7 @@ const CreateApplication = () => {
             <body className="bg-background">
 
                 <main class="mt-0 p-6">
-                    <SendApplication pet={data} />
+                    <SendApplication pet={data} petId={petId}/>
                 </main>
             </body>
         </PageFrame>

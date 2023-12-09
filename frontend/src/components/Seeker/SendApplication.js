@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { getUser } from "../../utils/credential";
 
 
-const SendApplication = ({pet}) => {
+const SendApplication = ({pet, petId}) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [information, setInformation] = useState('');
@@ -65,7 +65,7 @@ const SendApplication = ({pet}) => {
                     <button type="submit" className="bg-primary text-white hover:font-bold py-2 px-4 rounded">
                         Submit
                     </button>
-                    <Link to="/shelter_details" className="bg-primary text-white hover:font-bold py-2 px-4 rounded">
+                    <Link to={`/pet_detail/${petId}`} className="bg-primary text-white hover:font-bold py-2 px-4 rounded">
                         Back
                     </Link>
                 </div>
