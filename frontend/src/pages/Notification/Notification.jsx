@@ -35,7 +35,7 @@ const NotificationCard = ({notification, index, setItems}) => {
             case 'comment-application':
                 return `/application/${notification.content_object.application_id}/message`
             case 'comment-shelter':
-                return `/shelter_details/${notification.content_object.shelter_id}`
+                return `/shelter_detail/${notification.content_object.shelter_id}`
         }
     }
     console.log(notification);
