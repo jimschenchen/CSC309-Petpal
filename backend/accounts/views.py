@@ -3,7 +3,7 @@ from rest_framework import generics
 from rest_framework.request import Request
 from rest_framework.response import Response
 from .models import User
-from .serializers import UserCreateSerializer, UserUpdateSerializer, UserProfileSerializer
+from .serializers import UserCreateSerializer, UserUpdateSerializer, UserProfileSerializer, ShelterProfileSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import CustomTokenObtainPairSerializer
@@ -180,3 +180,15 @@ class UserDeleteView(DestroyAPIView):
         obj = get_object_or_404(User, id=self.kwargs.get('pk'))
         self.check_object_permissions(self.request, obj)
         return obj
+
+
+class ShelterListView(generics.ListAPIView):
+    queryset = User.objects.filter(user_type=User.SHELTER)
+    serializer_class = ShelterProfileSerializer
+
+
+class ShelterProfileView(RetrieveAPIView):
+    serializer_class = ShelterProfileSerializer
+
+    def get_queryset(self):
+        return User.objects.filter(user_type=User.SHELTER)

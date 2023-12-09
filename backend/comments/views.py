@@ -1,10 +1,11 @@
+from datetime import datetime
+
 from django.shortcuts import get_object_or_404
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, serializers, status
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
-from datetime import datetime
 
 from accounts.models import User
 from applications.models import Application
@@ -50,16 +51,17 @@ class ShelterCommentListCreateAPIView(generics.ListCreateAPIView):
         shelter = get_object_or_404(User, pk=shelter_id, user_type=User.SHELTER)
         return Comment.objects.filter(content_type__model='user', object_id=shelter.id).order_by('-creation_time')
 
-    def perform_create(self, serializer):
+    def get_serializer_context(self):
         sender = self.request.user
+        shelter_id = self.kwargs.get('shelter_id')
+        shelter = get_object_or_404(User, pk=shelter_id, user_type=User.SHELTER)
+        return {'sender': sender, 'content_object': shelter}
 
+    def perform_create(self, serializer):
         shelter_id = self.kwargs.get('shelter_id')
         shelter = get_object_or_404(User, pk=shelter_id, user_type=User.SHELTER)
 
-        message = serializer.validated_data.get('message')
-
-        comment = Comment(sender=sender, content_object=shelter, message=message)
-        comment.save()
+        comment = serializer.save()
 
         # create notification for shelter
         create_notification(shelter, comment, 'C')
