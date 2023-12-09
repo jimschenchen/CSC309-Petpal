@@ -29,12 +29,16 @@ class PetListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsShelterOrReadOnly]
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ['shelter', 'status', 'breed', 'age', 'gender', 'name']
-    ordering_fields = ['name', 'age', 'size']
+    ordering_fields = ['name', 'age', 'size', 'last_updated_time']
     pagination_class = PageNumberPagination
     pagination_class.page_size_query_param = 'page_size'
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
+        if 'ordering' not in self.request.query_params:
+            # Apply default ordering
+            queryset = queryset.order_by('last_updated_time')
         return queryset
 
     def perform_create(self, serializer):

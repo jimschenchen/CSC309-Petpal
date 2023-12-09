@@ -70,6 +70,8 @@ class Pet(models.Model):
     medical_history = models.TextField(blank=True, null=True)
     behavior = models.TextField(blank=True, null=True)
     addition = models.TextField(blank=True, null=True)
+    last_updated_time = models.DateTimeField(auto_now=True, help_text="The last time the application was updated")
+    created_time = models.DateTimeField(auto_now_add=True, help_text="The time when the application was created")
 
     def __str__(self):
         return self.name

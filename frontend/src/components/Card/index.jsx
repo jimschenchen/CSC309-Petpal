@@ -32,6 +32,9 @@ const Card = ({item}) => {
               <p className="mt-0 block font-sans text-sm font-normal leading-relaxed text-gray-700 antialiased">
                   Age: {item.age} years old
               </p>
+              <p className="mt-0 block font-sans text-sm font-normal leading-relaxed text-gray-700 antialiased">
+                Shelter: {item.shelter_name}
+              </p>
               <p className="mt-0 block font-sans text-sm font-normal leading-relaxed ${item.status_color} antialiased">
                   <span className="text-gray-700">Status: </span> {item.status}
               </p>
@@ -41,7 +44,7 @@ const Card = ({item}) => {
               <div className="flex items-center -space-x-3">
               </div>
               <p className="block font-sans text-sm font-light leading-relaxed text-inherit antialiased">
-                  Id: {item.id} | Shelter: {item.shelter_name}
+                  Id: {item.id} | updated: {item.last_updated_time}
               </p>
           </div>
       </Link>
