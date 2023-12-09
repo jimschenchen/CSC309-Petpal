@@ -16,7 +16,7 @@ const InfoContent = ({ pet }) => {
                 
                 <div className='flex gap-1 items-center'>
                 <label className="font-bold">Age:</label>
-                <p className="text-gray-800">{pet.age} yr</p>
+                <p className="text-gray-800">{pet.age} year</p>
                 </div>
                 
                 <div className='flex gap-1 items-center'>

@@ -8,7 +8,7 @@ const DetailContent = ({ pet }) => {
             <div className="mb-4">
                 <label className="font-bold">Description:</label>
                 <p className="text-gray-800">
-                    {pet.addition? pet.addition: "The shelter did not provide this information."}
+                    {pet.description? pet.description: "The shelter did not provide this information."}
                 </p>
             </div>
 
@@ -22,7 +22,7 @@ const DetailContent = ({ pet }) => {
             <div className="mb-4">
                 <label className="font-bold">Behavior:</label>
                 <p className="text-gray-800">
-                    {pet.behaviour? pet.behaviour: "The shelter did not provide this information."}
+                    {pet.behavior? pet.behavior: "The shelter did not provide this information."}
                 </p>
             </div>
         </div>
