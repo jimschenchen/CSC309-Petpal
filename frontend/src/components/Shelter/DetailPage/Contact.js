@@ -11,7 +11,7 @@ const Contact = ({ shelter }) => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow duration-300 
-         hover:bg-gray-100 hover:shadow-md hover:p-8 text-base">
+         hover:bg-gray-100 hover:shadow-md text-base">
       <div className="text-left">
         <strong>Location:</strong>
         <a href={googleMapsURL} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
