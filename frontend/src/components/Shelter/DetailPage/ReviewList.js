@@ -247,7 +247,7 @@ const Reviews = ({shelter}) => {
               size="small"
               value={calculateAverage(reviewsMeta).toFixed(1)}
               readOnly
-              precision={0.5}
+              precision={0.1}
               emptyIcon={
                 <StarIcon style={{ opacity: 1 }} fontSize="inherit" />
               }
