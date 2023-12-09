@@ -6,6 +6,12 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { CircularProgress } from "@mui/material";
 import { getUser } from "../../../utils/credential";
 
+import StarIcon from '@mui/icons-material/Star';
+import LinearProgress from '@mui/material/LinearProgress';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 const Review = ({review}) => {
   return (
     <div className="p-4 text-base md:text-lg border-gray-200 border-b-2">
@@ -28,12 +34,22 @@ const Reviews = ({shelter}) => {
 
   const [message, setMessage] = useState('');
   const [rating, setRating] = useState(null);
-  
+
   const [nextUrl, setNextUrl] = useState(null);
   const [ hasMorePage, setHasMorePage ] = useState(false);
 
   const [posted, setPosted] = useState(false);
   const [isPosting, setIsPosting] = useState(false);
+
+  const [reviewsMeta, setReviewsMeta] = useState({
+    "total_comments_count": 0,
+    "not_null_comments_count": 0,
+    "rating_1_count": 0,
+    "rating_2_count": 0,
+    "rating_3_count": 0,
+    "rating_4_count": 0,
+    "rating_5_count": 0
+});
 
 
   useEffect(() => {
@@ -83,7 +99,8 @@ const Reviews = ({shelter}) => {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
+      // console.log(data);
+      setReviewsMeta(data);
     })
 
   }, []);
@@ -141,16 +158,109 @@ const Reviews = ({shelter}) => {
     })
   }
 
+
+  const theme = createTheme({
+    palette: {
+      star: {
+        main: '#fbbc04',
+      },
+    },
+  });
+
+  const labels = {
+    0.5: 'Useless',
+    1: 'Useless+',
+    1.5: 'Poor',
+    2: 'Poor+',
+    2.5: 'Ok',
+    3: 'Ok+',
+    3.5: 'Good',
+    4: 'Good+',
+    4.5: 'Excellent',
+    5: 'Excellent+',
+    null: 'No Review'
+  };
+
+
+  function LinearProgressWithLabel(props) {
+
+    const { id, meta } = props;
+    const cur_count = meta[`rating_${id}_count`];
+    const progressValue = cur_count / meta.not_null_comments_count * 100;
+
+    return (
+      <ThemeProvider theme={theme}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={{ minWidth: 25 }}>
+            <Typography variant="body2" color="text.secondary">{ id }</Typography>
+          </Box>
+          <Box sx={{ width: "100%", mr: 1 }}>
+            <LinearProgress variant="determinate" color="star" value={ progressValue } />
+          </Box>
+          <Box sx={{ minWidth: 35 }}>
+            <Typography variant="body2" color="text.secondary">{`${Math.round(
+              cur_count
+            )}`}</Typography>
+          </Box>
+        </Box>
+      </ThemeProvider>
+
+    );
+  }
+
+  const calculateAverage = (meta) => {
+    let sum = 0;
+    for (let i = 1; i <= 5; i++) {
+      sum += i * meta[`rating_${i}_count`];
+    }
+    return sum / meta.not_null_comments_count;
+  }
+
   return (
     <>
     <div className="flex flex-col md:flex-row w-full">
     <div className="md:w-1/2 flex flex-col gap-2 p-4 border-gray-200 border-b-2
     md:border-r-2">
-      <h1 className="text-lg text-left">Average rating</h1>
-      <div className="flex items-center justify-center gap-2">
+      <h1 className="text-lg text-left">Rating Review</h1>
+      {/* <div className="flex items-center justify-center gap-2">
         <div >{Math.round(shelter.average_rating*10)/10}</div>
       <div className="w-fit"><Rating value={shelter.average_rating} precision={0.1} size="large" readOnly/></div>
+      </div> */}
+
+      <div className="flex max-w-lg m-4">
+        <div className="basis-3/4">
+          <LinearProgressWithLabel meta={reviewsMeta} id={5} className="flex-initial"/>
+          <LinearProgressWithLabel meta={reviewsMeta} id={4} className="flex-initial"/>
+          <LinearProgressWithLabel meta={reviewsMeta} id={3} className="flex-initial"/>
+          <LinearProgressWithLabel meta={reviewsMeta} id={2} className="flex-initial"/>
+          <LinearProgressWithLabel meta={reviewsMeta} id={1} className="flex-initial"/>
+        </div>
+        <div className="basis-1/4 flex flex-col items-center">
+          <div className="text-5xl">
+            {calculateAverage(reviewsMeta).toFixed(1)}
+          </div>
+
+          <div className="pl-0 mt-2 flex justify-start items-center gap-2">
+            <Rating
+              className=""
+              name="read-only"
+              size="small"
+              value={calculateAverage(reviewsMeta).toFixed(1)}
+              readOnly
+              precision={0.5}
+              emptyIcon={
+                <StarIcon style={{ opacity: 1 }} fontSize="inherit" />
+              }
+            />
+          </div>
+
+          <div className="text-sm">
+            {reviewsMeta.total_comments_count} reviews
+          </div>
+        </div>
       </div>
+
+
     </div>
 
     <div className="md:w-1/2 flex flex-col gap-3 p-4 border-gray-200 border-b-2">
