@@ -105,6 +105,8 @@ const Search = () => {
         }
       }
 
+      console.log("url", url);
+
       try {
         const res = await Request(url, "GET");
 
