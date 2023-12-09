@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 const PetItem = ({pet}) => {
     return (
+        <Link to={`/pet_detail/${pet.id}/`}>
         <div className="border-b flex-row justify-center items-center text-center duration-300 hover:bg-gray-100 hover:shadow-md md:flex md:justify-start md:text-center">
             <div className="flex flex-1 justify-center md:flex-none object-cover p-4 overflow-hidden h-[15rem]">
                 <img src={pet.image} alt="Pet Image" className="rounded" />
@@ -14,6 +16,7 @@ const PetItem = ({pet}) => {
             </div>
             
         </div>
+        </Link>
         
     );
 };

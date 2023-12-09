@@ -17,6 +17,7 @@ const Review = ({review}) => {
  
 }
 
+
 const Reviews = ({shelter}) => {
   const [reviews, setReviews] = useState([]);
 
@@ -122,7 +123,6 @@ const Reviews = ({shelter}) => {
       }
     })
   }
-
 
   return (
     <>

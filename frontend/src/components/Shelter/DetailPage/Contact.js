@@ -1,7 +1,14 @@
-import { useState } from "react";
+const Contact = ({ shelter }) => {
+    // Function to encode the address for use in a URL
+    const encodeAddressForURL = (address) => {
+      return encodeURIComponent(address);
+    };
 
-const Contact = ({shelter}) => {
-
+    const encodedEmail = encodeURIComponent(shelter?.email);
+  
+    // Construct the Google Maps URL with the shelter's address
+    const googleMapsURL = `https://www.google.com/maps/search/?api=1&query=${encodeAddressForURL(shelter?.address)}`;
+  
     return (
         <div className="bg-white p-6 rounded-lg shadow duration-300 
          hover:bg-gray-100 hover:shadow-md hover:p-8 text-base">
@@ -14,8 +21,9 @@ const Contact = ({shelter}) => {
             <div className="text-left">
                 <strong>Email:</strong> {shelter?.email}
             </div>
-        </div>
+      </div>
     );
-};
-
-export default Contact;
+  };
+  
+  export default Contact;
+  
