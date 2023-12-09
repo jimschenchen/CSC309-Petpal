@@ -45,7 +45,9 @@ const ShelterAccountUpdate = () => {
     const handleImageChange = (e) => {
         // Check if files are selected and update state
         if (e.target.files && e.target.files[0]) {
+            console.log(e.target.files);
             setAvatar(e.target.files[0]);
+            console.log(avatar);
         }
     };
 
@@ -86,7 +88,9 @@ const ShelterAccountUpdate = () => {
         formData.append('address', address);
         formData.append('phone_number', phone);
         formData.append('description', description);
-        formData.append('avatar', avatar);
+        if (avatar instanceof File) {
+            formData.append('avatar', avatar);
+        }
 
         try {
             // Make a PUT request to update the profile
