@@ -87,7 +87,9 @@ const UpdatePet = () => {
         formData.append('description', description);
         formData.append('medical_history', medicalH);
         formData.append('behavior', behavior);
-        formData.append('image', image);
+        if (image instanceof File) {
+            formData.append('image', image);
+        }
 
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);

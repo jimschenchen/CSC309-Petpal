@@ -51,7 +51,9 @@ const CreatePet = () => {
         formData.append('description', description);
         formData.append('medical_history', medicalHistory);
         formData.append('behavior', medicalHistory);
-        formData.append('image', image);
+        if (image instanceof File) {
+            formData.append('image', image);
+        }
 
         try {
             // Make a POST request to create the pet

@@ -82,7 +82,9 @@ const SeekerAccountUpdate = () => {
         formData.append('address', address);
         formData.append('phone_number', phone);
         formData.append('description', description);
-        formData.append('avatar', avatar);
+        if (avatar instanceof File) {
+            formData.append('avatar', avatar);
+        }
         console.log(avatar);
 
         try {
