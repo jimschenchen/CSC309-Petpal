@@ -30,7 +30,7 @@ class PetListCreateView(generics.ListCreateAPIView):
     serializer_class = PetSerializer
     permission_classes = [IsShelterOrReadOnly]
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    filterset_fields = ['shelter', 'status', 'breed', 'age', 'gender', 'name']
+    filterset_fields = ['shelter', 'status', 'breed', 'age', 'gender', 'name', 'size']
     ordering_fields = ['name', 'age', 'size', 'last_updated_time']
     pagination_class = PageNumberPagination
     pagination_class.page_size_query_param = 'page_size'
