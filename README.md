@@ -149,7 +149,10 @@ We are using AWS S3 as our storage. You can check this tutorial to create your S
 ## Screenshots
 
 ## Contribution
-+ Professor : Jack
++ [bbrianh](https://github.com/bbrianh)
++ [HanliJiang13](https://github.com/HanliJiang13)
++ [jimschenchen](https://github.com/jimschenchen)
++ Thanks to our Professor : [jacksun007](https://github.com/jacksun007)
 
 
 ## Contact Us
