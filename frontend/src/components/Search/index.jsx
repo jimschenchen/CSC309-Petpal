@@ -228,7 +228,7 @@ const Search = () => {
         </div>
 
 
-        <div id="main" className="flex-1 p-4 pt-0">
+        <div id="main" className="flex-1 pt-0">
           {/* <!-- ... main ... --> */}
 
           <InfiniteScroll
