@@ -24,11 +24,7 @@ class Comment(models.Model):
 
     message = models.TextField()
     image = models.ImageField(null=True)
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], null=True)
 
     notifications = GenericRelation(Notification)
 
-
-class Rating(models.Model):
-    seeker = models.ForeignKey(User, on_delete=models.CASCADE, related_name="rating_seeker")
-    shelter = models.ForeignKey(User, on_delete=models.CASCADE, related_name="rating_shelter")
-    rating = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])

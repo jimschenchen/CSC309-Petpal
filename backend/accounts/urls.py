@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import UserListCreateView, LoginTokenBasedView, UserUpdateView, UserProfileView, UserDeleteView
+from .views import UserListCreateView, LoginTokenBasedView, UserUpdateView, UserProfileView, UserDeleteView, \
+    ShelterListView, ShelterProfileView
 from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
@@ -22,5 +23,8 @@ urlpatterns = [
     
     path('users/<int:pk>/', UserDeleteView.as_view(), name='user-detail'),
 
+    # List shelters
+    path('shelters/', ShelterListView.as_view(), name='list_shelter'),
+    path('shelters/<int:pk>/', ShelterProfileView.as_view(), name='shelter-detail'),
 ]
 

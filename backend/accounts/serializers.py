@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
+from django.db.models import Avg
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from comments.models import Comment
 
 User = get_user_model()
 
@@ -83,3 +85,14 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             return data
 
         raise serializers.ValidationError('Unable to log in with provided email and password.')
+
+
+class ShelterProfileSerializer(serializers.ModelSerializer):
+    average_rating = serializers.SerializerMethodField()
+    class Meta:
+        model = User
+        fields = ['id', 'avatar', 'user_type', 'name', 'email', 'address', 'phone_number', 'description',
+                  'average_rating']
+
+    def get_average_rating(self, obj):
+        return obj.comments.aggregate(Avg('rating'))['rating__avg']
