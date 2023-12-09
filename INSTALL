@@ -7,6 +7,9 @@
 
 Note: This is a partial copy from README.md. For better experience of viewing deployment doc, please check README.md.
 
+## Website is hosing on
+`https://petpal.jimschenchen.com/`
+
 ## Local Deployment
 
 ###  Deployment - Backend (Django Rest Framework)

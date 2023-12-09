@@ -19,6 +19,8 @@ The project is divided into three phases. In phase 1, you will implement the sta
 ## Description about the project
 
 
+## Hosting
+[Petpal](https://petpal.jimschenchen.com/)
 
 ## Features
 ### Core features
@@ -67,13 +69,10 @@ The project is divided into three phases. In phase 1, you will implement the sta
 - **User Notifications**: Alerts for messages, status updates, and new pet listings based on user preferences.
 - **Shelter Notifications**: Alerts for new reviews, applications, and messages from applicants.
 
-
 ### Extra features
 + Integration with maps
 + Forget password with sending email
 + Rating summary
-
-
 
 ## Local Deployment
 
