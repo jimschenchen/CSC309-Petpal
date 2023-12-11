@@ -41,6 +41,8 @@ const Reviews = ({shelter}) => {
   const [posted, setPosted] = useState(false);
   const [isPosting, setIsPosting] = useState(false);
 
+  const navigate = useNavigate();
+
   const [reviewsMeta, setReviewsMeta] = useState({
     "total_comments_count": 0,
     "not_null_comments_count": 0,
@@ -131,6 +133,11 @@ const Reviews = ({shelter}) => {
   const handlePost = () => {
     if (message === '') {
       setError('Comment cannot be empty');
+      return;
+    }
+
+    if (getUser().userType === 'guest') {
+      navigate('/auth/login');
       return;
     }
 
