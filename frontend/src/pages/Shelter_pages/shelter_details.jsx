@@ -60,7 +60,7 @@ const ShelterDetails = () => {
   }
 
   return (
-    <PageFrame>
+    <PageFrame requiredLogin={true}>
       <div className='mx-2 mt-4'>
       <div className="text-sm font-medium text-center text-gray-500 border-gray-200">
         <ShelterHeader shelter={shelter} />
